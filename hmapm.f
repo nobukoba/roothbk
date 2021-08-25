@@ -74,9 +74,15 @@ C c/o Nobu 2018/01/26 20:12:47-->
 C      ICOMAD(1) = LOC (ICOMAD(1)) - LOCB(ICOMAD(1))
 C --> Eed
 C this should be a reasonable range for IA64 architectures
-C Added Nobu 2018/01/26 20:13:07 -->
-      ICOMAD(1) = ICOMAD(1) + 2**30
+C     Added Nobu 2018/01/26 20:13:07 -->
+c     c/o by Nobu 2021.08.24
+c      ICOMAD(1) = ICOMAD(1) + 2**30
 C --> End
+C     Preventing from segv, the following 
+c     was added. I do not know why this works?
+c     Nobu 2021.08.25 -->
+      ICOMAD(1) = 0
+c     --> Nobu
       HMAPM = HMAPI(MKEY, ICOMAD)
       IOFFST = ICOMAD(1) - LOCF(IBASE(1))
 *
