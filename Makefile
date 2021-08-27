@@ -28,8 +28,8 @@ LFLAGS    =
 
 all:	$(TARGET)
 
-$(TARGET): rootminipacklibDict.cxx rootminipacklib.o hlimap.o hidall.o mzwork.o hcreatem.o hshm.o hmapm.o hrin2.o hcopyu.o hcopyn.o hcopyt.o zebra.o hbook.o cernlib.o kernlib.o
-	$(CXX) -shared $(LFLAGS) -o $@ $^ $(ROOTLIBS) $(CXXFLAGS)
+$(TARGET): rootminipacklibDict.o rootminipacklib.o hlimap.o hidall.o mzwork.o hcreatem.o hshm.o hmapm.o hrin2.o hcopyu.o hcopyn.o hcopyt.o zebra.o hbook.o cernlib.o kernlib.o
+	$(CXX) -shared $(LFLAGS) -o $@ $^ $(ROOTLIBS)
 rootminipacklibDict.cxx: rootminipacklib.h rootminipacklibLinkDef.h
 ifeq ($(ROOT_VER_GTEQ_6),1)
 	$(ROOTCINT) -f $@ $^ -rmf rootminipacklibDict.rootmap

@@ -6,13 +6,11 @@
    as in the Fortran definition in hbook.f and zebra
    Also, the arrays must be declared extern like on Windows */
 #define PAWC_SIZE 32000000
-#define bigbuf bigbuf_
 #define pawc pawc_
 #define quest quest_
 #define hcbits hcbits_
 #define hcbook hcbook_
 #define rzcl rzcl_
-extern "C" char bigbuf_[PAWC_SIZE];
 extern "C" int pawc_[PAWC_SIZE];
 extern "C" int quest_[100];
 extern "C" int hcbits_[37];
@@ -20,6 +18,34 @@ extern "C" int hcbook_[51];
 extern "C" int rzcl_[11];
 
 /*  Define the names of the Fortran subroutine and functions for the different OSs */
+/*  Define the names of the Fortran subroutine and functions for the different OSs*/
+# define hlimit  hlimit_
+# define hropen  hropen_
+# define hrin    hrin_
+# define hnoent  hnoent_
+# define hgive   hgive_
+# define hgiven  hgiven_
+# define hgnpar  hgnpar_
+# define hgnf    hgnf_
+# define hgnt    hgnt_
+# define rzink   rzink_
+# define hdcofl  hdcofl_
+# define hdelet  hdelet_
+# define hntvar2 hntvar2_
+# define hbnam   hbnam_
+# define hi      hi_
+# define hie     hie_
+# define hif     hif_
+# define hij     hij_
+# define hix     hix_
+# define hijxy   hijxy_
+# define hije    hije_
+# define hcdir   hcdir_
+# define zitoh   zitoh_
+# define uhtoc   uhtoc_
+# define hlimap  hlimap_ /* nobu added */
+# define hidall  hidall_ /* nobu added */
+# define hrin2   hrin2_ /* nobu added */
 extern "C" void hlimit_(const int&);
 extern "C" void hropen_(const int&,const char*,const char*,const char*,const int&,const int&,const int,const int,const int);
 extern "C" void hrin_(const int&,const int&,const int&);
@@ -52,35 +78,12 @@ extern "C" void hidall_(const int*, const int&);            /* Nobu added */
 extern "C" void hrin2_(const int&,const int&,const int&);   /* nobu added */
 extern "C" void hrend_(const char*,const int);              /* nobu added */
 
-void hlimit(const int&);
-void hropen(const int&,const char*,const char*,const char*,const int&,const int&,const int,const int,const int);
-void hrin(const int&,const int&,const int&);
-void hnoent(const int&,const int&);
-void hgive(const int&,const char*,const int&,const float&,const float&,const int&,const float&,const float&,const int&,const int&,const int);
-void hgiven(const int&,const char*,const int&,const char*,const float&,const float&,const int,const int);
-void hntvar2(const int&,const int&,const char*,const char*,const char*,int&,int&,int&,int&,int&,const int,const int, const int);
-void hbnam(const int&,const char*,const int&,const char*,const int&,const int, const int);
-void hprntu(const int&);
-void hgnpar(const int&,const char *,const int);
-void hgnf(const int&,const int&,const float&,const int&);
-void hgnt(const int&,const int&,const int&);
-void rzink(const int&,const int&,const char *,const int);
-void hdcofl();
-void hmaxim(const int&,const float&);
-void hminim(const int&,const float&);
-void hdelet(const int&);
-void hix(const int&,const int&,const float&);
-void hijxy(const int&,const int&,const int&,const float&,const float&);
-float hi(const int&,const int&);
-float hie(const int&,const int&);
-float hif(const int&,const int&);
-float hij(const int&,const int&,const int&);
-float hije(const int&,const int&,const int&);
-void hcdir(const char*,const char* ,const int,const int);
-void zitoh(const int&,const int&,const int&);
-void uhtoc(const int&,const int&,const char*,int&,const int);
-void hlimap(const int&,const char*, const int); /* Nobu added */
-void hidall(const int*, const int&);            /* Nobu added */
-void hrin2(const int&,const int&,const int&);   /* nobu added */
-void hrend(const char*,const int);              /* nobu added */
+/* Prototype declaration */
+void init_rootminipacklib();
+void open_shm(const char *);
+void open_single_shm(const char*);
+void load_shm();
+void convert_directory(const char *, TDirectory*, TDirectory*);
+void convert_1d(Int_t, TDirectory*, TDirectory*);
+void convert_2d(Int_t, TDirectory*, TDirectory*);
 #endif

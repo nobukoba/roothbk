@@ -119,8 +119,10 @@
             IERROR=HFREEM(IGOFF)
             CALL HREND(CHGLOB)
          ENDIF
+         write(*,*) 'here in hlimap.f'
          NCH=LENOCC(NAME)
          IGSIZE=HMAPM(NAME,LQ,IGOFF)
+         write(*,*) 'here in hlimap.f 2'
          IF(IGSIZE.NE.0) THEN
             IGOFF=0
             IERROR=-IGSIZE
@@ -128,10 +130,16 @@
 1000        FORMAT(' ***** HLIMAP Error',I6,' mapping memory ',A)
             GO TO 99
          ENDIF
+         write(*,*) 'here in hlimap.f 3'
 *
 *           Connect Global Memory as a virtual HBOOK file.
 *
          NCHT=NCHTOP
+         write(*,*) 'hlimap.f NAME:', NAME
+         write(*,*) 'IGOFF:', IGOFF 
+*         write(*,*) 'LQ(IGOFF+1):', LQ(IGOFF+1)
+*         LQ(IGOFF+1) = 32000000
+*         CALL HRFILE(32000000,NAME,'M')
          CALL HRFILE(LQ(IGOFF+1),NAME,'M')
          IF(NCHTOP.NE.NCHT)THEN
             HFNAME(NCHTOP)='Global memory  : '//NAME(1:NCH)
@@ -140,6 +148,7 @@
 
          GO TO 99
       ENDIF
+         write(*,*) 'here in hlimap.f 4'
 *.
 *. All other cases create a new shared memory
 *. ==========================================
@@ -152,6 +161,7 @@
      +     LQBID(2000),LQBID(10000))
 *
       ENDIF
+         write(*,*) 'here in hlimap.f 5'
 *
       GNAME=NAME
       IS = HCREATEM(GNAME, LQ, NHBOOK, IOFFST)
@@ -163,6 +173,7 @@
       ENDIF
 *
 *          Option ':' disables checking of overlapping stores
+         write(*,*) 'here in hlimap.f 6'
       CALL MZSTOR (IXPAWC,'/PAWC/',':',FENC,LQ(1),LQ(1),LQ(1),
      +            LQ(IOFFST+10),LQ(IOFFST+NHBOOK-10))
       NWPAW  = NHBOOK
@@ -193,6 +204,7 @@
 ***************************************************************
 *
 *
+         write(*,*) 'here in hlimap.f 7'
       IHWORK=IXPAWC+1
       IHDIV =IXPAWC+2
 *
