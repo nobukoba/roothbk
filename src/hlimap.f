@@ -71,30 +71,30 @@
 *
 *. CASE  LIMIT=0   only attach shared memory
 *. =========================================
-      write(*,*) '################# hlimap.f ######################'
+*      write(*,*) '################# hlimap.f ######################'
       IF(LIMIT.EQ.0)THEN
-         write(*,*) 'hlimap.f: IGOFF', IGOFF
+*         write(*,*) 'hlimap.f: IGOFF', IGOFF
 *         IF(IGOFF.GT.0) THEN
          IF(IGOFF.NE.0) THEN
             IERROR=HFREEM(IGOFF)
-            write(*,*) 'hlimap.f CHGLOB:', CHGLOB
+*            write(*,*) 'hlimap.f CHGLOB:', CHGLOB
             CALL HREND(CHGLOB)
          ENDIF
-         write(*,*) 'here in hlimap.f'
+*         write(*,*) 'here in hlimap.f'
          NCH=LENOCC(NAME)
-         write(*,*) 'NCH', NCH
-         write(*,*) 'LENOCC(NAME)', LENOCC(NAME)
-         write(*,*) 'IGSIZE', IGSIZE
-         write(*,*) 'LQ(1)', LQ(1)
-         write(*,*) 'LOCF(LQ(1))', LOCF(LQ(1))
-         write(*,*) 'LOCF(LMAIN)', LOCF(LMAIN)
-         write(*,*) 'IGOFF', IGOFF
+*         write(*,*) 'NCH', NCH
+*         write(*,*) 'LENOCC(NAME)', LENOCC(NAME)
+*         write(*,*) 'IGSIZE', IGSIZE
+*         write(*,*) 'LQ(1)', LQ(1)
+*         write(*,*) 'LOCF(LQ(1))', LOCF(LQ(1))
+*         write(*,*) 'LOCF(LMAIN)', LOCF(LMAIN)
+*         write(*,*) 'IGOFF', IGOFF
          IGSIZE=HMAPM(NAME,LQ,IGOFF)
-         write(*,*) 'IGSIZE', IGSIZE
-         write(*,*) 'LQ(1)', LQ(1)
-         write(*,*) 'LOCF(LQ(1))', LOCF(LQ(1))
-         write(*,*) 'LOCF(LMAIN)', LOCF(LMAIN)
-         write(*,*) 'IGOFF', IGOFF
+*         write(*,*) 'IGSIZE', IGSIZE
+*         write(*,*) 'LQ(1)', LQ(1)
+*         write(*,*) 'LOCF(LQ(1))', LOCF(LQ(1))
+*         write(*,*) 'LOCF(LMAIN)', LOCF(LMAIN)
+*         write(*,*) 'IGOFF', IGOFF
          IF(IGSIZE.NE.0) THEN
             IGOFF=0
             IERROR=-IGSIZE
@@ -102,15 +102,15 @@
 1000        FORMAT(' ***** HLIMAP Error',I6,' mapping memory ',A)
             GO TO 99
          ENDIF
-         write(*,*) 'here in hlimap.f 3'
+*         write(*,*) 'here in hlimap.f 3'
 *
 *           Connect Global Memory as a virtual HBOOK file.
 *
          NCHT=NCHTOP
-         write(*,*) 'hlimap.f NAME:', NAME
-         write(*,*) 'IGOFF:', IGOFF 
-         write(*,*) 'LQ(IGOFF+1):', LQ(IGOFF+1)
-         write(*,*) 'LOC(LQ(IGOFF+1))/4:', LOC(LQ(IGOFF+1))/4
+*         write(*,*) 'hlimap.f NAME:', NAME
+*         write(*,*) 'IGOFF:', IGOFF 
+*         write(*,*) 'LQ(IGOFF+1):', LQ(IGOFF+1)
+*         write(*,*) 'LOC(LQ(IGOFF+1))/4:', LOC(LQ(IGOFF+1))/4
 *     LQ(IGOFF+1) = 32000000
 *         CALL HRFILE(32000000,NAME,'M')
          CALL HRFILE(LQ(IGOFF+1),NAME,'M')
@@ -121,30 +121,30 @@
 
          GO TO 99
       ENDIF
-         write(*,*) 'here in hlimap.f 4'
+*         write(*,*) 'here in hlimap.f 4'
 *.
 *. All other cases create a new shared memory
 *. ==========================================
       CALL HMACHI
-         write(*,*) 'here in hlimap.f 4'
+*         write(*,*) 'here in hlimap.f 4'
 *
-         write(*,*) 'here in hlimap.f 5'
+*         write(*,*) 'here in hlimap.f 5'
       NHBOOK=IABS(LIMIT)
-         write(*,*) 'here in hlimap.f 5.5'
+*         write(*,*) 'here in hlimap.f 5.5'
       IF(LIMIT.GE.0)THEN
-         write(*,*) 'here in hlimap.f 5.6'
+*         write(*,*) 'here in hlimap.f 5.6'
          CALL MZEBRA(-3)
-         write(*,*) 'here in hlimap.f 5.7'
+*         write(*,*) 'here in hlimap.f 5.7'
          CALL MZSTOR(IBID,'/BIDON/',' ',FENBID,LQBID,LQBID,LQBID,
      +     LQBID(2000),LQBID(10000))
 *
       ENDIF
-      write(*,*) 'here in hlimap.f 6'
+*      write(*,*) 'here in hlimap.f 6'
 *
-      write(*,*) 'LQ(1)', LQ(1)
-      write(*,*) 'LOCF(LQ(1))', LOCF(LQ(1))
-      write(*,*) 'LOC(LQ(1))/4', LOC(LQ(1))/4
-      write(*,*) 'LOCF(LMAIN)', LOCF(LMAIN)
+*      write(*,*) 'LQ(1)', LQ(1)
+*      write(*,*) 'LOCF(LQ(1))', LOCF(LQ(1))
+*      write(*,*) 'LOC(LQ(1))/4', LOC(LQ(1))/4
+*      write(*,*) 'LOCF(LMAIN)', LOCF(LMAIN)
 
          GNAME=NAME
       IS = HCREATEM(GNAME, LQ, NHBOOK, IOFFST)
@@ -156,23 +156,23 @@
       ENDIF
 *
 *          Option ':' disables checking of overlapping stores
-      write(*,*) 'hlimap 6 IXPAWC', IXPAWC
+*      write(*,*) 'hlimap 6 IXPAWC', IXPAWC
       CALL MZSTOR (IXPAWC,'/PAWC/',':',FENC,LQ(1),LQ(1),LQ(1),
      +            LQ(IOFFST+10),LQ(IOFFST+NHBOOK-10))
       NWPAW  = NHBOOK
-      write(*,*) 'hlimap 7 IXPAWC', IXPAWC
+*      write(*,*) 'hlimap 7 IXPAWC', IXPAWC
       CALL MZWORK(IXPAWC,LQ(2),LQ(IOFFST),0)
 *
       IHDIV  = 0
       IXHIGZ = 0
       IXKU   = 0
 *
-      write(*,*) 'hlimap 8 IXPAWC', IXPAWC
+*      write(*,*) 'hlimap 8 IXPAWC', IXPAWC
       CALL MZLINK(IXPAWC,'/HCBOOK/',LHBOOK,LCDIR,LCIDN)
       ILAST=IOFFST+NHBOOK
-      write(*,*) 'ILAST,IOFFST,NHBOOK', ILAST,IOFFST,NHBOOK
+*      write(*,*) 'ILAST,IOFFST,NHBOOK', ILAST,IOFFST,NHBOOK
       
-      write(*,*) 'hlimap 9 IXPAWC', IXPAWC
+*      write(*,*) 'hlimap 9 IXPAWC', IXPAWC
       CALL MZLINK(IXPAWC,'HCMAP',LQ(ILAST),LQ(ILAST),LQ(ILAST))
 *
 ***************************************************************
@@ -192,7 +192,7 @@
 ***************************************************************
 *
 *
-      write(*,*) 'hlimap 10 IXPAWC', IXPAWC
+*      write(*,*) 'hlimap 10 IXPAWC', IXPAWC
       IHWORK=IXPAWC+1
       IHDIV =IXPAWC+2
 *
@@ -209,21 +209,21 @@
       CALL MZFORM('HCB2','2I -B',IOCB2)
       CALL MZFORM('HFIT','10I -F',IOFIT)
       CALL MZFORM('LCHX','2I -H',IOCC)
-      write(*,*) 'hlimap 1 IHDIV, LCDIR', IHDIV, LCDIR
-      write(*,*) 'hlimap 1 LTAB, LHBOOK', LTAB, LHBOOK
+*      write(*,*) 'hlimap 1 IHDIV, LCDIR', IHDIV, LCDIR
+*      write(*,*) 'hlimap 1 LTAB, LHBOOK', LTAB, LHBOOK
       CALL MZBOOK(IHDIV,LCDIR,LHBOOK, 1,'HDIR',50,8,10,IODIR,0)
       CALL UCTOH('PAWC            ',IQ(LCDIR+1),4,16)
-      write(*,*) 'hlimap 2 IHDIV, LCDIR', IHDIV, LCDIR
-      write(*,*) 'hlimap 2 LTAB, LHBOOK', LTAB, LHBOOK
+*      write(*,*) 'hlimap 2 IHDIV, LCDIR', IHDIV, LCDIR
+*      write(*,*) 'hlimap 2 LTAB, LHBOOK', LTAB, LHBOOK
       CALL MZBOOK(IHDIV,LTAB ,LHBOOK,-3,'HTAB',500,0,500,2,0)
-      write(*,*) 'hlimap 3 LTAB', LTAB
+*      write(*,*) 'hlimap 3 LTAB', LTAB
 *
       LMAIN =LHBOOK
-      write(*,*) 'hlimap LMAIN=LHBOOK', LMAIN
+*      write(*,*) 'hlimap LMAIN=LHBOOK', LMAIN
       LQ(ILAST)=LMAIN
-      write(*,*) 'hlimap ILAST', ILAST
-      write(*,*) 'hlimap IOFFST', IOFFST
-      write(*,*) 'hlimap NHBOOK', NHBOOK
+*      write(*,*) 'hlimap ILAST', ILAST
+*      write(*,*) 'hlimap IOFFST', IOFFST
+*      write(*,*) 'hlimap NHBOOK', NHBOOK
       LQ(IOFFST+1)=NHBOOK
       LQ(IOFFST+2)=IOFFST
       NLCDIR=1

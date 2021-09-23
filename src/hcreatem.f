@@ -68,9 +68,9 @@ C Added Nobu 2018/01/26 20:16:03 -->
 C --> End
       HCREATEM = HCREATEI(MKEY, ISIZE, ICOMAD)
       IOFFST = ICOMAD(1) - LOCF(IBASE(1))
-      write(*,*) 'hcreatem.f IOFFST ', IOFFST
-      write(*,*) 'hcreatem.f ICOMAD(1) ', ICOMAD(1)
-      write(*,*) 'hcreatem.f LOCF(IBASE(1)) ', LOCF(IBASE(1))
+*      write(*,*) 'hcreatem.f IOFFST ', IOFFST
+*      write(*,*) 'hcreatem.f ICOMAD(1) ', ICOMAD(1)
+*      write(*,*) 'hcreatem.f LOCF(IBASE(1)) ', LOCF(IBASE(1))
 *      IOFFST = ICOMAD(1) - LOC(IBASE(1))/4
 *
       END

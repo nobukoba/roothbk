@@ -501,9 +501,6 @@ void shm2dir(const char *shm_name, TDirectory* root_dir) {
   if (root_dir == 0) {root_dir = gROOT;}
   convert_dir_hbk2root(shm_name_str.c_str(), root_dir);
   shm_name_str = shm_name_str.substr(2,4);
-  hfreem_(0);
-  //hrend_(shm_name_str.c_str(),shm_name_str.length());
-  //hfreem2_();
   return;
 }
 
@@ -532,9 +529,6 @@ void hbk2shm(const char* hbk_name, const char* shm_name){
   hcdir_("//PAWC"," ",6,1);
   hrend_("LUN10",5);
   hfreem_((long*)0);
-  //hfreem2_();
-  //init_hlimit();
-  //hlimap_(0,shm_name_str.c_str(),shm_name_str.length());
   return;
 }
 
@@ -756,24 +750,25 @@ void convert_dir_hbk2hbk(int shm_flag, const char* cur_dir, const char *pawdir_i
   int ndir = 0;
   char subdirs[50][16];
   hrdir_(50, subdirs[0], ndir, 16);
-  std::cout <<  "ndir: " << ndir << std::endl;
+  /*std::cout <<  "ndir: " << ndir << std::endl;*/
   char chdir[17];
   for (int k=0;k<ndir;k++) {
     strlcpy(chdir,subdirs[k],16);
+    /*
     std::cout <<  "subdirs[k]-->" <<  subdirs[0] << "<--" << std::endl;
-    std::cout <<  "chdir-->" <<  chdir << "<--" << std::endl;
+    std::cout <<  "chdir-->" <<  chdir << "<--" << std::endl;*/
     if (strchr(chdir,'/')) {
       printf("Sorry cannot convert directory name %s because it contains a slash\n",chdir);
       continue;
     }
-    std::cout << "chdir-->" << chdir << "<--" << std::endl;
+    /*std::cout << "chdir-->" << chdir << "<--" << std::endl;*/
     chdir[16] = 0;
     for (int i=16;i>0;i--) {
       if (chdir[i] == 0) continue;
       if (chdir[i] != ' ') break;
       chdir[i] = 0;
     }
-    std::cout << "chdir-->" << chdir << "<--" << std::endl;
+    /*std::cout << "chdir-->" << chdir << "<--" << std::endl;*/
     std::string chdir_str = chdir; 
     std::string pawdir = pawdir_in;
     std::string lundir = lundir_in;
@@ -817,12 +812,12 @@ void convert_dir_root2root(TDirectory* cur_dir, TDirectory* output_dir){
     }
     std::string classname = obj->ClassName();
     std::string objname = obj->GetName();
-    std::cout << "objname: " << objname << std::endl;
+    /*std::cout << "objname: " << objname << std::endl;*/
     TClass *cl = gROOT->GetClass(classname.c_str());
     if (!cl) continue;
     if (cl->InheritsFrom(TDirectory::Class())) {
-      std::cout << "Directory" << std::endl;
-      std::cout << "objname: " << objname << std::endl;
+      /*std::cout << "Directory" << std::endl;
+	std::cout << "objname: " << objname << std::endl;*/
       TDirectory* new_dir = (TDirectory*)output_dir->TDirectory::FindObject(objname.c_str());
       if (new_dir == 0) {
 	new_dir = new TDirectoryFile(obj->GetName(),obj->GetTitle(),"",output_dir);
@@ -831,7 +826,7 @@ void convert_dir_root2root(TDirectory* cur_dir, TDirectory* output_dir){
     } else if (cl->InheritsFrom(TTree::Class())) {
       continue;
     } else if (cl->InheritsFrom(TH1::Class())){
-      std::cout << "TH1" << std::endl;
+      /*std::cout << "TH1" << std::endl;*/
       TH1* hnew = (TH1*)output_dir->TDirectory::FindObject(objname.c_str());
       if (hnew != 0) {
 	delete hnew;
@@ -847,7 +842,7 @@ void convert_dir_root2root(TDirectory* cur_dir, TDirectory* output_dir){
 }
 
 void convert_dir_root2hbk(int shm_flag, TDirectory* cur_dir, const char *pawdir_in, const char *lundir_in) {
-  std::cout << "convert_dir_root2hbook" << std::endl;
+  /*std::cout << "convert_dir_root2hbook" << std::endl;*/
   TList *list = cur_dir->GetListOfKeys();
   int key_flag = 0;
   if((list!=0) && (list->GetEntries()!=0)){
@@ -871,8 +866,8 @@ void convert_dir_root2hbk(int shm_flag, TDirectory* cur_dir, const char *pawdir_
     TClass *cl = gROOT->GetClass(classname.c_str());
     if (!cl) continue;
     if (cl->InheritsFrom(TDirectory::Class())) {
-      std::cout << "Directory" << std::endl;
-      std::cout << "objname: " << objname << std::endl;
+      /*std::cout << "Directory" << std::endl;
+	std::cout << "objname: " << objname << std::endl;*/
       objname = objname.substr(0,16);
       /* Convert a-z to A-Z */
       for (int j = 0; j < objname.length(); j++) {
@@ -881,7 +876,7 @@ void convert_dir_root2hbk(int shm_flag, TDirectory* cur_dir, const char *pawdir_
 	  objname[j] = (char)((int)objname[j] - 0x20);
 	}
       }
-      std::cout << "objname: " << objname << std::endl;
+      /*std::cout << "objname: " << objname << std::endl;*/
       while (((int)objname.find("/")) > -1) {
 	objname[objname.find("/")] = '_';
       }
@@ -906,7 +901,7 @@ void convert_dir_root2hbk(int shm_flag, TDirectory* cur_dir, const char *pawdir_
     } else if (cl->InheritsFrom(TTree::Class())) {
       continue;
     } else if (cl->InheritsFrom(TH1::Class())){
-      std::cout << "TH1" << std::endl;
+      /*std::cout << "TH1" << std::endl;*/
       convert_histo_root2hbk((TH1*)obj, id);
       id = id + 1;
     }
@@ -960,24 +955,24 @@ void convert_dir_hbk2root(const char *cur_dir, TDirectory* output_dir) {
   int ndir = 0;
   char subdirs[50][16];
   hrdir_(50, subdirs[0], ndir, 16);
-  std::cout <<  "ndir: " << ndir << std::endl;
+  /*std::cout <<  "ndir: " << ndir << std::endl;*/
   char chdir[17];
   for (int k=0;k<ndir;k++) {
     strlcpy(chdir,subdirs[k],16);
-    std::cout <<  "subdirs[k]-->" <<  subdirs[k] << "<--" << std::endl;
-    std::cout <<  "chdir-->" <<  chdir << "<--" << std::endl;
+    /*std::cout <<  "subdirs[k]-->" <<  subdirs[k] << "<--" << std::endl;
+      std::cout <<  "chdir-->" <<  chdir << "<--" << std::endl;*/
     if (strchr(chdir,'/')) {
       printf("Sorry cannot convert directory name %s because it contains a slash\n",chdir);
       continue;
     }
-    std::cout << "chdir: " << chdir << std::endl;
+    /*std::cout << "chdir: " << chdir << std::endl;*/
     chdir[16] = 0;
     for (int i=16;i>0;i--) {
       if (chdir[i] == 0) continue;
       if (chdir[i] != ' ') break;
       chdir[i] = 0;
     }
-    std::cout << "chdir-->" << chdir << "<--" << std::endl;
+    /*std::cout << "chdir-->" << chdir << "<--" << std::endl;*/
     std::string chdir_str = chdir;
     TDirectory* new_dir = (TDirectory*)output_dir->TDirectory::FindObject(chdir_str.c_str());
     if (new_dir == 0) {
@@ -1052,7 +1047,7 @@ void convert_dir_srv2hbk(int shm_flag, TXMLEngine &xml, XMLNodePointer_t node,
 	    objname[j] = (char)((int)objname[j] - 0x20);
 	  }
 	}
-	std::cout << "objname: " << objname << std::endl;
+	/*std::cout << "objname: " << objname << std::endl;*/
 	while (((int)objname.find("/")) > -1) {
 	  objname[objname.find("/")] = '_';
 	}
@@ -1393,7 +1388,7 @@ void convert_histo_hbk2root(int id, int kind, TDirectory* cur_dir) {
       h->GetXaxis()->CenterTitle();
       h->GetYaxis()->CenterTitle();
     }
-    std::cout << "'" << idname_title.c_str() << "'" << std::endl;
+    /*std::cout << "'" << idname_title.c_str() << "'" << std::endl;*/
     if (hcbits_[8]) h->Sumw2();
     TGraph *gr = 0;
     if (hcbits_[11]) {
@@ -1443,7 +1438,7 @@ void convert_histo_hbk2root(int id, int kind, TDirectory* cur_dir) {
       TDirectory* cursav = gDirectory;
       cur_dir->cd();
       h = new TH2F(idname_title.c_str(),chtitl_str.c_str(),ncx,xmin,xmax,ncy,ymin,ymax);
-      std::cout << "'" << idname_title.c_str() << "'" << std::endl;
+      /*std::cout << "'" << idname_title.c_str() << "'" << std::endl;*/
       cursav->cd();
       h->GetXaxis()->CenterTitle();
       h->GetYaxis()->CenterTitle();

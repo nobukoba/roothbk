@@ -74,10 +74,12 @@ int hcreatei_(key_t *mkey, int *size, long *comaddr)
       *comaddr = (long) (inter >> 3);
 #endif
    }
+    /*
       printf("hshm.c (unsigned long)paddr %ld\n", (unsigned long)paddr);
       printf("hshm.c comaddr %ld\n", comaddr);
       printf("hshm.c *comaddr %ld\n", *comaddr);
-
+    */
+    
     return(istat);
 }
  
@@ -96,9 +98,10 @@ int hmapi_(key_t *mkey, long *comaddr)
    void            *req_addr;
    struct shmid_ds  shm_stat;
    
-   printf("hshm.c comaddr %ld\n", comaddr);
-   printf("hshm.c *comaddr %ld\n", *comaddr);
-   
+   /*
+     printf("hshm.c comaddr %ld\n", comaddr);
+     printf("hshm.c *comaddr %ld\n", *comaddr);
+   */   
    /* get id of existing shared memory segment */
    if ((shm_pawc = shmget(*mkey, 0, SHM_R | SHM_W)) < 0) {
       perror("shmget");
@@ -133,9 +136,11 @@ int hmapi_(key_t *mkey, long *comaddr)
 #else
       *comaddr = (long) (inter >> 3);
 #endif
+      /*
       printf("hshm.c (unsigned long)paddr %ld\n", (unsigned long)paddr);
       printf("hshm.c comaddr %ld\n", comaddr);
       printf("hshm.c *comaddr %ld\n", *comaddr);
+      */
    }
    
    return(istat);
@@ -151,9 +156,9 @@ int hfreem_(long *comaddr)
 {
    int istat;
  
-   /* unmaps segment from address space */
-   printf("hshm.c (unsigned long)paddr %ld\n", (unsigned long)paddr);
+   /*printf("hshm.c (unsigned long)paddr %ld\n", (unsigned long)paddr);*/
 
+   /* unmaps segment from address space */
    if ((istat = shmdt(paddr)) == -1) {
       perror("shmdt");
       istat = -errno;

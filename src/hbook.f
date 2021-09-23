@@ -120,9 +120,9 @@
 #include "hbook/hcbook.inc"
 #include "hbook/hcform.inc"
 #include "hbook/hcdire.inc"
-      write(*,*) 'NWPAW', NWPAW
-      write(*,*) 'LOCF(NWPAW)', LOCF(NWPAW)
-      write(*,*) 'LIMIT', LIMIT
+*      write(*,*) 'NWPAW', NWPAW
+*      write(*,*) 'LOCF(NWPAW)', LOCF(NWPAW)
+*      write(*,*) 'LIMIT', LIMIT
       CALL HMACHI
       NHBOOK = IABS(LIMIT)
       IF (NHBOOK.LT.10000) NHBOOK=10000
@@ -144,7 +144,7 @@
       CALL MZFORM('HCB2','2I -B',IOCB2)
       CALL MZFORM('HFIT','5I 5F -D',IOFIT)
       CALL MZFORM('LCHX','2I -H',IOCC)
-      write(*,*) 'HLIMIT LOCF(LHBOOK)', LOCF(LHBOOK)
+*      write(*,*) 'HLIMIT LOCF(LHBOOK)', LOCF(LHBOOK)
       CALL MZBOOK(IHDIV,LCDIR,LHBOOK, 1,'HDIR',50,8,10,IODIR,0)
       CALL UCTOH('PAWC            ',IQ(LCDIR+1),4,16)
       CALL MZBOOK(IHDIV,LTAB ,LHBOOK,-3,'HTAB',500,0,500,2,0)
@@ -218,7 +218,7 @@
       EQUIVALENCE (IOPTM,IOPT(4)),(IOPTO,IOPT(5)),(IOPTE,IOPT(6))
 * Nobu added 2021.09.08
       INTEGER*8 LOCF
-      write(*,*) 'HRFILE: LUN', LUN
+*      write(*,*) 'HRFILE: LUN', LUN
       IF(NCHTOP.GE.MXFILES)THEN
          print*, 'Too many open files','HRFILE',LUN
          GO TO 99
@@ -277,11 +277,11 @@
          ICHTYP(NCHTOP)=NWK
          HFNAME(NCHTOP)=CHDIR
       ELSE
-         write(*,*) '-LOCF(LUN)', -LOCF(LUN)
-         write(*,*) '-LOC(LUN)/4', -LOC(LUN)/4
+*         write(*,*) '-LOCF(LUN)', -LOCF(LUN)
+*         write(*,*) '-LOC(LUN)/4', -LOC(LUN)/4
          ICHTOP(NCHTOP)=-LOCF(LUN)
          ICHTYP(NCHTOP)=0
-         write(*,*) 'ICHTOP(NCHTOP)', ICHTOP(NCHTOP)
+*         write(*,*) 'ICHTOP(NCHTOP)', ICHTOP(NCHTOP)
          IF(IOPTM.EQ.0)THEN
             HFNAME(NCHTOP)='Global section - '//CHDIR
          ELSE
@@ -1380,7 +1380,7 @@
       CHARACTER*(*) CHPATH,CHOPT
       SAVE  CACHE
       DATA  CACHE  /NODIR/
-      write(*,*) 'HCDIR routine LHBOOK', LHBOOK
+*      write(*,*) 'HCDIR routine LHBOOK', LHBOOK
       IF(LHBOOK.EQ.0)GO TO 99
       CALL HUOPTC (CHOPT,'RP',IOPTV)
       IF(IOPTR.NE.0)THEN
@@ -1402,24 +1402,24 @@
       IF(NLPAT.LE.0)GO TO 99
       ICDOLD=ICDIR
       ICDIR=1
-      write(*,*) 'HCDIR: NCHTOP', NCHTOP
-      write(*,*) 'HCDIR: ICDIR', ICDIR
-      write(*,*) 'HCDIR: CHPAT(1)', CHPAT(1)
-      write(*,*) 'HCDIR: CHTOP(1)', CHTOP(1)
-      write(*,*) 'HCDIR: CHTOP(2)', CHTOP(2)
-      write(*,*) 'HCDIR: CHPATH ', CHPATH
+*      write(*,*) 'HCDIR: NCHTOP', NCHTOP
+*      write(*,*) 'HCDIR: ICDIR', ICDIR
+*      write(*,*) 'HCDIR: CHPAT(1)', CHPAT(1)
+*      write(*,*) 'HCDIR: CHTOP(1)', CHTOP(1)
+*      write(*,*) 'HCDIR: CHTOP(2)', CHTOP(2)
+*      write(*,*) 'HCDIR: CHPATH ', CHPATH
       DO 10 I=1,NCHTOP
-         write(*,*) 'HCDIR: 1'
+*         write(*,*) 'HCDIR: 1'
          IF(CHPAT(1).EQ.CHTOP(I))THEN
-            write(*,*) 'HCDIR: 2'
+*            write(*,*) 'HCDIR: 2'
             ICDIR=I
             IF(ICHTOP(I).GT.0)THEN
-               write(*,*) 'HCDIR: 3'
+*               write(*,*) 'HCDIR: 3'
                IF (ICHTOP(I).GT.200 .AND. ICHTOP(I).LT.300) THEN
                   print*, '>>>>>> HCDIR: ICHTOP(I).GT.200'
-                  write(*,*) 'HCDIR: 4'
+*                  write(*,*) 'HCDIR: 4'
                ELSE
-                  write(*,*) 'HCDIR: 5'
+*                  write(*,*) 'HCDIR: 5'
                   IF(CHPATH(1:1).EQ.'.')THEN
                      CALL HRZCD(' ',CHOPT)
                   ELSE
@@ -1432,10 +1432,10 @@
                ENDIF
                GO TO 60
             ELSEIF(ICHTOP(I).LT.0)THEN
-               write(*,*) 'HCDIR: 6'
+*               write(*,*) 'HCDIR: 6'
                GO TO 60
             ENDIF
-            write(*,*) 'HCDIR: 7'
+*            write(*,*) 'HCDIR: 7'
             GO TO 20
          ENDIF
   10  CONTINUE
@@ -1459,9 +1459,9 @@
       DO 70 I=1,NLPAT
          CHCDIR(I)=CHPAT(I)
   70  CONTINUE
-      write(*,*) 'HCDIR NLPAT ', NLPAT
-      write(*,*) 'HCDIR CHPAT(1) ', CHPAT(1)
-      write(*,*) 'HCDIR CHPAT(2) ', CHPAT(2)
+*      write(*,*) 'HCDIR NLPAT ', NLPAT
+*      write(*,*) 'HCDIR CHPAT(1) ', CHPAT(1)
+*      write(*,*) 'HCDIR CHPAT(2) ', CHPAT(2)
 
       IF(ICHTOP(ICDIR).EQ.0)THEN
          LCDIR = LR1

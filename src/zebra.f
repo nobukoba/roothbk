@@ -28,29 +28,29 @@
       do i = 1, 3
          INKEYS(i) = INKEYS4(i)
       enddo
-      write(*,*) 'ZEBRA 1'
+*      write(*,*) 'ZEBRA 1'
       
  12   NQSTOR = -1
       JQSTOR = -99
       CALL VZEROI (NQOFFT,66)
       CALL MZINCO (LIST)
-      write(*,*) 'ZEBRA 2'
+*      write(*,*) 'ZEBRA 2'
       NQDCUT = 201
       NQWCUT = 500
       CALL UCOPYI (INKEYS,MQKEYS,3)
       CALL VZEROI (NQLN, 28)
       CALL VZEROI (LQJZ, 16)
       CALL VZEROI (NSTRIP, MAXFILES)
-      write(*,*) 'ZEBRA 3'
+*      write(*,*) 'ZEBRA 3'
       JQLEV = -1
       RZXIO(1) = 0.
       RZXIO(2) = 0.
       IMODEH   = 0
-      write(*,*) 'ZEBRA 4'
+*      write(*,*) 'ZEBRA 4'
       CALL VFILL (IQFENC,4,IQNIL)
-      write(*,*) 'ZEBRA 5'
+*      write(*,*) 'ZEBRA 5'
       NQINIT = -1
-      write(*,*) 'ZEBRA 6'
+*      write(*,*) 'ZEBRA 6'
       END
 
 *-------------------------------------------------------------------------------
@@ -212,11 +212,11 @@
 #include "zebra/q_shiftl.inc"
 #include "zebra/q_locf.inc"
 
-      write(*,*) 'mzstor 1 NQOFFT(1+1)', NQOFFT(1+1)
-      write(*,*) 'mzstor 1 LQSTA(NQOFFT(1+1)+1)'
-      write(*,*) LQSTA(NQOFFT(1+1)+1)
-      write(*,*) 'mzstor 1 LQSTA(NQOFFT(1+1)+21)'
-      write(*,*) LQSTA(NQOFFT(1+1)+21)
+*      write(*,*) 'mzstor 1 NQOFFT(1+1)', NQOFFT(1+1)
+*      write(*,*) 'mzstor 1 LQSTA(NQOFFT(1+1)+1)'
+*      write(*,*) LQSTA(NQOFFT(1+1)+1)
+*      write(*,*) 'mzstor 1 LQSTA(NQOFFT(1+1)+21)'
+*      write(*,*) LQSTA(NQOFFT(1+1)+21)
 
       do i = 1, 5
          MMSYSL(i) = MMSYSL4(i)
@@ -236,7 +236,7 @@
       LQASTO8 = LOC(LQ(1))/4 - 1
       LQBTIS = LQATAB - LQASTO
       LQBTIS = LQATAB8 - LQASTO8
-      write(*,*) 'LQASTO, LQASTO8', LQASTO, LQASTO8
+*      write(*,*) 'LQASTO, LQASTO8', LQASTO, LQASTO8
 
 c Nobu
 c      print*, 'IQWKTB(1)',IQWKTB(1)
@@ -270,8 +270,8 @@ c      KQS    = LOCF(LV(1)) - 1 - LQASTO8
 c      if(KQS .GT. 0) then
 c         KQS    = LOC(LV(1))/4 - 1 - LQASTO8
 c      endif
-      write(*,*) 'MZSTOR KQS', KQS
-      write(*,*) 'LQSTOR, LQASTO', LQSTOR, LQASTO
+*      write(*,*) 'MZSTOR KQS', KQS
+*      write(*,*) 'LQSTOR, LQASTO', LQSTOR, LQASTO
       NFEND  = (LQSTOR+1) - LOCF(IFENCE(1))
       NQFEND = NFEND
       NQSNAM(1) = IQBLAN
@@ -285,17 +285,17 @@ c      endif
       NQLINK = NQREF
       LQ2END = LOCF(LIMIT(1)) - LQSTOR
       NDATAT = LOCF(LAST(1))  - LQSTOR
-      write(*,*) 'NDATAT, LQSTOR', NDATAT, LQSTOR
+*      write(*,*) 'NDATAT, LQSTOR', NDATAT, LQSTOR
 c      IF (NDATAT.LT.0) THEN
 c         NDATAT = LOC(LAST(1))/4 -  (LOC(LV(1))/4 - 1)
 c      ENDIF 
-      write(*,*) 'LOC(LAST(1))/4', LOC(LAST(1))/4
-      write(*,*) '(LOC(LV(1))/4 - 1)', (LOC(LV(1))/4 - 1)
-      write(*,*) 'NQSTRU, NQREF, LQ2END, NDATAT'
-      write(*,*) NQSTRU, NQREF, LQ2END, NDATAT
+*      write(*,*) 'LOC(LAST(1))/4', LOC(LAST(1))/4
+*      write(*,*) '(LOC(LV(1))/4 - 1)', (LOC(LV(1))/4 - 1)
+*      write(*,*) 'NQSTRU, NQREF, LQ2END, NDATAT'
+*      write(*,*) NQSTRU, NQREF, LQ2END, NDATAT
       NDATA = NDATAT
       LOCT  = LQATAB
-      write(*,*) 'L330 KQS, NDATA ', KQS, NDATA
+*      write(*,*) 'L330 KQS, NDATA ', KQS, NDATA
       IF (JQSTOR.NE.0)  THEN
           NDATA = NDATA  - NQTSYS
           NQSNAM(6) = NDATA
@@ -318,38 +318,38 @@ c      ENDIF
       NSYS   =  400
       NQMINR =   40
       NWF    = 2000
-      write(*,*) 'mzstor L353 KQS, NDATA ', KQS, NDATA
-      write(*,*) 'mzstor 10 NQSTRU', NQSTRU
+*      write(*,*) 'mzstor L353 KQS, NDATA ', KQS, NDATA
+*      write(*,*) 'mzstor 10 NQSTRU', NQSTRU
       IF (JQSTOR.EQ.0)  NQMINR=164
-      write(*,*) 'mzstor 11'
+*      write(*,*) 'mzstor 11'
       IF (NQSTRU.LT.0)               GO TO 91
-      write(*,*) 'mzstor 12'
+*      write(*,*) 'mzstor 12'
       IF (NQREF .LT.NQSTRU)          GO TO 91
-      write(*,*) 'mzstor 13'
-      write(*,*) 'NDATAT', NDATAT
-      write(*,*) 'NQLINK,NWF', NQLINK,NWF
-      write(*,*) 'NQLINK+NWF', NQLINK+NWF
+*      write(*,*) 'mzstor 13'
+*      write(*,*) 'NDATAT', NDATAT
+*      write(*,*) 'NQLINK,NWF', NQLINK,NWF
+*      write(*,*) 'NQLINK+NWF', NQLINK+NWF
 *     nobu c/o 20210905
       IF (NDATAT.LT.NQLINK+NWF)      GO TO 91
-      write(*,*) 'mzstor 14'
-      write(*,*) 'NLQ2END', NDATAT
-      write(*,*) 'NQLINK, NQMINR', NQLINK, NQMINR
-      write(*,*) 'NQLINK+NWF', NQLINK+NQMINR
+*      write(*,*) 'mzstor 14'
+*      write(*,*) 'NLQ2END', NDATAT
+*      write(*,*) 'NQLINK, NQMINR', NQLINK, NQMINR
+*      write(*,*) 'NQLINK+NWF', NQLINK+NQMINR
 *     nobu c/o 20210905
       IF (LQ2END.LT.NQLINK+NQMINR)   GO TO 91
-      write(*,*) 'mzstor 15'
-      write(*,*) 'NFEND', NFEND
+*      write(*,*) 'mzstor 15'
+*      write(*,*) 'NFEND', NFEND
       IF (NFEND .LT.1)               GO TO 92
-      write(*,*) 'mzstor 16'
+*      write(*,*) 'mzstor 16'
       IF (NFEND .GE.1001)            GO TO 92
-      write(*,*) 'mzstor 17'
+*      write(*,*) 'mzstor 17'
       IF (IFLSPL.EQ.1)  THEN
           IF (JQSTOR.EQ.0)           GO TO 96
           GO TO 39
         ENDIF
-      write(*,*) 'mzstor 18'
+*      write(*,*) 'mzstor 18'
       IF (JQSTOR.EQ.0)             GO TO 41
-      write(*,*) 'mzstor 19'
+*      write(*,*) 'mzstor 19'
       KSA = KQS - NQFEND
       KSE = KQS + NDATAT
       DO 36  JSTO=1,JQSTOR
@@ -359,23 +359,23 @@ c      ENDIF
       JSE = JS  + LQSTA(JT+21)
       JTA = JT  + LQBTIS
       JTE = JTA + NQTSYS
-      write(*,*) 'L375 KQS, NDATA ', KQS, NDATA
+*      write(*,*) 'L375 KQS, NDATA ', KQS, NDATA
       IF (KSE.GT.JTA .AND. KSA.LT.JTE)    GO TO 94
       IF (KSE.GT.JSA .AND. KSA.LT.JSE)    GO TO 95
    36 CONTINUE
    39 IF (JQSTOR.GE.16)            GO TO 93
    41 NQOFFT(JQSTOR+1) = KQT
-      write(*,*) 'L382 KQS, NDATA ', KQS, NDATA
+*      write(*,*) 'L382 KQS, NDATA ', KQS, NDATA
       NQOFFS(JQSTOR+1) = KQS
       NQALLO(JQSTOR+1) = IFLSPL
-      write(*,*) 'L385 KQS, NDATA ', KQS, NDATA
-      write(*,*) 'NQTSYS ', NQTSYS
-      write(*,*) 'LOCF(KQS) ', LOCF(KQS)
-      write(*,*) 'LOCF(IQTABV(KQT+1)) ', LOCF(IQTABV(KQT+1))
+*      write(*,*) 'L385 KQS, NDATA ', KQS, NDATA
+*      write(*,*) 'NQTSYS ', NQTSYS
+*      write(*,*) 'LOCF(KQS) ', LOCF(KQS)
+*      write(*,*) 'LOCF(IQTABV(KQT+1)) ', LOCF(IQTABV(KQT+1))
       CALL VZEROI (IQTABV(KQT+1),NQTSYS)
-      write(*,*) 'L387 KQS, NDATA ', KQS, NDATA
+*      write(*,*) 'L387 KQS, NDATA ', KQS, NDATA
       CALL VBLANK (IQDN1(KQT+1), 40)
-      write(*,*) 'L387 KQS, NDATA ', KQS, NDATA
+*      write(*,*) 'L387 KQS, NDATA ', KQS, NDATA
       NQSTOR = NQSTOR + 1
       LQ(KQS+NDATA-1) = IQNIL
       LQ(KQS+NDATA)   = IQNIL
@@ -401,8 +401,8 @@ c      ENDIF
       IQRNO(KQT+2)  = 9437183
       IQDN1(KQT+2)  = NAMEDV
       IQDN2(KQT+2)  = IQNUM(3)
-      write(*,*) 'mzstor * NQLINK, KQT', NQLINK, KQT
-      write(*,*) 'mzstor * LQSTA(KQT+1)', LQSTA(KQT+1) 
+*      write(*,*) 'mzstor * NQLINK, KQT', NQLINK, KQT
+*      write(*,*) 'mzstor * LQSTA(KQT+1)', LQSTA(KQT+1) 
       LQSTA(KQT+1)  = NQLINK + 1
       LQEND(KQT+1)  = LQSTA(KQT+1)
       NQDMAX(KQT+1) = NDATA
@@ -419,7 +419,7 @@ c      ENDIF
           IF (IXSTOR(1).EQ.0)      GO TO 71
         ENDIF
       IDN = ISHFT (JQSTOR,26)
-      write(*,*) 'mzstor IDN, JQSTOR', IDN, JQSTOR
+*      write(*,*) 'mzstor IDN, JQSTOR', IDN, JQSTOR
       IXSTOR(1) = IDN
    71 JQDIVI = JQDVSY
       CALL MZLIFT (-7,LSYS,0,2,MMSYSL,0)
@@ -431,8 +431,8 @@ c      IF (LOCAR.LT.0) THEN
 c         LOCAR = LOCAR + 2**30
 c      ENDIF
       LOCARE = LOCAR + NALL
-      write(*,*) 'LOCAR, NALL, LOCARE, NSTR'
-      write(*,*) LOCAR, NALL, LOCARE, NSTR
+*      write(*,*) 'LOCAR, NALL, LOCARE, NSTR'
+*      write(*,*) LOCAR, NALL, LOCARE, NSTR
       IQ(KQS+LSYS+1) = 11
       IQ(KQS+LSYS+2) = 1
       IQ(KQS+LSYS+3) = 1 + NQLINK
@@ -1414,8 +1414,9 @@ c      ENDIF
       IQLS   = LP(1)
       IF (IXSTOR.EQ.-7)                 GO TO 21
 #include "zebra/qstore.inc"
- 21   write(*,*) 'mzchls IQLS, LQSTA(KQT+1)', IQLS, LQSTA(KQT+1)
-      write(*,*) 'mzchls LQSTA(KQT+21)', LQSTA(KQT+21)
+ 21   continue
+*      write(*,*) 'mzchls IQLS, LQSTA(KQT+1)', IQLS, LQSTA(KQT+1)
+*      write(*,*) 'mzchls LQSTA(KQT+21)', LQSTA(KQT+21)
       IF (IQLS.LT.LQSTA(KQT+1))       GO TO 98
       IF (IQLS.GE.LQSTA(KQT+21))      GO TO 98
       IQNIO = JBYT (IQ(KQS+IQLS),19,4)
@@ -1423,31 +1424,31 @@ c      ENDIF
       IQNL  = IQ(KQS+IQLS-3)
       IQNS  = IQ(KQS+IQLS-2)
       IQND  = IQ(KQS+IQLS-1)
-      write(*,*) 'mzchls IQNIO:', IQNIO
-      write(*,*) 'mzchls IQID:', IQID
-      write(*,*) 'mzchls IQNL:', IQNL
-      write(*,*) 'mzchls IQNS:', IQNS
-      write(*,*) 'mzchls IQND:', IQND
-      write(*,*) 'mzchls JBYT(IQNL,IQBITW-3,4):', JBYT(IQNL,IQBITW-3,4)
-      write(*,*) 'mzchls JBYT(IQNS,IQBITW-3,4):', JBYT(IQNS,IQBITW-3,4)
-      write(*,*) 'mzchls JBYT(IQND,IQBITW-3,4):', JBYT(IQND,IQBITW-3,4)
+*      write(*,*) 'mzchls IQNIO:', IQNIO
+*      write(*,*) 'mzchls IQID:', IQID
+*      write(*,*) 'mzchls IQNL:', IQNL
+*      write(*,*) 'mzchls IQNS:', IQNS
+*      write(*,*) 'mzchls IQND:', IQND
+*      write(*,*) 'mzchls JBYT(IQNL,IQBITW-3,4):', JBYT(IQNL,IQBITW-3,4)
+*      write(*,*) 'mzchls JBYT(IQNS,IQBITW-3,4):', JBYT(IQNS,IQBITW-3,4)
+*      write(*,*) 'mzchls JBYT(IQND,IQBITW-3,4):', JBYT(IQND,IQBITW-3,4)
       
       IF (  JBYT(IQNL,IQBITW-3,4)
      +    + JBYT(IQNS,IQBITW-3,4)
      +    + JBYT(IQND,IQBITW-3,4) .NE.0)    GO TO 91
       IQNX  = IQLS + IQND + 9
-      write(*,*) 'mzchls IQNX:', IQNX
+*      write(*,*) 'mzchls IQNX:', IQNX
       IF (IQNX.GT.LQSTA(KQT+21))      GO TO 91
       IQLN  = IQLS - IQNL - IQNIO - 1
-      write(*,*) 'mzchls IQLN:', IQLN
+*      write(*,*) 'mzchls IQLN:', IQLN
       IF (IQLN.LT.LQSTA(KQT+1))       GO TO 91
       NST = JBYT (LQ(KQS+IQLN),1,16) - 12
-      write(*,*) 'mzchls KQS:', KQS
-      write(*,*) 'mzchls LQ(KQS+IQLN):', LQ(KQS+IQLN)
-      write(*,*) 'mzchls KQS+IQLN:', KQS+IQLN
-      write(*,*) 'mzchls NST:', NST
+*      write(*,*) 'mzchls KQS:', KQS
+*      write(*,*) 'mzchls LQ(KQS+IQLN):', LQ(KQS+IQLN)
+*      write(*,*) 'mzchls KQS+IQLN:', KQS+IQLN
+*      write(*,*) 'mzchls NST:', NST
       IF (NST.NE.IQNIO+IQNL)       GO TO 91
-      write(*,*) 'mzchls IQNS,IQNL:',  IQNS,IQNL
+*      write(*,*) 'mzchls IQNS,IQNL:',  IQNS,IQNL
       IF (IQNS.GT.IQNL)            GO TO 91
       IQFOUL = 0
       RETURN
@@ -1485,19 +1486,19 @@ c      ENDIF
           CALL UCOPYI (NIOP,NQIOCH,NIO+1)
           NQIOSV(1) = 0
         ENDIF
-        write(*,*) 'MZBOOK 1 LOCF(LSUPP(1))', LOCF(LSUPP(1))
-        write(*,*) 'MZBOOK 1 LSUPP, KQT', LSUPP, KQT
-        write(*,*) 'MZBOOK 1 IXP', IXP
-        write(*,*) 'MZBOOK LQSTA(KQT+1),JDV', LQSTA(KQT+1),JDV
-        write(*,*) 'MZBOOK 1 NQOFFT(1+1)', NQOFFT(1+1)
-        write(*,*) 'MZBOOK 1 LQSTA(NQOFFT(1+1)+1)'
-        write(*,*) LQSTA(NQOFFT(1+1)+1)
-        write(*,*) 'MZBOOK 1 LQSTA(NQOFFT(1+1)+21)'
-        write(*,*) LQSTA(NQOFFT(1+1)+21)
+*        write(*,*) 'MZBOOK 1 LOCF(LSUPP(1))', LOCF(LSUPP(1))
+*        write(*,*) 'MZBOOK 1 LSUPP, KQT', LSUPP, KQT
+*        write(*,*) 'MZBOOK 1 IXP', IXP
+*        write(*,*) 'MZBOOK LQSTA(KQT+1),JDV', LQSTA(KQT+1),JDV
+*        write(*,*) 'MZBOOK 1 NQOFFT(1+1)', NQOFFT(1+1)
+*        write(*,*) 'MZBOOK 1 LQSTA(NQOFFT(1+1)+1)'
+*        write(*,*) LQSTA(NQOFFT(1+1)+1)
+*        write(*,*) 'MZBOOK 1 LQSTA(NQOFFT(1+1)+21)'
+*        write(*,*) LQSTA(NQOFFT(1+1)+21)
         
         CALL MZLIFT (IXP,LP,LSUPP,63, NQID, NZP)
-        write(*,*) 'MZBOOK 2 LOCF(LSUPP(1))', LOCF(LSUPP(1))
-        write(*,*) 'MZBOOK 2 LSUPP, KQT', LSUPP, KQT
+*        write(*,*) 'MZBOOK 2 LOCF(LSUPP(1))', LOCF(LSUPP(1))
+*        write(*,*) 'MZBOOK 2 LSUPP, KQT', LSUPP, KQT
 #include "zebra/qtrace99.inc"
       END
 
@@ -1523,19 +1524,19 @@ c      ENDIF
 #include "zebra/qtrace.inc"
 ******IF (IQVSTA.NE.0)       CALL ZVAUTX
       
-      write(*,*) '#################### mzlift #####################'
-      write(*,*) 'mzlift LOCF(LQSYSS(5))', LOCF(LQSYSS(5))
-      write(*,*) 'mzlift LOCF(LQSUPP(1))', LOCF(LSUPP(1))
-      write(*,*) 'mzlift 0 KQT', KQT
-      write(*,*) 'mzlift 0 KQS', KQS
-      write(*,*) 'mzlift 0 LQ(KQS+9865)', LQ(KQS+9865)
-      write(*,*) 'mzlift 0 NTOT, LQSTA(KQT+21)', NTOT, LQSTA(KQT+21)
-      write(*,*) 'mzlift 0 LQSTA(KQT+1)', LQSTA(KQT+1)
-      write(*,*) 'mzlift 0 NQOFFT(1+1)', NQOFFT(1+1)
-      write(*,*) 'mzlift 0 LQSTA(NQOFFT(1+1)+1)'
-      write(*,*) LQSTA(NQOFFT(1+1)+1)
-      write(*,*) 'mzlift 0 LQSTA(NQOFFT(1+1)+21)'
-      write(*,*) LQSTA(NQOFFT(1+1)+21)
+*      write(*,*) '#################### mzlift #####################'
+*      write(*,*) 'mzlift LOCF(LQSYSS(5))', LOCF(LQSYSS(5))
+*      write(*,*) 'mzlift LOCF(LQSUPP(1))', LOCF(LSUPP(1))
+*      write(*,*) 'mzlift 0 KQT', KQT
+*      write(*,*) 'mzlift 0 KQS', KQS
+*      write(*,*) 'mzlift 0 LQ(KQS+9865)', LQ(KQS+9865)
+*      write(*,*) 'mzlift 0 NTOT, LQSTA(KQT+21)', NTOT, LQSTA(KQT+21)
+*      write(*,*) 'mzlift 0 LQSTA(KQT+1)', LQSTA(KQT+1)
+*      write(*,*) 'mzlift 0 NQOFFT(1+1)', NQOFFT(1+1)
+*      write(*,*) 'mzlift 0 LQSTA(NQOFFT(1+1)+1)'
+*      write(*,*) LQSTA(NQOFFT(1+1)+1)
+*      write(*,*) 'mzlift 0 LQSTA(NQOFFT(1+1)+21)'
+*      write(*,*) LQSTA(NQOFFT(1+1)+21)
       IF (JBIAS.NE.63)  THEN
           NQBIA = JBIAS
           NIO   = JBYT (NAME(5),12,4)
@@ -1543,42 +1544,42 @@ c      ENDIF
           IF (NIO.NE.0)  NQIOSV(1)=0
         ENDIF
       JDV   = IXDIV(1)
-      write(*,*) 'mzlift IXDIV(1), JDV', IXDIV(1), JDV
+*      write(*,*) 'mzlift IXDIV(1), JDV', IXDIV(1), JDV
       LQSUP = LSUPP(1)
-      write(*,*) 'mzlift LQSUP', LQSUP
-*      write(*,*) 'mzlift NAME', NAME
-      write(*,*) 'mzlift NQBIA', NQBIA
+*      write(*,*) 'mzlift LQSUP', LQSUP
+*      write(*,*) 'mzlift NAME(1)', NAME(1)
+*      write(*,*) 'mzlift NQBIA', NQBIA
       IF (NQBIA.GE.2)  LQSUP = 0
       ICHORG = NQIOCH(1)
       NTOT   = NQNL + NQND + 10
-      write(*,*) 'mzlift JDV, JQSTOR', JDV, JQSTOR
+*      write(*,*) 'mzlift JDV, JQSTOR', JDV, JQSTOR
       IF (JDV.EQ.-7)                 GO TO 24
       IF (JBYT(JDV,27,6).NE.JQSTOR)  GO TO 22
       JQDIVI = JBYT (JDV,1,26)
       IF (JQDIVI.LT.21)              GO TO 23
  22   CONTINUE
-      write(*,*) 'mzlift 6 KQT', KQT
-      write(*,*) 'mzlift NTOT, LQSTA(KQT+21)', NTOT, LQSTA(KQT+21)
-      write(*,*) 'mzlift LQSTA(KQT+1),JDV', LQSTA(KQT+1),JDV
-      write(*,*) 'mzlift 6 NQOFFT(1+1)', NQOFFT(1+1)
-      write(*,*) 'mzlift 6 LQSTA(NQOFFT(1+1)+1)'
-      write(*,*) LQSTA(NQOFFT(1+1)+1)
-      write(*,*) 'mzlift 6 LQSTA(NQOFFT(1+1)+21)'
-      write(*,*) LQSTA(NQOFFT(1+1)+21)
+*      write(*,*) 'mzlift 6 KQT', KQT
+*      write(*,*) 'mzlift NTOT, LQSTA(KQT+21)', NTOT, LQSTA(KQT+21)
+*      write(*,*) 'mzlift LQSTA(KQT+1),JDV', LQSTA(KQT+1),JDV
+*      write(*,*) 'mzlift 6 NQOFFT(1+1)', NQOFFT(1+1)
+*      write(*,*) 'mzlift 6 LQSTA(NQOFFT(1+1)+1)'
+*      write(*,*) LQSTA(NQOFFT(1+1)+1)
+*      write(*,*) 'mzlift 6 LQSTA(NQOFFT(1+1)+21)'
+*      write(*,*) LQSTA(NQOFFT(1+1)+21)
       CALL MZSDIV (JDV,0)
-      write(*,*) 'mzlift 7 KQT', KQT
-      write(*,*) 'mzlift NTOT, LQSTA(KQT+21)', NTOT, LQSTA(KQT+21)
-      write(*,*) 'mzlift LQSTA(KQT+1),JDV', LQSTA(KQT+1), JDV
+*      write(*,*) 'mzlift 7 KQT', KQT
+*      write(*,*) 'mzlift NTOT, LQSTA(KQT+21)', NTOT, LQSTA(KQT+21)
+*      write(*,*) 'mzlift LQSTA(KQT+1),JDV', LQSTA(KQT+1), JDV
    23 CALL MZCHNB (LP)
    24 CONTINUE
-      write(*,*) 'mzlift NQID, IQBITW', NQID, IQBITW
+*      write(*,*) 'mzlift NQID, IQBITW', NQID, IQBITW
       J = JBYT (NQID,IQBITW-7,8)
       IF (J.EQ.0)                  GO TO 91
-      write(*,*) 'mzlift if 1'
+*      write(*,*) 'mzlift if 1'
       IF (J.EQ.255)                GO TO 91
-      write(*,*) 'mzlift if 2'
-      write(*,*) 'mzlift NTOT, LQSTA(KQT+21)', NTOT, LQSTA(KQT+21)
-      write(*,*) 'mzlift LQSTA(KQT+1)', LQSTA(KQT+1)
+*      write(*,*) 'mzlift if 2'
+*      write(*,*) 'mzlift NTOT, LQSTA(KQT+21)', NTOT, LQSTA(KQT+21)
+*      write(*,*) 'mzlift LQSTA(KQT+1)', LQSTA(KQT+1)
 c     Nobu c/o 20210905
       IF (NTOT.GE.LQSTA(KQT+21))      GO TO 91
       IF (NQNS.GT.NQNL)            GO TO 91
@@ -1586,30 +1587,30 @@ c     Nobu c/o 20210905
       IF (NQNL.GT.64000)           GO TO 91
       IF (NQND.LT.0)               GO TO 91
       IF (NQBIA.GE.3)              GO TO 91
-      write(*,*) 'mzlift if 8 LQSUP', LQSUP
+*      write(*,*) 'mzlift if 8 LQSUP', LQSUP
       IF (LQSUP.EQ.0)              GO TO 25
-      write(*,*) 'mzlift if 9'
-      write(*,*) 'mzlift if IQFOUL',  IQFOUL
+*      write(*,*) 'mzlift if 9'
+*      write(*,*) 'mzlift if IQFOUL',  IQFOUL
       CALL MZCHLS (-7,LQSUP)
-      write(*,*) 'mzlift if 10'
-      write(*,*) 'mzlift if IQFOUL',  IQFOUL
+*      write(*,*) 'mzlift if 10'
+*      write(*,*) 'mzlift if IQFOUL',  IQFOUL
       IF (IQFOUL.NE.0)             GO TO 92
-      write(*,*) 'mzlift if 11'
+*      write(*,*) 'mzlift if 11'
       IF (NQBIA.EQ.1)              GO TO 26
-      write(*,*) 'mzlift if 12'
+*      write(*,*) 'mzlift if 12'
       IF (JBIT(IQ(KQS+LQSUP),IQDROP).NE.0)  GO TO 92
-      write(*,*) 'mzlift if 13'
+*      write(*,*) 'mzlift if 13'
       IF (IQNS+NQBIA.LT.0)         GO TO 93
       GO TO 26
    25 IF (NQBIA.LE.0)              GO TO 92
-      write(*,*) 'mzlift if 13'
+*      write(*,*) 'mzlift if 13'
    26 CONTINUE
-      write(*,*) 'mzlift 2 LQSUP, LSUPP(1)', LQSUP, LSUPP(1)
+*      write(*,*) 'mzlift 2 LQSUP, LSUPP(1)', LQSUP, LSUPP(1)
       IDN   = 1
       LS    = LQSUP
       LSAME = LQSUP
       LNEXT = LQSUP
-      write(*,*) 'mzlift NQBIA', NQBIA
+*      write(*,*) 'mzlift NQBIA', NQBIA
       IF (NQBIA.GT.0)              GO TO 38
       LNEXT = LQ(KQS+LNEXT+NQBIA)
       IF (LNEXT.EQ.0)              GO TO 36
@@ -1626,8 +1627,8 @@ c     Nobu c/o 20210905
    37 IDN = IQ(KQS+LSAME-5) + 1
       GO TO 39
  38   CONTINUE
-      write(*,*) 'mzlift KQS, LNEXT', KQS, LNEXT
-      write(*,*) 'mzlift ICHORG', ICHORG
+*      write(*,*) 'mzlift KQS, LNEXT', KQS, LNEXT
+*      write(*,*) 'mzlift ICHORG', ICHORG
       IF (LNEXT.NE.0)  IDN=IQ(KQS+LNEXT-5)+1
    39 CONTINUE
       IF (ICHORG.LT.0)             GO TO 47
@@ -1668,7 +1669,7 @@ c     Nobu c/o 20210905
    47 J     = JBYT (ICHORG,1,6)
       NQNIO = JBYT (ICHORG,7,5) - 1
       IOTH  = JBYT (ICHORG,12,5)
-      write(*,*) 'mzlift 1 J, NQNIO, IOTH',  J, NQNIO, IOTH
+*      write(*,*) 'mzlift 1 J, NQNIO, IOTH',  J, NQNIO, IOTH
       IF (J.EQ.1)  THEN
          IF (NQNIO.NE.IOTH)       GO TO 96
          GO TO 49
@@ -1676,7 +1677,7 @@ c     Nobu c/o 20210905
       IF (J.NE.2)                  GO TO 96
       IF (IOTH.NE.0)               GO TO 96
       IXIO = JBYT (ICHORG,17,16)
-      write(*,*) 'mzlift 2 IXIO',  IXIO
+*      write(*,*) 'mzlift 2 IXIO',  IXIO
       IF (IXIO.EQ.0)               GO TO 96
       LIOD = LQ(KQSP+LQFORM-2)
 *      write(*,*) 'mzlift 2 IQ(KQSP+LIOD+1)', IQ(KQSP+LIOD+1)
@@ -1713,9 +1714,9 @@ c     Nobu c/o 20210905
       IF (LSAME.LT.LQSTA(KQT+JQDIVI))  GO TO 97
       IF (LSAME.GE.LQEND(KQT+JQDIVI))  GO TO 97
    61 CALL MZRESV
-      write(*,*) 'mzlift NQRESV,NTOT', NQRESV,NTOT
+*      write(*,*) 'mzlift NQRESV,NTOT', NQRESV,NTOT
       NQRESV = NQRESV - NTOT
-      write(*,*) 'mzlift NQRESV,NTOT', NQRESV,NTOT
+*      write(*,*) 'mzlift NQRESV,NTOT', NQRESV,NTOT
 c Nobu c/o 20210905
       IF (NQRESV.LT.0)             GO TO 81
       IF (JQMODE.NE.0)             GO TO 63
@@ -1725,8 +1726,8 @@ c Nobu c/o 20210905
       GO TO 65
    63 LE    = LQSTA(KQT+JQDIVI)
       NQLN  = LE - NTOT
-      write(*,*) 'mzlift 1 KQT, JQDIVI', KQT, JQDIVI
-      write(*,*) 'mzlift 1 LE, NTOT', LE, NTOT
+*      write(*,*) 'mzlift 1 KQT, JQDIVI', KQT, JQDIVI
+*      write(*,*) 'mzlift 1 LE, NTOT', LE, NTOT
       LQSTA(KQT+JQDIVI) = NQLN
    65 NZ = MIN (NZERO,NQND)
       IF (NZ.EQ.0)  NZ=NQND
@@ -1758,14 +1759,14 @@ c Nobu c/o 20210905
       IF (LNEXT.NE.0)              GO TO 74
       LUP  = 0
       KADR = LOCF (LSUPP(1)) - LQSTOR
-      write(*,*) 'mzlift KADR', KADR
+*      write(*,*) 'mzlift KADR', KADR
 *     IF (KADR.LT.-2**29) THEN
 *         KADR = KADR + 2**30
 *      ENDIF
-      write(*,*) 'LOCF (LSUPP(1)) - LQSTOR', LOCF (LSUPP(1)) - LQSTOR
-      write(*,*) 'LOCF (LSUPP(1)), LQSTOR', LOCF (LSUPP(1)), LQSTOR
-      write(*,*) 'mzlift KADR, LSUPP(1)', KADR, LSUPP(1)
-      write(*,*) 'mzlift , NQLS', NQLS
+*      write(*,*) 'LOCF (LSUPP(1)) - LQSTOR', LOCF (LSUPP(1)) - LQSTOR
+*      write(*,*) 'LOCF (LSUPP(1)), LQSTOR', LOCF (LSUPP(1)), LQSTOR
+*      write(*,*) 'mzlift KADR, LSUPP(1)', KADR, LSUPP(1)
+*      write(*,*) 'mzlift , NQLS', NQLS
       IF (KADR.LT.LQSTA(KQT+1))       GO TO 78
       IF (KADR.LT.LQSTA(KQT+21))      GO TO 98
       GO TO 78
@@ -1775,14 +1776,14 @@ c Nobu c/o 20210905
       LQ(KQS+NQLS)    = LNEXT
       LQ(KQS+LNEXT+2) = NQLS
  78   CONTINUE
-      write(*,*) 'mzlift 3 LSUPP(1), NQLS', LSUPP(1), NQLS
+*      write(*,*) 'mzlift 3 LSUPP(1), NQLS', LSUPP(1), NQLS
       LQ(KQS+NQLS+1) = LUP
       LQ(KQS+NQLS+2) = KADR
 *      write(*,*) 'KQS, KADR ', KQS, KADR 
 *      write(*,*) 'KQS+KADR ', KQS+KADR 
 *      write(*,*) 'mzlift 4 LSUPP(1), NQLS', LSUPP(1), NQLS
       LQ(KQS+KADR)   = NQLS
-      write(*,*) 'mzlift 5 LSUPP(1), NQLS', LSUPP(1), NQLS
+*      write(*,*) 'mzlift 5 LSUPP(1), NQLS', LSUPP(1), NQLS
    79 LP(1) = NQLS
 *      write(*,*) 'mzlift 6 LSUPP(1), NQLS', LSUPP(1), NQLS
       IF (NQLOGL.GE.2)
@@ -1871,8 +1872,8 @@ c Nobu c/o 20210905
 *      IF (LOCRL.LT.0) THEN
 *         LOCRL = LOCRL + 2**30
 *      ENDIF
-      write(*,*) 'LOCAR, LOCR, LOCRL'
-      write(*,*) LOCAR, LOCR, LOCRL
+*      write(*,*) 'LOCAR, LOCR, LOCRL'
+*      write(*,*) LOCAR, LOCR, LOCRL
       NS = LOCR    - LOCAR
       NL = LOCRL+1 - LOCAR
       IF (NL.EQ.1)  THEN
@@ -3862,7 +3863,7 @@ c Nobu c/o 20210905
       
 #include "zebra/q_sbyt.inc"
 
-      write(*,*) '################## mzform #################'
+*      write(*,*) '################## mzform #################'
       do i = 1,5
          MMID(i) = MMID4(i)
          MMIX(i) = MMIX4(i)
@@ -3907,28 +3908,28 @@ c Nobu c/o 20210905
       CALL MZPUSH (JQPDVS,LIOD,0,60,'I')
       GO TO 29
    75 CONTINUE
-      write(*,*) 'mzform MMID, MMIX, MMIO', MMID, MMIX, MMIO
+*      write(*,*) 'mzform MMID, MMIX, MMIO', MMID, MMIX, MMIO
       DO 76 J=1,2
-      write(*,*) 'mzform 1 KQS, LQ(1+8), LQ(2+8)', KQS, LQ(1+8), LQ(2+8)
-      write(*,*) 'mzform 1 KQS, LOCF(LQ(1+8))', LOCF(LQ(1+8))
-      write(*,*) 'mzform 1 KQS, LOCF(LQ(2+8))', LOCF(LQ(2+8))
-      write(*,*) 'mzform 1 JQPDVS,LIX,L,MMIX', JQPDVS,LIX,L,MMIX
-      write(*,*) 'mzform 1 KQS', KQS
-      write(*,*) 'mzform 1 LQ(KQS+9865)', LQ(KQS+9865)
+*      write(*,*) 'mzform 1 KQS, LQ(1+8), LQ(2+8)', KQS, LQ(1+8), LQ(2+8)
+*      write(*,*) 'mzform 1 KQS, LOCF(LQ(1+8))', LOCF(LQ(1+8))
+*      write(*,*) 'mzform 1 KQS, LOCF(LQ(2+8))', LOCF(LQ(2+8))
+*      write(*,*) 'mzform 1 JQPDVS,LIX,L,MMIX', JQPDVS,LIX,L,MMIX
+*      write(*,*) 'mzform 1 KQS', KQS
+*      write(*,*) 'mzform 1 LQ(KQS+9865)', LQ(KQS+9865)
          CALL MZLIFT (JQPDVS,L,LQFORM,1,MMID,0)
-      write(*,*) 'mzform 1 KQS', KQS
-      write(*,*) 'mzform 1 LQ(KQS+9865)', LQ(KQS+9865)
-      write(*,*) 'mzform 1 KQS, LQ(1+8), LQ(2+8)', KQS, LQ(1+8), LQ(2+8)
-      write(*,*) 'mzform 1 KQS, LOCF(LQ(1+8))', LOCF(LQ(1+8))
-      write(*,*) 'mzform 1 KQS, LOCF(LQ(2+8))', LOCF(LQ(2+8))
-      write(*,*) 'mzform 1 JQPDVS,LIX,L,MMIX', JQPDVS,LIX,L,MMIX
+*      write(*,*) 'mzform 1 KQS', KQS
+*      write(*,*) 'mzform 1 LQ(KQS+9865)', LQ(KQS+9865)
+*      write(*,*) 'mzform 1 KQS, LQ(1+8), LQ(2+8)', KQS, LQ(1+8), LQ(2+8)
+*      write(*,*) 'mzform 1 KQS, LOCF(LQ(1+8))', LOCF(LQ(1+8))
+*      write(*,*) 'mzform 1 KQS, LOCF(LQ(2+8))', LOCF(LQ(2+8))
+*      write(*,*) 'mzform 1 JQPDVS,LIX,L,MMIX', JQPDVS,LIX,L,MMIX
       CALL MZLIFT (JQPDVS,LIX,L,-1,MMIX,0)
-      write(*,*) 'mzform 1 KQS', KQS
-      write(*,*) 'mzform 1 LQ(KQS+9865)', LQ(KQS+9865)
-      write(*,*) 'mzform 1 KQS, LQ(1+8), LQ(2+8)', KQS, LQ(1+8), LQ(2+8)
-      write(*,*) 'mzform 1 KQS, LOCF(LQ(1+8))', LOCF(LQ(1+8))
-      write(*,*) 'mzform 1 KQS, LOCF(LQ(2+8))', LOCF(LQ(2+8))
-      write(*,*) 'mzform 1 JQPDVS,LIX,L,MMIX', JQPDVS,LIX,L,MMIX
+*      write(*,*) 'mzform 1 KQS', KQS
+*      write(*,*) 'mzform 1 LQ(KQS+9865)', LQ(KQS+9865)
+*      write(*,*) 'mzform 1 KQS, LQ(1+8), LQ(2+8)', KQS, LQ(1+8), LQ(2+8)
+*      write(*,*) 'mzform 1 KQS, LOCF(LQ(1+8))', LOCF(LQ(1+8))
+*      write(*,*) 'mzform 1 KQS, LOCF(LQ(2+8))', LOCF(LQ(2+8))
+*      write(*,*) 'mzform 1 JQPDVS,LIX,L,MMIX', JQPDVS,LIX,L,MMIX
    76 CONTINUE
       CALL MZLIFT (JQPDVS,L,LQFORM,-2,MMIO,0)
       IQ(KQSP+L+1) = 1
@@ -5385,7 +5386,7 @@ c Nobu c/o 20210905
       IF (JDES.GE.JDESMX) GO TO 999
       LOCAR = MDESV(JDES+1)
       LIX = LOCAR
-      write(*,*) 'LIX, JDES', LIX,JDES
+*      write(*,*) 'LIX, JDES', LIX,JDES
       LOCARE = MDESV(JDES+2)
       MODAR = MDESV(JDES+3)
       IF (JBIT(MODAR,31).NE.0) THEN
@@ -5491,25 +5492,25 @@ c Nobu c/o 20210905
       DIMENSION NAMESR(2)
       DATA NAMESR / 4HMZSD, 4HIV  /
 #include "zebra/q_jbyt.inc"
-      write(*,*) 'MZSDIV 1 KQT', KQT
-      write(*,*) 'MZSDIV 1 LQSTA(KQT+21)',  LQSTA(KQT+21)
-      write(*,*) 'MZSDIV 1 LQSTA(KQT+1)',  LQSTA(KQT+1)
+*      write(*,*) 'MZSDIV 1 KQT', KQT
+*      write(*,*) 'MZSDIV 1 LQSTA(KQT+21)',  LQSTA(KQT+21)
+*      write(*,*) 'MZSDIV 1 LQSTA(KQT+1)',  LQSTA(KQT+1)
       IXIN = IXDIVP(1)
       IFLAG = IFLAGP(1)
       JSTO = JBYT (IXIN,27,4)
-      write(*,*) 'MZSDIV 1.1 LQSTA(KQT+21)',  LQSTA(KQT+21)
-      write(*,*) 'MZSDIV 1.1 LQSTA(KQT+1)',  LQSTA(KQT+1)
-      write(*,*) 'MZSDIV 1.1 JSTO, JQSTOR', JSTO, JQSTOR
-      write(*,*) 'MZSDIV 1.1 NQOFFT(JSTO+1)', NQOFFT(JSTO+1)
-      write(*,*) 'MZSDIV 1.1 LQSTA(NQOFFT(JSTO+1)+1)'
-      write(*,*) LQSTA(NQOFFT(JSTO+1)+1)
-      write(*,*) 'MZSDIV 1.1 LQSTA(NQOFFT(JSTO+1)+21)'
-      write(*,*) LQSTA(NQOFFT(JSTO+1)+21)
+*      write(*,*) 'MZSDIV 1.1 LQSTA(KQT+21)',  LQSTA(KQT+21)
+*      write(*,*) 'MZSDIV 1.1 LQSTA(KQT+1)',  LQSTA(KQT+1)
+*      write(*,*) 'MZSDIV 1.1 JSTO, JQSTOR', JSTO, JQSTOR
+*      write(*,*) 'MZSDIV 1.1 NQOFFT(JSTO+1)', NQOFFT(JSTO+1)
+*      write(*,*) 'MZSDIV 1.1 LQSTA(NQOFFT(JSTO+1)+1)'
+*      write(*,*) LQSTA(NQOFFT(JSTO+1)+1)
+*      write(*,*) 'MZSDIV 1.1 LQSTA(NQOFFT(JSTO+1)+21)'
+*      write(*,*) LQSTA(NQOFFT(JSTO+1)+21)
       IF (JSTO.NE.JQSTOR) GO TO 41
-      write(*,*) 'MZSDIV 1.2 LQSTA(KQT+21)',  LQSTA(KQT+21)
-      write(*,*) 'MZSDIV 1.2 LQSTA(KQT+1)',  LQSTA(KQT+1)
-      write(*,*) 'MZSDIV 1.2 JQSTOR', JQSTOR
-      write(*,*) 'MZSDIV 1.2 NQOFFT(JQSTOR+1)', NQOFFT(JQSTOR+1)
+*      write(*,*) 'MZSDIV 1.2 LQSTA(KQT+21)',  LQSTA(KQT+21)
+*      write(*,*) 'MZSDIV 1.2 LQSTA(KQT+1)',  LQSTA(KQT+1)
+*      write(*,*) 'MZSDIV 1.2 JQSTOR', JQSTOR
+*      write(*,*) 'MZSDIV 1.2 NQOFFT(JQSTOR+1)', NQOFFT(JQSTOR+1)
       IF (IFLAG.LT.0) GO TO 48
    21 JDIV = JBYT (IXIN,1,26)
       JCOM = JBYT (IXIN,31,2)
@@ -5524,7 +5525,7 @@ c Nobu c/o 20210905
           IF (IFLAG.EQ.4) GO TO 94
         ENDIF
       JQDIVI = JDIV
-      write(*,*) 'MZSDIV 11 KQT', KQT
+*      write(*,*) 'MZSDIV 11 KQT', KQT
       RETURN
    24 IF (JDIV.EQ.24) GO TO 26
       IF (IFLAG.GT.0) GO TO 93
@@ -5539,13 +5540,13 @@ c Nobu c/o 20210905
    41 IF (JSTO.GT.NQSTOR) GO TO 91
       JQSTOR = JSTO
       JQDIVR = 0
-      write(*,*) 'MZSDIV 2 KQT', KQT
-      write(*,*) 'MZSDIV 1.5 LQSTA(KQT+21)',  LQSTA(KQT+21)
-      write(*,*) 'MZSDIV 1.5 LQSTA(KQT+1)',  LQSTA(KQT+1)
+*      write(*,*) 'MZSDIV 2 KQT', KQT
+*      write(*,*) 'MZSDIV 1.5 LQSTA(KQT+21)',  LQSTA(KQT+21)
+*      write(*,*) 'MZSDIV 1.5 LQSTA(KQT+1)',  LQSTA(KQT+1)
       KQT = NQOFFT(JQSTOR+1)
-      write(*,*) 'MZSDIV 1.7 LQSTA(KQT+21)',  LQSTA(KQT+21)
-      write(*,*) 'MZSDIV 1.7 LQSTA(KQT+1)',  LQSTA(KQT+1)
-      write(*,*) 'MZSDIV 3 KQT', KQT
+*      write(*,*) 'MZSDIV 1.7 LQSTA(KQT+21)',  LQSTA(KQT+21)
+*      write(*,*) 'MZSDIV 1.7 LQSTA(KQT+1)',  LQSTA(KQT+1)
+*      write(*,*) 'MZSDIV 3 KQT', KQT
       KQS = NQOFFS(JQSTOR+1)
       DO 44 J=1,12
    44 IQCUR(J) = IQTABV(KQT+J)

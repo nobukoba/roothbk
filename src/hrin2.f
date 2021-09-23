@@ -29,24 +29,24 @@
 * Nobu added 2018/01/25 16:16:27 -->
          IF(INDEX(HFNAME(ICDIR),'memory').NE.0)THEN
             LOCQ=1-LOCF(IQUEST(1))-ICHTOP(ICDIR)
-*            LOCQ=1-LOC(IQUEST(1))/4-ICHTOP(ICDIR)
-            write(*,*) "LOCF(IQUEST(1)", LOCF(IQUEST(1))
-            write(*,*) "IQUEST(1)", IQUEST(1)
-            write(*,*) "LOC(IQUEST(1))", LOC(IQUEST(1))
-            write(*,*) "ICHTOP(ICDIR)", ICHTOP(ICDIR)
-            write(*,*) "ICDIR", ICDIR
-            write(*,*) "LOCQ", LOCQ
-            write(*,*) 'hrin2.f here 1'
-            write(*,*) "IQUEST(LOCQ)", IQUEST(LOCQ)
-            write(*,*) 'hrin2.f here 2'
+            LOCQ=1-LOC(IQUEST(1))/4-ICHTOP(ICDIR)
+*            write(*,*) "hrin2.f LOCF(IQUEST(1)", LOCF(IQUEST(1))
+*            write(*,*) "hrin2.f IQUEST(1)", IQUEST(1)
+*            write(*,*) "hrin2.f LOC(IQUEST(1))", LOC(IQUEST(1))
+*            write(*,*) "hrin2.f ICHTOP(ICDIR)", ICHTOP(ICDIR)
+*            write(*,*) "hrin2.f ICDIR", ICDIR
+*            write(*,*) "hrin2.f LOCQ", LOCQ
+*            write(*,*) 'hrin2.f here 1'
+*            write(*,*) "hrin2.f IQUEST(LOCQ)", IQUEST(LOCQ)
+*            write(*,*) 'hrin2.f here 2'
             CALL HCOPYU(IDD,IQUEST(LOCQ),IOFSET)
-            write(*,*) "here in hrin2 1"
+*            write(*,*) "here in hrin2 1"
 *         ELSE
 *            LOCQ=1-LOCF(IQUEST(1))-ICHTOP(ICDIR)
 *            CALL HCOPYM(IDD,IQUEST(LOCQ),IOFSET)
          ENDIF
          CALL SBIT1(IQ(LCID),5)
-         write(*,*) "IQUEST(LOCQ)", IQUEST(LOCQ)
+*         write(*,*) "hrin2.f IQUEST(LOCQ)", IQUEST(LOCQ)
          GO TO 80
 * --> End
       ENDIF

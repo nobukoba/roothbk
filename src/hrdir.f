@@ -42,8 +42,8 @@
 *
 *           Current directory refers to a RZ file.
 *
-      write(*,*) 'hdir.f ICDIR: ', ICDIR
-      write(*,*) 'hdir.f ICHTOP(ICDIR): ',ICHTOP(ICDIR)
+*      write(*,*) 'hrdir.f ICDIR: ', ICDIR
+*      write(*,*) 'hrdir.f ICHTOP(ICDIR): ',ICHTOP(ICDIR)
 
       IF(ICHTOP(ICDIR).GT.0)THEN
          IF (ICHTOP(ICDIR).GT.1000 .AND.
@@ -81,8 +81,8 @@
             CALL RZRDIR(MAXDIR,CHDIR,NDIR)
 
          ENDIF
-         write(*,*) 'hrdir.f ndir: ', ndir
-         write(*,*) 'hrdir.f: CHDIR(1)-->'//CHDIR(1)//'<--'
+*         write(*,*) 'hrdir.f ndir: ', ndir
+*         write(*,*) 'hrdir.f: CHDIR(1)-->'//CHDIR(1)//'<--'
          GO TO 60
       ENDIF
 *
@@ -126,7 +126,7 @@
       IF(ICHTOP(ICDIR).LT.0)THEN
          IGOFF=-LOCF(LQ(1))-ICHTOP(ICDIR)
          CALL HRDIRM(LQ(IGOFF+1),MAXDIR,CHDIR,NDIR)
-         write(*,*) 'hrdir.f: CHDIR(1)-->'//CHDIR(1)//'<--'
+*         write(*,*) 'hrdir.f: CHDIR(1)-->'//CHDIR(1)//'<--'
          RETURN
       ENDIF
 *#endif

@@ -97,9 +97,9 @@ c      IOFFST = ICOMAD(1) - LOC(IBASE(1))/4
 c     IOFFST = 2109856982 ! root loaded
 c     IOFFST = 266804582 ! compuled
 c     IOFFST = (ICOMAD(1)*4 - LOCF(IBASE(1)))/4
-      write(*,*) 'hmapm.f IOFFST ', IOFFST
-      write(*,*) 'hmapm.f ICOMAD(1) ', ICOMAD(1)
-      write(*,*) 'hmapm.f LOCF(IBASE(1)) ', LOCF(IBASE(1))
-      write(*,*) 'hmapm.f LOC(IBASE(1)) ', LOC(IBASE(1))/4
+*      write(*,*) 'hmapm.f IOFFST ', IOFFST
+*      write(*,*) 'hmapm.f ICOMAD(1) ', ICOMAD(1)
+*      write(*,*) 'hmapm.f LOCF(IBASE(1)) ', LOCF(IBASE(1))
+*      write(*,*) 'hmapm.f LOC(IBASE(1)) ', LOC(IBASE(1))/4
 *     
       END

@@ -24,14 +24,14 @@
       NW=IPAWD(1)
       KOF=IPAWD(2)
       ILAST=IPAWD(NW)
-      write(*,*) 'in hcopyu.f NW', NW
-      write(*,*) 'in hcopyu.f IPAWD(1)', IPAWD(1)
-      write(*,*) 'in hcopyu.f LOCF(IPAWD(1))', LOCF(IPAWD(1))
-      write(*,*) 'in hcopyu.f IPAWD(2)', IPAWD(2)
-      write(*,*) 'in hcopyu.f ILAST = IPAWD(NW)', IPAWD(NW)
+*      write(*,*) 'in hcopyu.f NW', NW
+*      write(*,*) 'in hcopyu.f IPAWD(1)', IPAWD(1)
+*      write(*,*) 'in hcopyu.f LOCF(IPAWD(1))', LOCF(IPAWD(1))
+*      write(*,*) 'in hcopyu.f IPAWD(2)', IPAWD(2)
+*      write(*,*) 'in hcopyu.f ILAST = IPAWD(NW)', IPAWD(NW)
       JR1=ILAST-KOF
-      write(*,*) 'in hcopyu.f KOF', KOF
-      write(*,*) 'in hcopyu.f JR1', JR1
+*      write(*,*) 'in hcopyu.f KOF', KOF
+*      write(*,*) 'in hcopyu.f JR1', JR1
 *     
 *          Search levels down
 *
@@ -43,7 +43,7 @@
             DO 40 I=1,4
                IF(IHDIR(I).NE.IPAWD(JR1+I+8))THEN
                   JR1=IPAWD(JR1)-KOF
-      write(*,*) 'in hcopyu.f JR1', JR1
+*      write(*,*) 'in hcopyu.f JR1', JR1
                   GO TO 30
                ENDIF
   40        CONTINUE
