@@ -11,11 +11,15 @@
 #define hcbits hcbits_
 #define hcbook hcbook_
 #define rzcl rzcl_
+#define zebq zebq_
+#define mzcc mzcc_
 extern "C" int pawc_[PAWC_SIZE];
 extern "C" int quest_[100];
 extern "C" int hcbits_[37];
 extern "C" int hcbook_[51];
 extern "C" int rzcl_[11];
+extern "C" int zebq_[104];
+extern "C" int mzcc_[411];
 
 /*  Define the names of the Fortran subroutine and functions for the different OSs */
 /*  Define the names of the Fortran subroutine and functions for the different OSs*/

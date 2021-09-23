@@ -11,16 +11,9 @@ ROOTLIBS  = -L$(shell root-config --libdir) -lCore -lCint -lRIO -lNet -lHist -lG
 ROOTCINT  = rootcint
 endif
 
-GCC_VER_GTEQ_5 = $(shell expr `gcc -dumpversion | cut -f1-2 -d.` \>= 5.0)
-ifeq ($(GCC_VER_GTEQ_5),1)
-PIEFLAGS  =  -O -no-pie
-else
-PIEFLAGS  =
-endif
-
-CC        = gcc $(PIEFLAGS)
+CC        = gcc
 CXX       = g++
-FC        = gfortran $(PIEFLAGS)
+FC        = gfortran
 CFLAGS    = -fPIC
 CXXFLAGS  = $(shell root-config --cflags) -fPIC
 FFLAGS    = -std=legacy -Wno-argument-mismatch -fPIC
