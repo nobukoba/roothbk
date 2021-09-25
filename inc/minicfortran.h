@@ -120,6 +120,5 @@ extern "C" void  nosubdir_(const int&);
 extern "C" void  tisubdir_(const int&,const char*);
 extern "C" void  hrdir_(const int&, char*,const int&,const int);
 extern "C" int   hfreem_(long*);
-extern "C" void  hfreem2_();
 /* --> Nobu */
 #endif

@@ -38,7 +38,7 @@ int main (int argc, char **argv) {
       std::cout << "Error: gSystem->ProcessEvents() is not null." << std::endl;
       break;
     }
-    gSystem->Sleep(1000);
+    gSystem->Sleep(300);
   }
   return 1;
 }

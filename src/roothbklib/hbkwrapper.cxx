@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
-#include "cfortran.h"
-#include "roothbk.h"
+#include "minicfortran.h"
+#include "hbkwrapper.h"
 
 void hlimap(const char *shm_name) {
   std::string shm_name_str = shm_name;
@@ -41,23 +41,6 @@ void hfill(const int id,const float x,const float y,const float weight){
 void htitle(const char *title) {
   std::string title_str = title;
   htitle_(title_str.c_str(),title_str.length());
-  return;
-}
-float rndm(const int id){  
-  return rndm_(id);
-}
-void rannor(const float &x,const float &y){
-  rannor_(x, y);
-  return;
-}
-float hrndm(const int idd){
-  return hrndm_(idd);
-}
-float hrndm1(const int idd){
-  return hrndm1_(idd);
-}
-void hrndm2(const int id,const float &x,const float &y){
-  hrndm2_(id, x, y);
   return;
 }
 void hmdir(const char *chdir,const char *chopt){

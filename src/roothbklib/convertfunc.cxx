@@ -19,7 +19,7 @@
 #include "TSocket.h"
 #include "TServerSocket.h"
 #include "THttpServer.h"
-#include "cfortran.h"
+#include "minicfortran.h"
 #include "convertfunc.h"
 
 int hbk_id_title_flag = 2;
@@ -104,7 +104,6 @@ void lshm(){
 int init_hbook(int input_hlimap_flag){
   static int hlimit_flag = 0;
   static int hlimap_flag = 0;
-
   if (hlimit_flag == 1) {return 1;}
   if (hlimap_flag == 1) {
     if(input_hlimap_flag == 0){
@@ -310,6 +309,8 @@ TFile* open_output_root(const char *name, const char *root_name){
 THttpServer* open_output_srv(int port) {
   static THttpServer* serv = 0;
   static int saved_port = 0;
+  static int message_counter = 0;
+
   if(port < 0){
     if(serv != 0){
       std::cout << "THttpServer on port " << saved_port << " was deleted." << std::endl;
@@ -334,8 +335,11 @@ THttpServer* open_output_srv(int port) {
     TString thttpserver_str = Form("http:%d?top=pid%d_at_%s", port, gSystem->GetPid(), gSystem->HostName());
     serv = new THttpServer(thttpserver_str.Data());
   }else{
-      std::cout << "THttpServer is runing on port " << saved_port << "." << std::endl;
+    if (message_counter < 3) {
+      std::cout << "THttpServer is already runing on port " << saved_port << "." << std::endl;
       std::cout << "Access to this THttpServer." << std::endl;
+      message_counter++;      
+    }
   }
   return serv;
 }
@@ -371,8 +375,10 @@ void shms2srv(const char *shm_names, int port) {
       shm_name_str[shm_name_str.find(",")] = '_';
     }
     TDirectory* f = (TDirectory*)gROOT->GetListOfFiles()->FindObject(shm_name_str.c_str());
+    /*std::cout << "f: " <<  f << std::endl;*/
     if (!f) {
       f = new TMemFile(shm_name_str.c_str(), "recreate");
+      /*std::cout << "f->GetName(): " <<  f->GetName() << std::endl;*/
       if (!f) {
 	printf("Error: can't open the direcotry: %s\n", shm_name_str.c_str());
 	return;
@@ -1330,6 +1336,7 @@ void convert_histo_hbk2root(int id, int kind, TDirectory* cur_dir) {
     }
   }
   TH1* h = (TH1*)cur_dir->TDirectory::FindObject(idname_title.c_str());
+  /*std::cout << "h: " << h << std::endl;*/
   int new_flag = 0;
   int cur_kind = 0;
   int *lq = &pawc_[9];
@@ -1377,12 +1384,14 @@ void convert_histo_hbk2root(int id, int kind, TDirectory* cur_dir) {
 	TDirectory* cursav = gDirectory;
 	cur_dir->cd();
 	h = new TH1F(idname_title.c_str(),chtitl_str.c_str(),ncx,xbins);
+	/*std::cout << "h->GetName(): " << h->GetName() << std::endl;*/
 	cursav->cd();
 	delete [] xbins;
       } else {
 	TDirectory* cursav = gDirectory;
 	cur_dir->cd();
 	h = new TH1F(idname_title.c_str(),chtitl_str.c_str(),ncx,xmin,xmax);
+	/*std::cout << "h->GetName(): " << h->GetName() << std::endl;*/
 	cursav->cd();
       }
       h->GetXaxis()->CenterTitle();
@@ -1392,6 +1401,8 @@ void convert_histo_hbk2root(int id, int kind, TDirectory* cur_dir) {
     if (hcbits_[8]) h->Sumw2();
     TGraph *gr = 0;
     if (hcbits_[11]) {
+      std::cout << "hcbits_[11]:" << hcbits_[11] << std::endl;
+
       TDirectory* cursav = gDirectory;
       cur_dir->cd();
       gr = new TGraph(ncx);
@@ -1438,7 +1449,7 @@ void convert_histo_hbk2root(int id, int kind, TDirectory* cur_dir) {
       TDirectory* cursav = gDirectory;
       cur_dir->cd();
       h = new TH2F(idname_title.c_str(),chtitl_str.c_str(),ncx,xmin,xmax,ncy,ymin,ymax);
-      /*std::cout << "'" << idname_title.c_str() << "'" << std::endl;*/
+      /*std::cout << "h->GetName(): " << h->GetName() << std::endl;*/
       cursav->cd();
       h->GetXaxis()->CenterTitle();
       h->GetYaxis()->CenterTitle();
