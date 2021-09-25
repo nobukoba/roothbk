@@ -20,7 +20,7 @@ TARGETS       = libroothbklib.so libroothbklib.a
 all:	$(TARGETS)
 	cp -f $(TARGETS) roothbklibDict_rdict.pcm ../../lib/
 
-libroothbklib.a:  roothbklibDict.o hbkrapper.o convertfunc.o
+libroothbklib.a:  roothbklibDict.o hbkwrapper.o convertfunc.o
 	echo $^ | xargs $(AR) $@
 libroothbklib.so:  roothbklibDict.o hbkwrapper.o convertfunc.o
 	$(CXX) -shared $(LFLAGS) -o $@ $^ $(PACKLIB_A) -Wl,-rpath $(PWD) $(ROOTLIBS)
