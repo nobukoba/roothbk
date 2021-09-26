@@ -1,7 +1,6 @@
 void read(){
-  for (int i = 0; i< 10000000; i++){
-    open_shm("TE13");
-    h1->Draw();
-  }
+  gROOT->ProcessLine(".L ../lib/libroothbklib.so");
+  gROOT->ProcessLine("shm2dir(\"EXAM\")");
+  gROOT->ProcessLine("h1_test1->Draw()");
   return;
 }
