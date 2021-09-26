@@ -294,7 +294,7 @@
       END
 
 *-------------------------------------------------------------------------------
-
+      
       SUBROUTINE HRIN(IDD,ICYCLE,KOFSET)
 #include "hbook/hcntpar.inc"
 #include "hbook/hntcur.inc"

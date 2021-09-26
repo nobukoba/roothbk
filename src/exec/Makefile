@@ -3,46 +3,45 @@ CXXFLAGS  = -g -I../../inc $(shell root-config --cflags) -fPIC
 LFLAGS    = 
 ROOTLIBS  = $(shell root-config --glibs) -lgfortran -lXMLIO -lRHTTP 
 
-TARGETS   = shms2hbk shms2root shms2srv shm2hbk shm2root shm2srv hbk2shm hbk2root hbk2srv root2shm root2hbk root2srv srv2shm srv2hbk srv2root lshm dshm shm_monitor
+TARGETS   = ../../bin/shms2hbk ../../bin/shms2root ../../bin/shms2srv ../../bin/shm2hbk ../../bin/shm2root ../../bin/shm2srv ../../bin/hbk2shm ../../bin/hbk2root ../../bin/hbk2srv ../../bin/root2shm ../../bin/root2hbk ../../bin/root2srv ../../bin/srv2shm ../../bin/srv2hbk ../../bin/srv2root ../../bin/lshm ../../bin/dshm ../../bin/shm_monitor
 
 all:	$(TARGETS)
-	cp -f $(TARGETS) ../../bin/
 
-shms2hbk:  % : %.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
+../../bin/shms2hbk:  shms2hbk.o  ../../lib/libroothbklib.a ../../lib/libminipacklib.a
 	$(CXX) $(LFLAGS) -o $@ $^ $(ROOTLIBS) -lgfortran
-shms2root: % : %.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
+../../bin/shms2root: shms2root.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
 	$(CXX) $(LFLAGS) -o $@ $^ $(ROOTLIBS) -lgfortran 
-shms2srv:  % : %.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
+../../bin/shms2srv:  shms2srv.o  ../../lib/libroothbklib.a ../../lib/libminipacklib.a
 	$(CXX) $(LFLAGS) -o $@ $^ $(ROOTLIBS) -lgfortran
-shm2hbk:   % : %.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
+../../bin/shm2hbk:   shm2hbk.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
 	$(CXX) $(LFLAGS) -o $@ $^ $(ROOTLIBS) -lgfortran
-shm2root:  % : %.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
+../../bin/shm2root:  shm2root.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
 	$(CXX) $(LFLAGS) -o $@ $^ $(ROOTLIBS) -lgfortran
-shm2srv:   % : %.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
+../../bin/shm2srv:   shm2srv.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
 	$(CXX) $(LFLAGS) -o $@ $^ $(ROOTLIBS) -lgfortran
-hbk2shm:   % : %.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
+../../bin/hbk2shm:   hbk2shm.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
 	$(CXX) $(LFLAGS) -o $@ $^ $(ROOTLIBS) -lgfortran
-hbk2root:  % : %.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
+../../bin/hbk2root:  hbk2root.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
 	$(CXX) $(LFLAGS) -o $@ $^ $(ROOTLIBS) -lgfortran
-hbk2srv:   % : %.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
+../../bin/hbk2srv:   hbk2srv.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
 	$(CXX) $(LFLAGS) -o $@ $^ $(ROOTLIBS) -lgfortran
-root2shm:  % : %.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
+../../bin/root2shm:  root2shm.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
 	$(CXX) $(LFLAGS) -o $@ $^ $(ROOTLIBS) -lgfortran
-root2hbk:  % : %.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
+../../bin/root2hbk:  root2hbk.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
 	$(CXX) $(LFLAGS) -o $@ $^ $(ROOTLIBS) -lgfortran
-root2srv:  % : %.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
+../../bin/root2srv:  root2srv.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
 	$(CXX) $(LFLAGS) -o $@ $^ $(ROOTLIBS) -lgfortran
-srv2shm:   % : %.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
+../../bin/srv2shm:   srv2shm.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
 	$(CXX) $(LFLAGS) -o $@ $^ $(ROOTLIBS) -lgfortran
-srv2hbk:   % : %.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
+../../bin/srv2hbk:   srv2hbk.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
 	$(CXX) $(LFLAGS) -o $@ $^ $(ROOTLIBS) -lgfortran
-srv2root:  % : %.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
+../../bin/srv2root:  srv2root.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
 	$(CXX) $(LFLAGS) -o $@ $^ $(ROOTLIBS) -lgfortran
-lshm:      % : %.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
+../../bin/lshm:      lshm.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
 	$(CXX) $(LFLAGS) -o $@ $^ $(ROOTLIBS) -lgfortran
-dshm:      % : %.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
+../../bin/dshm:      dshm.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
 	$(CXX) $(LFLAGS) -o $@ $^ $(ROOTLIBS) -lgfortran
-shm_monitor: % : %.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
+../../bin/shm_monitor: shm_monitor.o ../../lib/libroothbklib.a ../../lib/libminipacklib.a
 	$(CXX) $(LFLAGS) -o $@ $^ $(ROOTLIBS) -lgfortran
 
 %.o: %.cxx

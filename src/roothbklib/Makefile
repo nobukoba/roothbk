@@ -7,23 +7,24 @@ else
 ROOTCINT  = rootcint
 endif
 
-CXX       = g++
-AR        = ar clq
-CXXFLAGS  = -g -I../../inc $(shell root-config --cflags) -fPIC
-LFLAGS    = 
-ROOTLIBS  = $(shell root-config --glibs) -lgfortran -lXMLIO -lRHTTP 
+CXX        = g++
+AR         = ar r
+CXXFLAGS   = -g -I../../inc $(shell root-config --cflags) -fPIC
+LFLAGS     = 
+ROOTLIBS   = $(shell root-config --glibs) -lgfortran -lXMLIO -lRHTTP 
 PACKLIB_A  = ../../lib/libminipacklib.a
 PACKLIB_SO = -L../../lib  -lminipacklib
 
-TARGETS       = libroothbklib.so libroothbklib.a
+TARGETS    = ../../lib/libroothbklib.so ../../lib/libroothbklib.a ../../lib/roothbklibDict_rdict.pcm
 
 all:	$(TARGETS)
-	cp -f $(TARGETS) roothbklibDict_rdict.pcm ../../lib/
 
-libroothbklib.a:  roothbklibDict.o hbkwrapper.o convertfunc.o
-	echo $^ | xargs $(AR) $@
-libroothbklib.so:  roothbklibDict.o hbkwrapper.o convertfunc.o
+../../lib/libroothbklib.a:  roothbklibDict.o hbkwrapper.o convertfunc.o
+	$(AR) $@ $^
+../../lib/libroothbklib.so:  roothbklibDict.o hbkwrapper.o convertfunc.o $(PACKLIB_A)
 	$(CXX) -shared $(LFLAGS) -o $@ $^ $(PACKLIB_A) -Wl,-rpath $(PWD) $(ROOTLIBS)
+../../lib/roothbklibDict_rdict.pcm:  roothbklibDict.o
+	cp -f roothbklibDict_rdict.pcm $@
 roothbklibDict.cxx: ../../inc/minicfortran.h ../../inc/hbkwrapper.h ../../inc/convertfunc.h ../../inc/roothbklibLinkDef.h
 ifeq ($(ROOT_VER_GTEQ_6),1)
 	$(ROOTCINT) -f $@ $^

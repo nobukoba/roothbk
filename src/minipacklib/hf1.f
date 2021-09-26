@@ -28,7 +28,7 @@
       IF(ID1.NE.IDLAST)THEN
          ID=ID1
          IDPOS=LOCATI(IQ(LTAB+1),IQ(LCDIR+KNRH),ID)
-         write(*,*) 'hf1.f IDPOS', IDPOS
+*         write(*,*) 'hf1.f IDPOS', IDPOS
          IF(IDPOS.LE.0)RETURN
          IDLAST=ID1
          LCID=LQ(LTAB-IDPOS)
@@ -38,8 +38,8 @@
          I6=JBIT(IQ(LCID+KBITS),6)
          I7=JBIT(IQ(LCID+KBITS),7)
       ENDIF
-      write(*,*) 'hf1.f LCONT', LCONT
-      write(*,*) 'hf1.f KNOENT', KNOENT
+*      write(*,*) 'hf1.f LCONT', LCONT
+*      write(*,*) 'hf1.f KNOENT', KNOENT
 *
       IF(I5.NE.0)CALL HF1AUT(X,W)
       IQ(LCONT+KNOENT)=IQ(LCONT+KNOENT)+1

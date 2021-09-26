@@ -2,7 +2,7 @@
 * 
 *-------------------------------------------------------------------------------
 *  Nobu 2018/01/25 16:13:47
-      SUBROUTINE HRIN2(IDD,ICYCLE,KOFSET)
+      SUBROUTINE HRIN(IDD,ICYCLE,KOFSET)
 #include "hbook/hcntpar.inc"
 #include "hbook/hntcur.inc"
 #include "hbook/hcbook.inc"

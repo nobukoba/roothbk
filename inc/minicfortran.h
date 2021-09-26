@@ -6,15 +6,6 @@
    as in the Fortran definition in hbook.f and zebra
    Also, the arrays must be declared extern like on Windows */
 #define PAWC_SIZE 32000000
-/*
-#define pawc pawc_
-#define quest quest_
-#define hcbits hcbits_
-#define hcbook hcbook_
-#define rzcl rzcl_
-#define zebq zebq_
-#define mzcc mzcc_
-*/
 extern "C" int pawc_[PAWC_SIZE];
 extern "C" int quest_[100];
 extern "C" int hcbits_[37];
@@ -22,46 +13,10 @@ extern "C" int hcbook_[51];
 extern "C" int rzcl_[11];
 extern "C" int zebq_[104];
 extern "C" int mzcc_[411];
-
-/*  Define the names of the Fortran subroutine and functions for the different OSs */
-/*
-# define hlimit  hlimit_
-# define hropen  hropen_
-# define hrin    hrin_
-# define hnoent  hnoent_
-# define hgive   hgive_
-# define hgiven  hgiven_
-# define hgnpar  hgnpar_
-# define hgnf    hgnf_
-# define hgnt    hgnt_
-# define rzink   rzink_
-# define hdcofl  hdcofl_
-# define hdelet  hdelet_
-# define hntvar2 hntvar2_
-# define hbnam   hbnam_
-# define hi      hi_
-# define hie     hie_
-# define hif     hif_
-# define hij     hij_
-# define hix     hix_
-# define hijxy   hijxy_
-# define hije    hije_
-# define hcdir   hcdir_
-# define zitoh   zitoh_
-# define uhtoc   uhtoc_
-*/
-/* --> Nobu added */
-/*
-# define hlimap  hlimap_
-# define hidall  hidall_
-# define hrin2   hrin2_
-# define hrend   hrend_
-# define hbook1  hbook1_
-# define hbook2  hbook2_
-# define hf1     hf1_
-# define hf2     hf2_
-*/
-/* --> Nobu */
+extern "C" int bidon_[10006];
+extern "C" int mzcwk_[5120];
+extern "C" int fzcx_[71];
+extern "C" int fzci_[78];
 
 extern "C" void  hlimit_(const int&);
 extern "C" void  hropen_(const int&,const char*,const char*,const char*,const int&,const int&,const int,const int,const int);
@@ -76,7 +31,6 @@ extern "C" void  hgnpar_(const int&,const char *,const int);
 extern "C" void  hgnf_(const int&,const int&,const float&,const int&);
 extern "C" void  hgnt_(const int&,const int&,const int&);
 extern "C" void  rzink_(const int&,const int&,const char *,const int);
-extern "C" void  hdcofl_();
 extern "C" void  hmaxim_(const int&,const float&);
 extern "C" void  hminim_(const int&,const float&);
 extern "C" void  hdelet_(const int&);
@@ -95,6 +49,7 @@ extern "C" void  hlimap_(const int&,const char*, const int);
 extern "C" void  hidall_(const int*, const int&);
 extern "C" void  hrin2_(const int&,const int&,const int&);
 extern "C" void  hrend_(const char*,const int);
+extern "C" void  hdcofl_();
 extern "C" void  hbook1_(const int&,const char*,const int&,const float&,const float&,const float&,const int);
 extern "C" void  hbook2_(const int&,const char*,const int&,const float&,const float&,const int&,const float&,const float&,const float&,const int);
 extern "C" void  hbookb_(const int&,const char*,const int&,const float*,const float&,const int);
@@ -116,9 +71,8 @@ extern "C" void  hpak_(const int&,const float*);
 extern "C" void  hpake_(const int&,const float*);
 extern "C" void  hidopt_(const int&,const char*,const int);
 extern "C" void  hsifla_(const int&,const int&);
-extern "C" void  nosubdir_(const int&);
-extern "C" void  tisubdir_(const int&,const char*);
 extern "C" void  hrdir_(const int&, char*,const int&,const int);
 extern "C" int   hfreem_(long*);
+extern "C" void  printaddr_();
 /* --> Nobu */
 #endif

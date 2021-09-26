@@ -58,13 +58,13 @@ C-             4  vary  only DFIRST limit, keep common links
 
 #include "zebra/q_jbyt.inc"
 #include "zebra/q_locf.inc"
-      write(*,*) 'mzwork 1 NQOFFT(1+1)', NQOFFT(1+1)
-      write(*,*) 'mzwork 1 LQSTA(NQOFFT(1+1)+1)'
-      write(*,*) LQSTA(NQOFFT(1+1)+1)
-      write(*,*) 'mzwork 1 LQSTA(NQOFFT(1+1)+21)'
-      write(*,*) LQSTA(NQOFFT(1+1)+21)
+*      write(*,*) 'mzwork 1 NQOFFT(1+1)', NQOFFT(1+1)
+*      write(*,*) 'mzwork 1 LQSTA(NQOFFT(1+1)+1)'
+*      write(*,*) LQSTA(NQOFFT(1+1)+1)
+*      write(*,*) 'mzwork 1 LQSTA(NQOFFT(1+1)+21)'
+*      write(*,*) LQSTA(NQOFFT(1+1)+21)
       IFLAG = IFLAGP(1)
-      write(*,*) 'mzwork 1 IFLAG', IFLAG
+*      write(*,*) 'mzwork 1 IFLAG', IFLAG
 
 #include "zebra/qtrace.inc"
 #include "zebra/qstore.inc"
@@ -91,11 +91,11 @@ C-             4  vary  only DFIRST limit, keep common links
 
 C----              Check valid parameters
 
-      write(*,*) 'mzwork 2 NEWL, NEWD, NQREF', NEWL, NEWD, NQREF
-      write(*,*) 'mzwork 2 LQEND(KQT+2)', LQEND(KQT+2)
+*      write(*,*) 'mzwork 2 NEWL, NEWD, NQREF', NEWL, NEWD, NQREF
+*      write(*,*) 'mzwork 2 LQEND(KQT+2)', LQEND(KQT+2)
 c Nobu c/o 20210905 for 64 bit addressing
-c     IF (NEWL.LT.NQREF)           GO TO 92
-c      IF (NEWD.LT.NEWL)            GO TO 93
+      IF (NEWL.LT.NQREF)           GO TO 92
+      IF (NEWD.LT.NEWL)            GO TO 93
       IF (IFLAG.GE.3)              GO TO 31
       IF (NEWD.GE.LQEND(KQT+2))       GO TO 94
 
@@ -173,11 +173,11 @@ C----              Set new limits
 *#endif
 * --> c/o Nobu
 #include "zebra/qtrace99.inc"
-      write(*,*) 'mzwork * NQOFFT(1+1)', NQOFFT(1+1)
-      write(*,*) 'mzwork * LQSTA(NQOFFT(1+1)+1)'
-      write(*,*) LQSTA(NQOFFT(1+1)+1)
-      write(*,*) 'mzwork * LQSTA(NQOFFT(1+1)+21)'
-      write(*,*) LQSTA(NQOFFT(1+1)+21)
+*      write(*,*) 'mzwork * NQOFFT(1+1)', NQOFFT(1+1)
+*      write(*,*) 'mzwork * LQSTA(NQOFFT(1+1)+1)'
+*      write(*,*) LQSTA(NQOFFT(1+1)+1)
+*      write(*,*) 'mzwork * LQSTA(NQOFFT(1+1)+21)'
+*      write(*,*) LQSTA(NQOFFT(1+1)+21)
 
       RETURN
 

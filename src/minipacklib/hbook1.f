@@ -52,7 +52,7 @@
 
       CHARACTER*(*) CHTITL
 *.___________________________________________
-      write(*,*) '################# hbook1.f ######################'
+*      write(*,*) '################# hbook1.f ######################'
       IERR=0
       IF(IDD.EQ.0)THEN
          CALL HBUG('ID=0 is an illegal identifier','HBOOK1',IDD)
@@ -69,8 +69,8 @@
       NX=INTARG(NNNX)
       IF(NX.EQ.0)NX=100
       IF(X1.LE.X0)NOENT=1
-      write(*,*) 'XXX1, XXX0, NNNX',  XXX1, XXX0, NNNX
-      write(*,*) 'X1, X0, NX',  X1, X0, NX
+*      write(*,*) 'XXX1, XXX0, NNNX',  XXX1, XXX0, NNNX
+*      write(*,*) 'X1, X0, NX',  X1, X0, NX
 
 *
 *             Automatic boundaries adjustment
@@ -123,11 +123,11 @@
 *             Enter ID in the list of ordered IDs
 *
       IDPOS=-IDPOS+1
-      write(*,*) 'IHDIV, LTAB',IHDIV, LTAB
-      write(*,*) 'NRHIST, IQ(LTAB-1)',NRHIST, IQ(LTAB-1)
-      write(*,*) 'LOC(IQ(LTAB-1))/4', LOC(IQ(LTAB-1))/4
+*      write(*,*) 'IHDIV, LTAB',IHDIV, LTAB
+*      write(*,*) 'NRHIST, IQ(LTAB-1)',NRHIST, IQ(LTAB-1)
+*      write(*,*) 'LOC(IQ(LTAB-1))/4', LOC(IQ(LTAB-1))/4
       IF(NRHIST.GE.IQ(LTAB-1))THEN
-         write(*,*) 'hbook1.f L168'
+*         write(*,*) 'hbook1.f L168'
          CALL MZPUSH(IHDIV,LTAB,500,500,' ')
       ENDIF
       DO 10 I=NRHIST,IDPOS,-1
@@ -180,12 +180,12 @@
       IQ(LCONT+KNBIT)=NBPROX
       NRHIST=NRHIST+1
       IQ(LCDIR+KNRH)=NRHIST
-      do i = 1, 10
-         write(*,*) 'i, LQ(i), LOCF(LQ(i))', i, LQ(i), LOCF(LQ(i))
-      enddo
-      do i = LQ(1), LQ(1)+10
-         write(*,*) 'i, LQ(i), LOCF(LQ(i))', i, LQ(i), LOCF(LQ(i))
-      enddo
+*      do i = 1, 10
+*         write(*,*) 'i, LQ(i), LOCF(LQ(i))', i, LQ(i), LOCF(LQ(i))
+*      enddo
+*      do i = LQ(1), LQ(1)+10
+*         write(*,*) 'i, LQ(i), LOCF(LQ(i))', i, LQ(i), LOCF(LQ(i))
+*      enddo
 *     
   99  RETURN
       END

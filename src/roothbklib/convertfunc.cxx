@@ -199,7 +199,7 @@ std::string open_input_shm(const char* shm_name){
 std::string open_input_hbk(const char* hbk_name){
   std::string hbk_name_str = hbk_name;
   int lun = 10, ier=0, record_size=0;
-  hropen_(lun,"LUN10",hbk_name_str.c_str()," ",record_size,ier,5,hbk_name_str.length(),1);
+  hropen_(lun,"LUN10",hbk_name_str.c_str(),"x",record_size,ier,5,hbk_name_str.length(),1);
   if (ier)  {
     printf(" Error on hropen was %d \n", ier);
     return "";

@@ -359,23 +359,23 @@ c      ENDIF
       JSE = JS  + LQSTA(JT+21)
       JTA = JT  + LQBTIS
       JTE = JTA + NQTSYS
-*      write(*,*) 'L375 KQS, NDATA ', KQS, NDATA
+*      write(*,*) 'MZSOTR L375 KQS, NDATA ', KQS, NDATA
       IF (KSE.GT.JTA .AND. KSA.LT.JTE)    GO TO 94
       IF (KSE.GT.JSA .AND. KSA.LT.JSE)    GO TO 95
    36 CONTINUE
    39 IF (JQSTOR.GE.16)            GO TO 93
    41 NQOFFT(JQSTOR+1) = KQT
-*      write(*,*) 'L382 KQS, NDATA ', KQS, NDATA
+*      write(*,*) 'MZSOTR L382 KQS, NDATA ', KQS, NDATA
       NQOFFS(JQSTOR+1) = KQS
       NQALLO(JQSTOR+1) = IFLSPL
-*      write(*,*) 'L385 KQS, NDATA ', KQS, NDATA
-*      write(*,*) 'NQTSYS ', NQTSYS
-*      write(*,*) 'LOCF(KQS) ', LOCF(KQS)
-*      write(*,*) 'LOCF(IQTABV(KQT+1)) ', LOCF(IQTABV(KQT+1))
+*      write(*,*) 'MZSOTR L385 KQS, NDATA ', KQS, NDATA
+*      write(*,*) 'MZSOTR NQTSYS ', NQTSYS
+*      write(*,*) 'MZSOTR LOCF(KQS) ', LOCF(KQS)
+*      write(*,*) 'MZSOTR LOCF(IQTABV(KQT+1)) ', LOCF(IQTABV(KQT+1))
       CALL VZEROI (IQTABV(KQT+1),NQTSYS)
-*      write(*,*) 'L387 KQS, NDATA ', KQS, NDATA
+*      write(*,*) 'MZSOTR L387 KQS, NDATA ', KQS, NDATA
       CALL VBLANK (IQDN1(KQT+1), 40)
-*      write(*,*) 'L387 KQS, NDATA ', KQS, NDATA
+*      write(*,*) 'MZSOTR L387 KQS, NDATA ', KQS, NDATA
       NQSTOR = NQSTOR + 1
       LQ(KQS+NDATA-1) = IQNIL
       LQ(KQS+NDATA)   = IQNIL
@@ -1332,7 +1332,7 @@ c      ENDIF
 *      IF (LADESV(2).LT.0) THEN
 *         LADESV(2) = LADESV(2) + 2**30
 *      ENDIF
-      write(*,*) 'LADESV(2)', LADESV(2)
+*      write(*,*) 'FZIREL- LADESV(2)', LADESV(2)
       LADESV(3) = LADESV(2) + 1
       LADESV(5) = IQLETT(9)
       LADESV(6) = IQLETT(15)
@@ -5386,7 +5386,7 @@ c Nobu c/o 20210905
       IF (JDES.GE.JDESMX) GO TO 999
       LOCAR = MDESV(JDES+1)
       LIX = LOCAR
-*      write(*,*) 'LIX, JDES', LIX,JDES
+*      write(*,*) 'MZRELL: LIX, JDES', LIX,JDES
       LOCARE = MDESV(JDES+2)
       MODAR = MDESV(JDES+3)
       IF (JBIT(MODAR,31).NE.0) THEN

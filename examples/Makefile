@@ -1,48 +1,52 @@
-ROOT_VER_GTEQ_6 = $(shell expr `root-config --version|cut -f1 -d/` \>= 6.0)
-ifeq ($(ROOT_VER_GTEQ_6),1)
-#root version >= 6
-ROOTCINT  = rootcling
-else
-# root version 5
-ROOTCINT  = rootcint
-endif
-
-CC        = gcc
 CXX       = g++
 FC        = gfortran
-CFLAGS    = -g -fPIC
-CXXFLAGS  = -g  -I../src $(shell root-config --cflags) -fPIC
-FFLAGS    = -g -cpp -I../src -std=legacy -Wno-argument-mismatch -fPIC
+CXXFLAGS  = -g  -I../inc $(shell root-config --cflags) -fPIC
+FFLAGS    = -g -cpp -I../inc -std=legacy -Wno-argument-mismatch -fPIC
 LFLAGS    = 
-ROOTLIBS  = $(shell root-config --glibs) -lgfortran -lXMLIO -lRHTTP 
+ROOTLIBS  = $(shell root-config --glibs) -lgfortran
 
-TARGET    = hbk_write hbk_write2 shm_read shm_read2 hserver hserver2 hserver3
+TARGETS   = write_hbk_cxx_a write_hbk_cxx_so read_hbk_cxx_a read_hbk_cxx_so write_shm_cxx_a write_shm_cxx_so read_shm_cxx_a read_shm_cxx_so write_hbk_f_a write_hbk_f_so read_hbk_f_a read_hbk_f_so write_shm_f_a write_shm_f_so read_shm_f_a read_shm_f_so
 
-all:	$(TARGET)
+all:	$(TARGETS)
 
-hbk_write: hbk_write.o
-	$(CXX) $(LFLAGS) -o $@ $^ ../lib/librootminipacklib.a -lgfortran
-hbk_write2: hbk_write.o
-	$(CXX) $(LFLAGS) -o $@ hbk_write.o -L../lib -lrootminipacklib  -lgfortran -Wl,-rpath,$(PWD)/../lib
-shm_read: shm_read.o
-	$(CXX) $(LFLAGS) -o $@ $^ ../lib/librootminipacklib.a -lgfortran
-shm_read2: shm_read.o
-	$(CXX) $(LFLAGS) -o $@ shm_read.o -L../lib -lrootminipacklib  -lgfortran -Wl,-rpath,$(PWD)/../lib
-shm_read3: shm_read3.o
-	$(CXX) $(LFLAGS) -o $@ $^ -L/home/kobayash/cern/cernlib_2005_minipacklib_hbook_sandbox_double/2005/lib -lpacklib -lgfortran
-hserver: hserver.o
-	$(FC) $(LFLAGS) -o $@ $^ ../lib/librootminipacklib.a
-hserver2: hserver.o
-	$(FC) $(LFLAGS) -o $@ $^  -lgfortran -L/home/kobayash/cern/cernlib_2005_minipacklib_hbook_sandbox/2005/lib -lpacklib
-hserver3: hserver.o
-	$(CXX) $(LFLAGS) -o $@ hserver.o -L../lib -lrootminipacklib  -lgfortran -Wl,-rpath,$(PWD)/../lib
+write_hbk_cxx_a:  write_hbk_cxx.o
+	$(CXX) $(LFLAGS) -o $@ $^ ../lib/libroothbklib.a ../lib/libminipacklib.a -lgfortran
+write_hbk_cxx_so: write_hbk_cxx.o
+	$(CXX) $(LFLAGS) -o $@ $^ -L../lib -lroothbklib -lgfortran -Wl,-rpath,$(PWD)/../lib
+read_hbk_cxx_a:   read_hbk_cxx.o
+	$(CXX) $(LFLAGS) -o $@ $^ ../lib/libroothbklib.a ../lib/libminipacklib.a -lgfortran
+read_hbk_cxx_so:  read_hbk_cxx.o
+	$(CXX) $(LFLAGS) -o $@ $^ -L../lib -lroothbklib -lgfortran -Wl,-rpath,$(PWD)/../lib
+write_shm_cxx_a:  write_shm_cxx.o
+	$(CXX) $(LFLAGS) -o $@ $^ ../lib/libroothbklib.a ../lib/libminipacklib.a -lgfortran
+write_shm_cxx_so: write_shm_cxx.o
+	$(CXX) $(LFLAGS) -o $@ $^ -L../lib -lroothbklib -lgfortran -Wl,-rpath,$(PWD)/../lib
+read_shm_cxx_a:   read_shm_cxx.o
+	$(CXX) $(LFLAGS) -o $@ $^ ../lib/libroothbklib.a ../lib/libminipacklib.a -lgfortran
+read_shm_cxx_so:  read_shm_cxx.o
+	$(CXX) $(LFLAGS) -o $@ $^ -L../lib -lroothbklib -lgfortran -Wl,-rpath,$(PWD)/../lib
+
+write_hbk_f_a:  write_hbk_f_a.o
+	$(CXX) $(LFLAGS) -o $@ $^ ../lib/libroothbklib.a ../lib/libminipacklib.a -lgfortran
+write_hbk_f_so: write_hbk_f_so.o
+	$(CXX) $(LFLAGS) -o $@ $^ -L../lib -lroothbklib -lgfortran -Wl,-rpath,$(PWD)/../lib
+read_hbk_f_a:   read_hbk_f_a.o
+	$(CXX) $(LFLAGS) -o $@ $^ ../lib/libroothbklib.a ../lib/libminipacklib.a -lgfortran
+read_hbk_f_so:  read_hbk_f_so.o
+	$(CXX) $(LFLAGS) -o $@ $^ -L../lib -lroothbklib -lgfortran -Wl,-rpath,$(PWD)/../lib
+write_shm_f_a:  write_shm_f_a.o
+	$(CXX) $(LFLAGS) -o $@ $^ ../lib/libroothbklib.a ../lib/libminipacklib.a -lgfortran
+write_shm_f_so: write_shm_f_so.o
+	$(CXX) $(LFLAGS) -o $@ $^ -L../lib -lroothbklib -lgfortran -Wl,-rpath,$(PWD)/../lib
+read_shm_f_a:   read_shm_f_a.o
+	$(CXX) $(LFLAGS) -o $@ $^ ../lib/libroothbklib.a ../lib/libminipacklib.a -lgfortran
+read_shm_f_so:  read_shm_f_so.o
+	$(CXX) $(LFLAGS) -o $@ $^ -L../lib -lroothbklib -lgfortran -Wl,-rpath,$(PWD)/../lib
 
 %.o: %.cxx
 	$(CXX) $(CXXFLAGS) -c $<
-%.o: %.c
-	$(CC)  $(CFLAGS)   -c $<
 %.o: %.f
 	$(FC)  $(FFLAGS)   -c $<
 .PHONY : clean
 clean:
-	rm -rf $(TARGET) $(EXE) *.o *~
+	rm -rf $(TARGETS) *.o *~
