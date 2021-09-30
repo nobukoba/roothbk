@@ -1,3 +1,11 @@
+/*
+  First, execute the write_shm.C macro to
+  create histograms on shared memory named EXAM.
+  Then, execute this macro as follows.
+
+  $ root read_shm.C
+
+*/
 #include <iostream>
 #if defined(__CLING__)
 R__LOAD_LIBRARY(../../lib/libroothbklib.so)  

@@ -1,3 +1,11 @@
+/*
+  How to execute
+  
+  $ root write_hbk.C
+  
+  Then this macro creates a HBOOK file write_hbk.hb
+
+*/
 #include <iostream>
 #if defined(__CLING__)
 R__LOAD_LIBRARY(../../lib/libroothbklib.so)  

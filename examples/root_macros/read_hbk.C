@@ -1,3 +1,12 @@
+/*
+  First, execute the write_hbk.C macro to
+  create the write_hbk.hb file. Then,
+  Execute this macro as follows.
+
+  $ root read_hbk.C
+
+*/
+
 #include <iostream>
 #if defined(__CLING__)
 R__LOAD_LIBRARY(../../lib/libroothbklib.so)  

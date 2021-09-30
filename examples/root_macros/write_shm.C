@@ -1,3 +1,12 @@
+/*
+  How to execute
+  
+  $ root write_shm.C
+  
+  Then this macro creates HBOOK histograms on the shared memory
+  named EXAM.
+
+*/
 #include <iostream>
 #if defined(__CLING__)
 R__LOAD_LIBRARY(../../lib/libroothbklib.so)  
