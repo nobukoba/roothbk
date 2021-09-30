@@ -9,7 +9,7 @@
 
       call printaddr()
       call hlimit(nwords)
-      call hropen(10,'LUN10','write_hbk_f.hb','n',1024,ier)
+      call hropen(10,'LUN10','write_hbk.hb','n',1024,ier)
       if (ier .ne. 0) then
          write(*,*) " Error on hropen was ", ier
          return

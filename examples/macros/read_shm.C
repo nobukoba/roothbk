@@ -1,29 +1,29 @@
 #include <iostream>
-#include "hbkwrapper.h"
-#include "minicfortran.h"
+#if defined(__CLING__)
+R__LOAD_LIBRARY(../../lib/libroothbklib.so)  
+#endif
 
-int main (int argc, char **argv) {
+int read_shm() {
+#if defined(__CINT__)
+  gSystem->Load("../../lib/libroothbklib.so");
+#endif
+  printaddr();
   /* If you want to change the value 32000000 of "hlimit(32000000)",
      also the "HCV(32000000-11)" in inc/hbook/hcbook.inc 
      should be modified in calling from C/C++ programs. */
-  printaddr();
   hlimit(32000000);
-  int ier=0, record_size=0;
-  hropen(10,"LUN10","write_hbk_cxx.hb","x",record_size,ier);
-  if (ier)  {
-    std::cout << " Error on hropen was " << ier << std::endl;
-    return 1;
-  }
+  hlimap(0, "EXAM");
   int idvec[10000];
   int imax = 0;
   hrin2(0,9999,0);
   hidall(idvec,imax);
   hdelet(0);
+  std::cout << "imax: " << imax <<std::endl;
   for (int i=0;i<imax;i++) {
     int id = idvec[i];
     hrin2(id,999,0);
     if (quest[0]) {
-      printf("Error cannot read ID = %d\n",id);
+      std::cout << "Error cannot read ID = " << id << std::endl;
     }
     hdcofl();
     std::cout << "id: " << id <<std::endl;
@@ -63,6 +63,5 @@ int main (int argc, char **argv) {
     std::cout << std::endl;
     hdelet(id);
   }
-  hrend("LUN10");
   return 1;
 }

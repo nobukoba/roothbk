@@ -6,7 +6,13 @@ int main (int argc, char **argv) {
      also the "HCV(32000000-11)" in inc/hbook/hcbook.inc 
      should be modified in calling from C/C++ programs. */
   printaddr();
-  hlimap(32000000, "EXAM");
+  hlimit(32000000);
+  int ier=0, record_size=1024;
+  hropen(10,"LUN10","write_hbk.hb","n",record_size,ier);
+  if (ier)  {
+    std::cout << " Error on hropen was " << ier << std::endl;
+    return 1;
+  }
   hbook1(1,"test1;aa;bb",100,-4.,4.,0.);
   hcopy(1,2,"test2");
   hcopy(1,3,"test3");
@@ -24,5 +30,8 @@ int main (int argc, char **argv) {
       std::cout << "write_hbk_cxx in loop index " << i << std::endl;
     }
   }
+  int icycle = 0;
+  hrout(0,icycle," ");
+  hrend("LUN10");
   return 1;
 }

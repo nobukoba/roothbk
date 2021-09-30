@@ -5,7 +5,7 @@
       common/pawc/h(nwords)
       
       call printaddr()
-      call hlimap(32000000,'EXMF')
+      call hlimap(32000000,'EXAM')
       call hbook1(1,'test1;aa;bb',100,-4.,4.,0.)
       call hcopy(1,2,'test2')
       call hcopy(1,3,'test3')

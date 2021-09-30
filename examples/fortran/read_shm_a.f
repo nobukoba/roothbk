@@ -14,7 +14,7 @@
       
       call printaddr()
       call hlimit(nwords)
-      call hlimap(0,'EXMF')
+      call hlimap(0,'EXAM')
 
       call hrin2(0,9999,0)
       call hidall(idvec, imax)
