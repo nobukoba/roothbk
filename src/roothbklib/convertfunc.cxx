@@ -310,7 +310,6 @@ THttpServer* open_output_srv(int port) {
   static THttpServer* serv = 0;
   static int saved_port = 0;
   static int message_counter = 0;
-
   if(port < 0){
     if(serv != 0){
       std::cout << "THttpServer on port " << saved_port << " was deleted." << std::endl;
@@ -1025,7 +1024,12 @@ void convert_dir_srv2hbk(int shm_flag, TXMLEngine &xml, XMLNodePointer_t node,
       std::cout << cmd << std::endl;
       TString result = gSystem->GetFromPipe(cmd.Data());
       TObject *obj = 0;
+#if defined(NoFromJSON)
+      std::cout << "No TBufferJSON::FromJSON" << std::endl;
+      std::cout << "Use new ROOT version 6" << std::endl;
+#else
       TBufferJSON::FromJSON(obj, result);
+#endif
       if (obj) {
 	convert_histo_root2hbk((TH1*)obj, id);
 	id = id + 1;
@@ -1120,7 +1124,12 @@ void convert_dir_srv2root(TXMLEngine &xml, XMLNodePointer_t node, Int_t level,
       std::cout << cmd << std::endl;
       TString result = gSystem->GetFromPipe(cmd.Data());
       TObject *obj = 0;
+#if defined(NoFromJSON)
+      std::cout << "No TBufferJSON::FromJSON" << std::endl;
+      std::cout << "Use new ROOT version 6" << std::endl;
+#else
       TBufferJSON::FromJSON(obj, result);
+#endif
       if (obj) {
 	TH1* hnew = (TH1*)curdir->TDirectory::FindObject(obj->GetName());
 	if (hnew != 0) {
