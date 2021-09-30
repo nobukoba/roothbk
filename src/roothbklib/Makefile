@@ -9,7 +9,9 @@ endif
 
 CXX        = g++
 AR         = ar r
-CXXFLAGS   = -g -I../../inc $(shell root-config --cflags) -fPIC -DNoFromJSON
+CXXFLAGS   = -g -I../../inc $(shell root-config --cflags) -fPIC
+# If ROOT does not have TBufferJSON::FromJSON class, please use the below CXXFLAG
+#CXXFLAGS   = -g -I../../inc $(shell root-config --cflags) -fPIC -DNoFromJSON
 LFLAGS     = 
 ROOTLIBS   = $(shell root-config --glibs) -lgfortran -lXMLIO -lRHTTP 
 PACKLIB_A  = ../../lib/libminipacklib.a
