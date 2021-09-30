@@ -1,0 +1,5 @@
+macro main
+  hi/file 1 ../fortran/write_hbk.hb
+  hi/li
+  hi/pl 4 colz
+return

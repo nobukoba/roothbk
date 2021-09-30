@@ -1,0 +1,5 @@
+macro main
+  glo EXAM
+  hi/li
+  hi/pl 4 colz
+return
