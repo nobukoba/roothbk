@@ -2,20 +2,18 @@
   First, execute the write_shm.C macro to
   create histograms on shared memory named EXAM.
   Then, execute this macro as follows.
-  
-  $ root shm2dir.C
-  
+
+  $ root root2dir.C
+
 */
 #if defined(__CLING__)
-R__LOAD_LIBRARY(../../lib/libroothbklib.so)
+R__LOAD_LIBRARY(../../lib/libroothbklib.so)  
 #endif
  
-void shm2dir(){
+void root2dir(){
 #if defined(__CINT__)
   gSystem->Load("../../lib/libroothbklib.so");
 #endif
-  shm2dir();
-  TH1* h1_test1 = (TH1*)gROOT->TDirectory::FindObject("h1_test1");
-  h1_test1->Draw();
+  root2dir();
   return;
 }

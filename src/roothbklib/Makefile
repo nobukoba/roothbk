@@ -18,7 +18,7 @@ PACKLIB_A  = ../../lib/libminipacklib.a
 PACKLIB_SO = -L../../lib  -lminipacklib
 
 ifeq ($(ROOT_VER_GTEQ_6),1)
-#root version >= 6
+# root version >= 6
 TARGETS    = ../../lib/libroothbklib.so ../../lib/libroothbklib.a ../../lib/roothbklibDict_rdict.pcm
 else
 # root version 5
