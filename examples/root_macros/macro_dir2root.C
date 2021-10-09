@@ -1,14 +1,14 @@
 /*
   Execute this macro as follows.
   
-  $ root macro_dir2shm.C
+  $ root macro_dir2root.C
   
 */
 #if defined(__CLING__)
 R__LOAD_LIBRARY(../../lib/libroothbklib.so)
 #endif
- 
-void macro_dir2shm(){
+
+void macro_dir2root(){
 #if defined(__CINT__)
   gSystem->Load("../../lib/libroothbklib.so");
 #endif
@@ -27,9 +27,9 @@ void macro_dir2shm(){
     h3->Fill(a*a+b*b,1.);
     h4->Fill(a,b,1.);
     if((i % 1000000) == 0){
-      std::cout << "macro_dir2shm in loop index " << i << std::endl;
+      std::cout << "macro_dir2root in loop index " << i << std::endl;
     }
   }
-  dir2shm("EXAM");
+  dir2root("dir2root.root");
   return;
 }

@@ -1,19 +1,19 @@
 /*
-  First, execute the write_hbk.C macro to
-  create the HBOOK file write_hbk.hb.
+  First, execute the macro_dir2srv.C macro to
+  run the THttpServer on port 8080.
   Then, execute this macro as follows.
-  
-  $ root macro_hbk2shm.C
-  
+
+  $ root macro_srv2root.C
+
 */
 #if defined(__CLING__)
 R__LOAD_LIBRARY(../../lib/libroothbklib.so)  
 #endif
  
-void macro_hbk2shm(){
+void macro_srv2root(){
 #if defined(__CINT__)
   gSystem->Load("../../lib/libroothbklib.so");
 #endif
-  hbk2shm("write_hbk.hb");
+  srv2root("http://localhost:8080");
   return;
 }

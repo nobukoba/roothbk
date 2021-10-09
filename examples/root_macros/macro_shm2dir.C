@@ -3,14 +3,14 @@
   create histograms on shared memory named EXAM.
   Then, execute this macro as follows.
   
-  $ root shm2dir.C
+  $ root macro_shm2dir.C
   
 */
 #if defined(__CLING__)
 R__LOAD_LIBRARY(../../lib/libroothbklib.so)
 #endif
  
-void shm2dir(){
+void macro_shm2dir(){
 #if defined(__CINT__)
   gSystem->Load("../../lib/libroothbklib.so");
 #endif

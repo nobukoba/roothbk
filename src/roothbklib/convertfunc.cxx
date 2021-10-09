@@ -258,10 +258,14 @@ std::string open_output_shm(const char *name, const char* shm_name){
 
 std::string open_output_hbk(const char* name, const char* hbk_name){
   std::string hbk_name_str = hbk_name;
-  if (!hbk_name_str.length()) {
+  if(hbk_name_str.length()==0){
     hbk_name_str = name;
-    hbk_name_str += ".hb";
   }
+  if (hbk_name_str.length()>=5 &&
+      hbk_name_str.substr(hbk_name_str.length()-5) == ".root"){
+    hbk_name_str = hbk_name_str.substr(0,hbk_name_str.length()-5);
+  }
+  hbk_name_str += ".hb";
   int lun = 10, ier=0, record_size=1024;
   hropen_(lun,"LUN10",hbk_name_str.c_str(),"n",record_size,ier,5,hbk_name_str.length(),1);
   if (ier)  {
@@ -343,6 +347,216 @@ THttpServer* open_output_srv(int port) {
   return serv;
 }
 
+void dir2hbk(TDirectory* root_dir, const char* hbk_name){
+  if(init_hbook(0)==0){return;}
+  if (root_dir == 0) {root_dir = gDirectory;}
+  std::string hbk_name_str = open_output_hbk(root_dir->GetName(),hbk_name);
+  if(hbk_name_str==""){return;}
+  int shm_flag = 0;
+  convert_dir_root2hbk(shm_flag,root_dir,"//PAWC","//LUN10");
+  int icycle = 0;
+  hrout_(0,icycle,"T",1);
+  hrend_("LUN10",5);
+  return;
+}
+
+void dir2root(TDirectory* root_dir, const char* root_name){
+  if (root_dir == 0) {root_dir = gDirectory;}
+  TFile *f = open_output_root(root_dir->GetName(),root_name);
+  if (f==0) {return;}
+  convert_dir_root2root(root_dir,(TDirectory*)f);
+  f->Write();
+  f->Close();
+  return;
+}
+
+void dir2shm(TDirectory* root_dir, const char *shm_name){
+  if(init_hbook(1)==0){return;}
+  if (root_dir == 0) {root_dir = gDirectory;}
+  std::string shm_name_str = open_output_shm(root_dir->GetName(),shm_name);
+  if (shm_name_str =="") {return;}
+  int shm_flag = 1;
+  convert_dir_root2hbk(shm_flag,root_dir,"//PAWC","");
+return;
+}
+
+void dir2srv(TDirectory* root_dir, int port) {
+  THttpServer* serv = open_output_srv(port);
+  if (serv == 0) {return;}
+  if (gSystem->ProcessEvents()) {
+    std::cout << "Error: gSystem->ProcessEvents() is null" << std::endl;
+  }
+  return;
+}
+
+void dir2hbk(const char* hbk_name){
+  dir2hbk(0, hbk_name);
+  return;
+}
+void dir2root(const char* root_name){
+  dir2root(0, root_name);
+  return;
+}
+void dir2shm(const char *shm_name){
+  dir2shm(0, shm_name);
+  return;
+}
+void dir2srv(int port){
+  dir2srv(0, port);
+  return;
+}
+
+void hbk2dir(const char *hbk_name, TDirectory* root_dir) {
+  if(init_hbook(0)==0){return;}
+  std::string hbk_name_str = open_input_hbk(hbk_name);
+  if(hbk_name_str==""){return;}
+  if (root_dir == 0) {root_dir = gROOT;}
+  convert_dir_hbk2root(hbk_name_str.c_str(), root_dir);
+  hrend_("LUN10",5);
+  return;
+}
+
+void hbk2root(const char *hbk_name, const char *root_name) {
+  if(init_hbook(0)==0){return;}
+  std::string hbk_name_str = open_input_hbk(hbk_name);
+  if(hbk_name_str==""){return;}
+  TFile *f = open_output_root(hbk_name,root_name);
+  if (f==0) {return;}
+  convert_dir_hbk2root(hbk_name_str.c_str(), (TDirectory*)f);
+  hrend_("LUN10",5);
+  f->Write();
+  f->Close();
+  return;
+}
+
+void hbk2shm(const char* hbk_name, const char* shm_name){
+  if(init_hbook(1)==0){return;}
+  std::string shm_name_str = open_output_shm(hbk_name,shm_name);
+  if (shm_name_str =="") {return;}
+  std::string hbk_name_str = open_input_hbk(hbk_name);
+  if(hbk_name_str==""){return;}
+  int shm_flag = 0;
+  convert_dir_hbk2hbk(shm_flag,hbk_name_str.c_str(),"//PAWC","");
+  hcdir_("//PAWC"," ",6,1);
+  hrend_("LUN10",5);
+  hfreem_((long*)0);
+  return;
+}
+
+void hbk2srv(const char *hbk_name, int port, TDirectory* root_dir) {
+  if(init_hbook(0)==0){return;}
+  std::string hbk_name_str = open_input_hbk(hbk_name);
+  if(hbk_name_str==""){return;}
+  THttpServer* serv = open_output_srv(port);
+  if (serv == 0) {return;}
+  if (root_dir == 0) {root_dir = gROOT;}
+  convert_dir_hbk2root(hbk_name_str.c_str(), root_dir);
+  if (gSystem->ProcessEvents()) {
+    std::cout << "Error: gSystem->ProcessEvents() is null" << std::endl;
+  }
+  return;
+}
+
+void root2dir(const char* root_name, TDirectory* root_dir){
+  TFile *f = open_input_root(root_name);
+  if (f==0) {return;}
+  if (root_dir == 0) {root_dir = gROOT;}
+  convert_dir_root2root((TDirectory*)f,root_dir);
+  f->Write();
+  f->Close();
+  return;
+}
+
+void root2hbk(const char *root_name, const char* hbk_name){
+  if(init_hbook(0)==0){return;}
+  TFile *f = open_input_root(root_name);
+  if (f==0) {return;}
+  std::string hbk_name_str = open_output_hbk(root_name,hbk_name);
+  if(hbk_name_str==""){return;}
+  int shm_flag = 0;
+  convert_dir_root2hbk(shm_flag,(TDirectory*)f,"//PAWC","//LUN10");
+  int icycle = 0;
+  hrout_(0,icycle,"T",1);
+  hrend_("LUN10",5);
+  f->Close();
+  return;
+}
+
+void root2shm(const char *root_name, const char* shm_name){
+  if(init_hbook(1)==0){return;}
+  TFile *f = open_input_root(root_name);
+  if (f==0) {return;}
+  std::string shm_name_str = open_output_shm(root_name,shm_name);
+  if (shm_name_str =="") {return;}
+  int shm_flag = 1;
+  convert_dir_root2hbk(shm_flag,(TDirectory*)f,"//PAWC","");
+  f->Close();
+  return;
+}
+
+void root2srv(const char *root_name, int port, TDirectory* root_dir) {
+  TFile *f = open_input_root(root_name);
+  if (f==0) {return;}
+  THttpServer* serv = open_output_srv(port);
+  if (serv == 0) {return;}
+  if (root_dir == 0) {root_dir = gROOT;}
+  convert_dir_root2root((TDirectory*)f, root_dir);
+  if (gSystem->ProcessEvents()) {
+    std::cout << "Error: gSystem->ProcessEvents() is null" << std::endl;
+  }
+  return;
+}
+
+void shm2dir(const char *shm_name, TDirectory* root_dir) {
+  if(init_hbook(0)==0){return;}
+  std::string shm_name_str = open_input_shm(shm_name);
+  if(shm_name_str==""){return;}
+  if (root_dir == 0) {root_dir = gROOT;}
+  convert_dir_hbk2root(shm_name_str.c_str(), root_dir);
+  shm_name_str = shm_name_str.substr(2,4);
+  return;
+}
+
+void shm2hbk(const char* shm_name, const char* hbk_name){
+  if(init_hbook(0)==0){return;}
+  std::string shm_name_str = open_input_shm(shm_name);
+  if(shm_name_str==""){return;}
+  std::string hbk_name_str = open_output_hbk(shm_name,hbk_name);
+  if(hbk_name_str==""){return;}
+  int shm_flag = 1;
+  convert_dir_hbk2hbk(shm_flag,shm_name_str.c_str(),"//PAWC","//LUN10");
+  int icycle = 0;
+  hrout_(0,icycle,"T",1);
+  hrend_("LUN10",5);
+  return;
+}
+
+void shm2root(const char *shm_name, const char *root_name) {
+  if(init_hbook(0)==0){return;}
+  std::string shm_name_str = open_input_shm(shm_name);
+  if(shm_name_str==""){return;}
+  TFile *f = open_output_root(shm_name,root_name);
+  if (f==0) {return;}
+  convert_dir_hbk2root(shm_name_str.c_str(), (TDirectory *)f);
+  f->Write();
+  f->Close();
+  return;
+}
+
+void shm2srv(const char *shm_name, int port, TDirectory* root_dir) {
+  if(init_hbook(0)==0){return;}
+  std::string shm_name_str = open_input_shm(shm_name);
+  if(shm_name_str==""){return;}
+  THttpServer* serv = open_output_srv(port);
+  if (serv == 0) {return;}
+  if (root_dir == 0) {root_dir = gROOT;}
+  convert_dir_hbk2root(shm_name_str.c_str(), root_dir);
+  if (gSystem->ProcessEvents()) {
+    std::cout << "Error: gSystem->ProcessEvents() is not null" << std::endl;
+  }
+  return;
+}
+
 void shms2dir(const char *shm_names, TDirectory* root_dir) {
   std::string shm_names_str = get_shm_names_str(shm_names);
   if (root_dir == 0) {root_dir = gROOT;}
@@ -362,6 +576,63 @@ void shms2dir(const char *shm_names, TDirectory* root_dir) {
     }
     shm2dir(shm_name_str.c_str(), cur_dir);
   }
+  return;
+}
+
+void shms2hbk(const char *shm_names, const char *hbk_name) {
+  if(init_hbook(0)==0){return;}
+  std::string shm_names_str = get_shm_names_str(shm_names);
+  std::string hbk_name_str = open_output_hbk("shms",hbk_name);
+  if(hbk_name_str==""){return;}
+  std::stringstream ss(shm_names_str);
+  std::string shm_name;
+  while(ss >> shm_name){
+    if (((int)shm_name.find(",")) > -1) {
+      /*shm_name[shm_name.find(",")] = '_';*/
+      shm_name = shm_name.substr(0,shm_name.find(","));
+    }
+    std::string shm_name_str = open_input_shm(shm_name.c_str());
+    if(shm_name_str==""){return;}
+    hcdir_("//LUN10"," ",7,1);
+    hmdir_(shm_name.c_str(),"S",shm_name.length(),1);
+    hcdir_("//PAWC"," ",6,1);
+    hmdir_(shm_name.c_str(),"S",shm_name.length(),1);
+    int shm_flag = 1;
+    std::string new_paw_name_str = "//PAWC/" + shm_name;
+    std::string new_hbk_name_str = "//LUN10/" + shm_name;
+    convert_dir_hbk2hbk(shm_flag,shm_name_str.c_str(),
+			new_paw_name_str.c_str(),new_hbk_name_str.c_str());
+    hcdir_("//PAWC"," ",6,1);
+    hcdir_("//LUN10"," ",7,1);
+  }
+  int icycle = 0;
+  hrout_(0,icycle,"T",1);
+  hrend_("LUN10",5);
+  return;
+}
+
+void shms2root(const char *shm_names, const char* root_name) {
+  std::string shm_names_str = get_shm_names_str(shm_names);
+  TFile *f = open_output_root("shms",root_name);
+  if (f==0) {return;}
+  std::stringstream ss(shm_names_str);
+  std::string shm_name_str;
+  while(ss >> shm_name_str){
+    if (((int)shm_name_str.find(",")) > -1) {
+      shm_name_str[shm_name_str.find(",")] = '_';
+    }
+    TDirectory* cur_dir = (TDirectory*)f->TDirectory::FindObject(shm_name_str.c_str());
+    if (!cur_dir) {
+      cur_dir = new TDirectoryFile(shm_name_str.c_str(), shm_name_str.c_str(), "", f);
+      if (!cur_dir) {
+	printf("Error: can't open the direcotry: %s\n", shm_name_str.c_str());
+	return;
+      }
+    }
+    shm2dir(shm_name_str.c_str(), cur_dir);
+  }
+  f->Write();
+  f->Close();
   return;
 }
 
@@ -416,285 +687,15 @@ void shms2srv(const char *shm_names, int port) {
   return;
 }
 
-void shms2root(const char *shm_names, const char* root_name) {
-  std::string shm_names_str = get_shm_names_str(shm_names);
-  TFile *f = open_output_root("shms",root_name);
-  if (f==0) {return;}
-  std::stringstream ss(shm_names_str);
-  std::string shm_name_str;
-  while(ss >> shm_name_str){
-    if (((int)shm_name_str.find(",")) > -1) {
-      shm_name_str[shm_name_str.find(",")] = '_';
-    }
-    TDirectory* cur_dir = (TDirectory*)f->TDirectory::FindObject(shm_name_str.c_str());
-    if (!cur_dir) {
-      cur_dir = new TDirectoryFile(shm_name_str.c_str(), shm_name_str.c_str(), "", f);
-      if (!cur_dir) {
-	printf("Error: can't open the direcotry: %s\n", shm_name_str.c_str());
-	return;
-      }
-    }
-    shm2dir(shm_name_str.c_str(), cur_dir);
-  }
-  f->Write();
-  f->Close();
-  return;
-}
-
-void shms2hbk(const char *shm_names, const char *hbk_name) {
-  if(init_hbook(0)==0){return;}
-  std::string shm_names_str = get_shm_names_str(shm_names);
-  std::string hbk_name_str = open_output_hbk("shms",hbk_name);
-  if(hbk_name_str==""){return;}
-  std::stringstream ss(shm_names_str);
-  std::string shm_name;
-  while(ss >> shm_name){
-    if (((int)shm_name.find(",")) > -1) {
-      /*shm_name[shm_name.find(",")] = '_';*/
-      shm_name = shm_name.substr(0,shm_name.find(","));
-    }
-    std::string shm_name_str = open_input_shm(shm_name.c_str());
-    if(shm_name_str==""){return;}
-    hcdir_("//LUN10"," ",7,1);
-    hmdir_(shm_name.c_str(),"S",shm_name.length(),1);
-    hcdir_("//PAWC"," ",6,1);
-    hmdir_(shm_name.c_str(),"S",shm_name.length(),1);
-    int shm_flag = 1;
-    std::string new_paw_name_str = "//PAWC/" + shm_name;
-    std::string new_hbk_name_str = "//LUN10/" + shm_name;
-    convert_dir_hbk2hbk(shm_flag,shm_name_str.c_str(),
-			new_paw_name_str.c_str(),new_hbk_name_str.c_str());
-    hcdir_("//PAWC"," ",6,1);
-    hcdir_("//LUN10"," ",7,1);
-  }
-  int icycle = 0;
-  hrout_(0,icycle,"T",1);
-  hrend_("LUN10",5);
-  return;
-}
-
-void shm2hbk(const char* shm_name, const char* hbk_name){
-  if(init_hbook(0)==0){return;}
-  std::string shm_name_str = open_input_shm(shm_name);
-  if(shm_name_str==""){return;}
-  std::string hbk_name_str = open_output_hbk(shm_name,hbk_name);
-  if(hbk_name_str==""){return;}
-  int shm_flag = 1;
-  convert_dir_hbk2hbk(shm_flag,shm_name_str.c_str(),"//PAWC","//LUN10");
-  int icycle = 0;
-  hrout_(0,icycle,"T",1);
-  hrend_("LUN10",5);
-  return;
-}
-
-void shm2root(const char *shm_name, const char *root_name) {
-  if(init_hbook(0)==0){return;}
-  std::string shm_name_str = open_input_shm(shm_name);
-  if(shm_name_str==""){return;}
-  TFile *f = open_output_root(shm_name,root_name);
-  if (f==0) {return;}
-  convert_dir_hbk2root(shm_name_str.c_str(), (TDirectory *)f);
-  f->Write();
-  f->Close();
-  return;
-}
-
-void shm2dir(const char *shm_name, TDirectory* root_dir) {
-  if(init_hbook(0)==0){return;}
-  std::string shm_name_str = open_input_shm(shm_name);
-  if(shm_name_str==""){return;}
-  if (root_dir == 0) {root_dir = gROOT;}
-  convert_dir_hbk2root(shm_name_str.c_str(), root_dir);
-  shm_name_str = shm_name_str.substr(2,4);
-  return;
-}
-
-void shm2srv(const char *shm_name, int port, TDirectory* root_dir) {
-  if(init_hbook(0)==0){return;}
-  std::string shm_name_str = open_input_shm(shm_name);
-  if(shm_name_str==""){return;}
-  THttpServer* serv = open_output_srv(port);
-  if (serv == 0) {return;}
-  if (root_dir == 0) {root_dir = gROOT;}
-  convert_dir_hbk2root(shm_name_str.c_str(), root_dir);
-  if (gSystem->ProcessEvents()) {
-    std::cout << "Error: gSystem->ProcessEvents() is not null" << std::endl;
-  }
-  return;
-}
-
-void hbk2shm(const char* hbk_name, const char* shm_name){
-  if(init_hbook(1)==0){return;}
-  std::string shm_name_str = open_output_shm(hbk_name,shm_name);
-  if (shm_name_str =="") {return;}
-  std::string hbk_name_str = open_input_hbk(hbk_name);
-  if(hbk_name_str==""){return;}
-  int shm_flag = 0;
-  convert_dir_hbk2hbk(shm_flag,hbk_name_str.c_str(),"//PAWC","");
-  hcdir_("//PAWC"," ",6,1);
-  hrend_("LUN10",5);
-  hfreem_((long*)0);
-  return;
-}
-
-void hbk2root(const char *hbk_name, const char *root_name) {
-  if(init_hbook(0)==0){return;}
-  std::string hbk_name_str = open_input_hbk(hbk_name);
-  if(hbk_name_str==""){return;}
-  TFile *f = open_output_root(hbk_name,root_name);
-  if (f==0) {return;}
-  convert_dir_hbk2root(hbk_name_str.c_str(), (TDirectory*)f);
-  hrend_("LUN10",5);
-  f->Write();
-  f->Close();
-  return;
-}
-
-void hbk2dir(const char *hbk_name, TDirectory* root_dir) {
-  if(init_hbook(0)==0){return;}
-  std::string hbk_name_str = open_input_hbk(hbk_name);
-  if(hbk_name_str==""){return;}
-  if (root_dir == 0) {root_dir = gROOT;}
-  convert_dir_hbk2root(hbk_name_str.c_str(), root_dir);
-  hrend_("LUN10",5);
-  return;
-}
-
-void hbk2srv(const char *hbk_name, int port, TDirectory* root_dir) {
-  if(init_hbook(0)==0){return;}
-  std::string hbk_name_str = open_input_hbk(hbk_name);
-  if(hbk_name_str==""){return;}
-  THttpServer* serv = open_output_srv(port);
-  if (serv == 0) {return;}
-  if (root_dir == 0) {root_dir = gROOT;}
-  convert_dir_hbk2root(hbk_name_str.c_str(), root_dir);
-  if (gSystem->ProcessEvents()) {
-    std::cout << "Error: gSystem->ProcessEvents() is null" << std::endl;
-  }
-  return;
-}
-
-void root2srv(const char *root_name, int port, TDirectory* root_dir) {
-  TFile *f = open_input_root(root_name);
-  if (f==0) {return;}
-  THttpServer* serv = open_output_srv(port);
-  if (serv == 0) {return;}
-  if (root_dir == 0) {root_dir = gROOT;}
-  convert_dir_root2root((TDirectory*)f, root_dir);
-  if (gSystem->ProcessEvents()) {
-    std::cout << "Error: gSystem->ProcessEvents() is null" << std::endl;
-  }
-  return;
-}
-
-void dir2srv(TDirectory* root_dir, int port) {
-  THttpServer* serv = open_output_srv(port);
-  if (serv == 0) {return;}
-  if (gSystem->ProcessEvents()) {
-    std::cout << "Error: gSystem->ProcessEvents() is null" << std::endl;
-  }
-  return;
-}
-
-void root2shm(const char *root_name, const char* shm_name){
-  if(init_hbook(1)==0){return;}
-  TFile *f = open_input_root(root_name);
-  if (f==0) {return;}
-  std::string shm_name_str = open_output_shm(root_name,shm_name);
-  if (shm_name_str =="") {return;}
-  int shm_flag = 1;
-  convert_dir_root2hbk(shm_flag,(TDirectory*)f,"//PAWC","");
-  f->Close();
-  return;
-}
-
-void root2hbk(const char *root_name, const char* hbk_name){
-  if(init_hbook(0)==0){return;}
-  TFile *f = open_input_root(root_name);
-  if (f==0) {return;}
-  std::string hbk_name_str = open_output_hbk(root_name,hbk_name);
-  if(hbk_name_str==""){return;}
-  int shm_flag = 0;
-  convert_dir_root2hbk(shm_flag,(TDirectory*)f,"//PAWC","//LUN10");
-  int icycle = 0;
-  hrout_(0,icycle,"T",1);
-  hrend_("LUN10",5);
-  f->Close();
-  return;
-}
-
-void root2dir(const char* root_name, TDirectory* root_dir){
-  TFile *f = open_input_root(root_name);
-  if (f==0) {return;}
-  if (root_dir == 0) {root_dir = gROOT;}
-  convert_dir_root2root((TDirectory*)f,root_dir);
-  f->Write();
-  f->Close();
-  return;
-}
-
-void dir2shm(TDirectory* root_dir, const char *shm_name){
-  if(init_hbook(1)==0){return;}
-  if (root_dir == 0) {root_dir = gDirectory;}
-  std::string shm_name_str = open_output_shm(root_dir->GetName(),shm_name);
-  if (shm_name_str =="") {return;}
-  int shm_flag = 1;
-  convert_dir_root2hbk(shm_flag,root_dir,"//PAWC","");
-return;
-}
-
-void dir2hbk(TDirectory* root_dir, const char* hbk_name){
-  if(init_hbook(0)==0){return;}
-  if (root_dir == 0) {root_dir = gDirectory;}
-  std::string hbk_name_str = open_output_hbk(root_dir->GetName(),hbk_name);
-  if(hbk_name_str==""){return;}
-  int shm_flag = 0;
-  convert_dir_root2hbk(shm_flag,root_dir,"//PAWC","//LUN10");
-  int icycle = 0;
-  hrout_(0,icycle,"T",1);
-  hrend_("LUN10",5);
-  return;
-}
-
-void dir2root(TDirectory* root_dir, const char* root_name){
-  if (root_dir == 0) {root_dir = gDirectory;}
-  TFile *f = open_output_root(root_dir->GetName(),root_name);
-  if (f==0) {return;}
-  convert_dir_root2root(root_dir,(TDirectory*)f);
-  f->Write();
-  f->Close();
-  return;
-}
-
-void dir2shm(const char *shm_name){
-  dir2shm(0, shm_name);
-  return;
-}
-void dir2hbk(const char* hbk_name){
-  dir2hbk(0, hbk_name);
-  return;
-}
-void dir2root(const char* root_name){
-  dir2root(0, root_name);
-  return;
-}
-void dir2srv(int port){
-  dir2srv(0, port);
-  return;
-}
-
-void srv2shm(const char* srv_url, const char *shm_name){
-  if(init_hbook(1)==0){return;}
+void srv2dir(const char* srv_url, TDirectory* root_dir){
   TXMLEngine xml;
   XMLDocPointer_t xmldoc = open_input_srv(xml, srv_url);
   if(xmldoc == 0){return;}
   XMLNodePointer_t mainnode = xml.DocGetRootElement(xmldoc);
   XMLNodePointer_t child = xml.GetChild(mainnode);
-  std::string shm_name_str = open_output_shm("http",shm_name);
-  if (shm_name_str =="") {return;}
+  if (root_dir == 0) {root_dir = gROOT;}
   TString fulldir = "";
-  int shm_flag = 1;
-  convert_dir_srv2hbk(shm_flag, xml, child, 1, srv_url, fulldir, "//PAWC","");
+  convert_dir_srv2root(xml, child, 1, srv_url, fulldir, root_dir);
   xml.FreeDoc(xmldoc);
   return;
 }
@@ -718,19 +719,6 @@ void srv2hbk(const char* srv_url, const char *hbk_name){
   return;
 }
 
-void srv2dir(const char* srv_url, TDirectory* root_dir){
-  TXMLEngine xml;
-  XMLDocPointer_t xmldoc = open_input_srv(xml, srv_url);
-  if(xmldoc == 0){return;}
-  XMLNodePointer_t mainnode = xml.DocGetRootElement(xmldoc);
-  XMLNodePointer_t child = xml.GetChild(mainnode);
-  if (root_dir == 0) {root_dir = gROOT;}
-  TString fulldir = "";
-  convert_dir_srv2root(xml, child, 1, srv_url, fulldir, root_dir);
-  xml.FreeDoc(xmldoc);
-  return;
-}
-
 void srv2root(const char* srv_url, const char* root_name){
   TXMLEngine xml;
   XMLDocPointer_t xmldoc = open_input_srv(xml, srv_url);
@@ -744,6 +732,22 @@ void srv2root(const char* srv_url, const char* root_name){
   xml.FreeDoc(xmldoc);
   f->Write();
   f->Close();
+  return;
+}
+
+void srv2shm(const char* srv_url, const char *shm_name){
+  if(init_hbook(1)==0){return;}
+  TXMLEngine xml;
+  XMLDocPointer_t xmldoc = open_input_srv(xml, srv_url);
+  if(xmldoc == 0){return;}
+  XMLNodePointer_t mainnode = xml.DocGetRootElement(xmldoc);
+  XMLNodePointer_t child = xml.GetChild(mainnode);
+  std::string shm_name_str = open_output_shm("http",shm_name);
+  if (shm_name_str =="") {return;}
+  TString fulldir = "";
+  int shm_flag = 1;
+  convert_dir_srv2hbk(shm_flag, xml, child, 1, srv_url, fulldir, "//PAWC","");
+  xml.FreeDoc(xmldoc);
   return;
 }
 

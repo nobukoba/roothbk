@@ -1,19 +1,19 @@
 /*
-  First, execute the write_shm.C macro to
-  create histograms on shared memory named EXAM.
+  First, execute the macro_dir2root.C macro to
+  create the ROOT file dir2root.root.
   Then, execute this macro as follows.
 
-  $ root root2hbk.C
+  $ root macro_root2hbk.C
 
 */
 #if defined(__CLING__)
 R__LOAD_LIBRARY(../../lib/libroothbklib.so)  
 #endif
  
-void root2hbk(){
+void macro_root2hbk(){
 #if defined(__CINT__)
   gSystem->Load("../../lib/libroothbklib.so");
 #endif
-  root2hbk();
+  root2hbk("dir2root.root");
   return;
 }
