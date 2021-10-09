@@ -14,6 +14,6 @@ void macro_shm2srv(){
 #if defined(__CINT__)
   gSystem->Load("../../lib/libroothbklib.so");
 #endif
-  macro_shm2srv("EXAM");
+  shm2srv("EXAM");
   return;
 }

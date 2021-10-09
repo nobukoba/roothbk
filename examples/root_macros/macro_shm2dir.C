@@ -14,7 +14,7 @@ void macro_shm2dir(){
 #if defined(__CINT__)
   gSystem->Load("../../lib/libroothbklib.so");
 #endif
-  shm2dir();
+  shm2dir("EXAM");
   TH1* h1_test1 = (TH1*)gROOT->TDirectory::FindObject("h1_test1");
   h1_test1->Draw();
   return;

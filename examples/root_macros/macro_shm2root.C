@@ -14,6 +14,6 @@ void macro_shm2root(){
 #if defined(__CINT__)
   gSystem->Load("../../lib/libroothbklib.so");
 #endif
-  shm2root();
+  shm2root("EXAM");
   return;
 }
