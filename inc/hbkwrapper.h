@@ -17,7 +17,7 @@ void  hlimit(const int);
 void  hlimap(const char *);
 void  hlimap(const int, const char *);
 void  hropen(const int,const char*,const char*,const char*,const int&,const int&);
-void  hrin2(const int,const int,const int);
+void  hrin(const int,const int,const int);
 void  hrend(const char*);
 void  hrout(const int, const int&, const char*);
 void  hgive(const int,const char*,const int&,const float&,const float&,const int&,const float&,const float&,const int&,const int&);

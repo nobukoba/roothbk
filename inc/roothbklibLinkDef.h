@@ -6,7 +6,7 @@
 #pragma link C++ function hlimit;
 #pragma link C++ function hlimap;
 #pragma link C++ function hropen;
-#pragma link C++ function hrin2;
+#pragma link C++ function hrin;
 #pragma link C++ function hrend;
 #pragma link C++ function hrout;
 #pragma link C++ function hgive;

@@ -47,7 +47,7 @@ extern "C" void  uhtoc_(const int&,const int&,const char*,int&,const int);
 /* --> Nobu added */
 extern "C" void  hlimap_(const int&,const char*, const int);
 extern "C" void  hidall_(const int*, const int&);
-extern "C" void  hrin2_(const int&,const int&,const int&);
+extern "C" void  hrin_(const int&,const int&,const int&);
 extern "C" void  hrend_(const char*,const int);
 extern "C" void  hdcofl_();
 extern "C" void  hbook1_(const int&,const char*,const int&,const float&,const float&,const float&,const int);

@@ -23,8 +23,8 @@ void  hropen(const int lun, const char* chtop,
   return;
 }
 
-void hrin2(const int id, const int icycle, const int iofset){
-  hrin2_(id, icycle, iofset);
+void hrin(const int id, const int icycle, const int iofset){
+  hrin_(id, icycle, iofset);
 }
 
 void hrend(const char* chtop){

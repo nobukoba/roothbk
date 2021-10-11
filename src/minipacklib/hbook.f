@@ -306,15 +306,41 @@
       INTEGER       KEYS(2)
       DATA KHIDE,KHID1,KHID2,KHCO1,KHCO2/4HHIDE,4HHID1,4HHID2,
      +                                   4hHCO1,4HHCO2/
-      CALL UCTOH ('KHIDE', KHIDE, 4,4)
-      CALL UCTOH ('KHID1', KHID1, 4,4)
-      CALL UCTOH ('KHID2', KHID2, 4,4)
-      CALL UCTOH ('KHCO1', KHCO1, 4,4)
-      CALL UCTOH ('KHCO1', KHCO1, 4,4)
+* Nobu test lines 2021.10.11
+*     CALL UCTOH ('KHIDE', KHIDE, 4,4)
+*      CALL UCTOH ('KHID1', KHID1, 4,4)
+*      CALL UCTOH ('KHID2', KHID2, 4,4)
+*      CALL UCTOH ('KHCO1', KHCO1, 4,4)
+*      CALL UCTOH ('KHCO1', KHCO1, 4,4)
 
       IOFSET=KOFSET
       IF(ICHTOP(ICDIR).LT.0)THEN
-         print*, '>>>>>> HRIN: ICHTOP(ICDIR).LT.0'
+* c/o Nobu 2018/01/26 20:18:17 -->
+*         print*, '>>>>>> HRIN: ICHTOP(ICDIR).LT.0'
+* --> End
+* Nobu added 2018/01/25 16:16:27 -->
+         IF(INDEX(HFNAME(ICDIR),'memory').NE.0)THEN
+            LOCQ=1-LOCF(IQUEST(1))-ICHTOP(ICDIR)
+            LOCQ=1-LOC(IQUEST(1))/4-ICHTOP(ICDIR)
+*            write(*,*) "hrin2.f LOCF(IQUEST(1)", LOCF(IQUEST(1))
+*            write(*,*) "hrin2.f IQUEST(1)", IQUEST(1)
+*            write(*,*) "hrin2.f LOC(IQUEST(1))", LOC(IQUEST(1))
+*            write(*,*) "hrin2.f ICHTOP(ICDIR)", ICHTOP(ICDIR)
+*            write(*,*) "hrin2.f ICDIR", ICDIR
+*            write(*,*) "hrin2.f LOCQ", LOCQ
+*            write(*,*) 'hrin2.f here 1'
+*            write(*,*) "hrin2.f IQUEST(LOCQ)", IQUEST(LOCQ)
+*            write(*,*) 'hrin2.f here 2'
+            CALL HCOPYU(IDD,IQUEST(LOCQ),IOFSET)
+*            write(*,*) "here in hrin2 1"
+*         ELSE
+*            LOCQ=1-LOCF(IQUEST(1))-ICHTOP(ICDIR)
+*            CALL HCOPYM(IDD,IQUEST(LOCQ),IOFSET)
+         ENDIF
+         CALL SBIT1(IQ(LCID),5)
+*         write(*,*) "hrin2.f IQUEST(LOCQ)", IQUEST(LOCQ)
+         GO TO 80
+* <-- End
       ENDIF
       IF(ICYCLE.GT.1000.AND.IDD.EQ.0)THEN
          CALL HPAFF(CHCDIR,NLCDIR,CHWOLD)

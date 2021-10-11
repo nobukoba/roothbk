@@ -174,7 +174,7 @@ std::string open_input_shm(const char* shm_name){
     }
   }
   hlimap_(0,shm_name_str.c_str(),shm_name_str.length());
-  hrin2_(0,9999,0);
+  hrin_(0,9999,0);
   hdelet_(0);
   if (quest_[0]) {
     printf("Error: cannot open the shared memory: %s\n",shm_name_str.c_str());
@@ -732,7 +732,7 @@ void srv2shm(const char* srv_url, const char *shm_name){
 void convert_dir_hbk2hbk(int shm_flag, const char* cur_dir, const char *pawdir_in, const char *lundir_in) {
   std::string cur_dir_str = cur_dir;
   hcdir_(cur_dir_str.c_str()," ",cur_dir_str.length(),1);
-  hrin2_(0,9999,0);
+  hrin_(0,9999,0);
   /* converting subdirectories of this directory */
   int ndir = 0;
   char subdirs[50][16];
@@ -901,13 +901,13 @@ void convert_dir_hbk2root(const char *cur_dir, TDirectory* output_dir) {
   int imax = 0;
   std::string cur_dir_str = cur_dir;
   hcdir_(cur_dir_str.c_str()," ",cur_dir_str.length(),1);
-  hrin2_(0,9999,0);
+  hrin_(0,9999,0);
   hidall_(idvec,imax);
   hdelet_(0);
   for (int i=0;i<imax;i++) {
     int id = idvec[i];
     int i999 = 999;
-    hrin2_(id,i999,0);
+    hrin_(id,i999,0);
     if (quest_[0]) {
       printf("Error cannot read ID = %d\n",id);
       /* break; */
