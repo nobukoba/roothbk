@@ -101,27 +101,14 @@ void lshm(){
   return;
 }
 
-int init_hbook(int input_hlimap_flag){
+void init_hbook(){
   static int hlimit_flag = 0;
-  static int hlimap_flag = 0;
-  if (hlimit_flag == 1) {return 1;}
-  if (hlimap_flag == 1) {
-    if(input_hlimap_flag == 0){
-      std::cout << "Error in reading HBOOKs!" << std::endl;
-      std::cout << "Shared memory write mode is activated."<< std::endl;
-      std::cout << "Use another ROOT sessoin to read or write HBOOKs." << std::endl;
-    return 0;
-    }
-    return 1;
-  }
-  if (input_hlimap_flag==1){
-    hlimap_flag = 1;
-  }else{
+  if (hlimit_flag==0){
     int pawc_size = PAWC_SIZE;
     hlimit_(pawc_size);
     hlimit_flag = 1;
   }
-  return 1;
+  return;
 }
 
 std::string get_shm_names_str(const char *shm_names){
@@ -174,6 +161,7 @@ std::string get_shm_names_str(const char *shm_names){
 }
 
 std::string open_input_shm(const char* shm_name){
+  init_hbook();
   std::string shm_name_str = shm_name;
   shm_name_str = shm_name_str.substr(0,4);
   if (((int)shm_name_str.find(",")) > -1) {
@@ -197,6 +185,7 @@ std::string open_input_shm(const char* shm_name){
 }
 
 std::string open_input_hbk(const char* hbk_name){
+  init_hbook();
   std::string hbk_name_str = hbk_name;
   int lun = 10, ier=0, record_size=0;
   hropen_(lun,"LUN10",hbk_name_str.c_str(),"x",record_size,ier,5,hbk_name_str.length(),1);
@@ -257,6 +246,7 @@ std::string open_output_shm(const char *name, const char* shm_name){
 }
 
 std::string open_output_hbk(const char* name, const char* hbk_name){
+  init_hbook();
   std::string hbk_name_str = hbk_name;
   if(hbk_name_str.length()==0){
     hbk_name_str = name;
@@ -348,7 +338,6 @@ THttpServer* open_output_srv(int port) {
 }
 
 void dir2hbk(TDirectory* root_dir, const char* hbk_name){
-  if(init_hbook(0)==0){return;}
   if (root_dir == 0) {root_dir = gDirectory;}
   std::string hbk_name_str = open_output_hbk(root_dir->GetName(),hbk_name);
   if(hbk_name_str==""){return;}
@@ -371,7 +360,6 @@ void dir2root(TDirectory* root_dir, const char* root_name){
 }
 
 void dir2shm(TDirectory* root_dir, const char *shm_name){
-  if(init_hbook(1)==0){return;}
   if (root_dir == 0) {root_dir = gDirectory;}
   std::string shm_name_str = open_output_shm(root_dir->GetName(),shm_name);
   if (shm_name_str =="") {return;}
@@ -407,7 +395,6 @@ void dir2srv(int port){
 }
 
 void hbk2dir(const char *hbk_name, TDirectory* root_dir) {
-  if(init_hbook(0)==0){return;}
   std::string hbk_name_str = open_input_hbk(hbk_name);
   if(hbk_name_str==""){return;}
   if (root_dir == 0) {root_dir = gROOT;}
@@ -417,7 +404,6 @@ void hbk2dir(const char *hbk_name, TDirectory* root_dir) {
 }
 
 void hbk2root(const char *hbk_name, const char *root_name) {
-  if(init_hbook(0)==0){return;}
   std::string hbk_name_str = open_input_hbk(hbk_name);
   if(hbk_name_str==""){return;}
   TFile *f = open_output_root(hbk_name,root_name);
@@ -430,7 +416,6 @@ void hbk2root(const char *hbk_name, const char *root_name) {
 }
 
 void hbk2shm(const char* hbk_name, const char* shm_name){
-  if(init_hbook(1)==0){return;}
   std::string shm_name_str = open_output_shm(hbk_name,shm_name);
   if (shm_name_str =="") {return;}
   std::string hbk_name_str = open_input_hbk(hbk_name);
@@ -443,7 +428,6 @@ void hbk2shm(const char* hbk_name, const char* shm_name){
 }
 
 void hbk2srv(const char *hbk_name, int port, TDirectory* root_dir) {
-  if(init_hbook(0)==0){return;}
   std::string hbk_name_str = open_input_hbk(hbk_name);
   if(hbk_name_str==""){return;}
   THttpServer* serv = open_output_srv(port);
@@ -467,7 +451,6 @@ void root2dir(const char* root_name, TDirectory* root_dir){
 }
 
 void root2hbk(const char *root_name, const char* hbk_name){
-  if(init_hbook(0)==0){return;}
   TFile *f = open_input_root(root_name);
   if (f==0) {return;}
   std::string hbk_name_str = open_output_hbk(root_name,hbk_name);
@@ -482,7 +465,6 @@ void root2hbk(const char *root_name, const char* hbk_name){
 }
 
 void root2shm(const char *root_name, const char* shm_name){
-  if(init_hbook(1)==0){return;}
   TFile *f = open_input_root(root_name);
   if (f==0) {return;}
   std::string shm_name_str = open_output_shm(root_name,shm_name);
@@ -507,7 +489,6 @@ void root2srv(const char *root_name, int port, TDirectory* root_dir) {
 }
 
 void shm2dir(const char *shm_name, TDirectory* root_dir) {
-  if(init_hbook(0)==0){return;}
   std::string shm_name_str = open_input_shm(shm_name);
   if(shm_name_str==""){return;}
   if (root_dir == 0) {root_dir = gROOT;}
@@ -517,12 +498,13 @@ void shm2dir(const char *shm_name, TDirectory* root_dir) {
 }
 
 void shm2hbk(const char* shm_name, const char* hbk_name){
-  if(init_hbook(0)==0){return;}
   std::string shm_name_str = open_input_shm(shm_name);
   if(shm_name_str==""){return;}
   std::string hbk_name_str = open_output_hbk(shm_name,hbk_name);
   if(hbk_name_str==""){return;}
   int shm_flag = 1;
+  hcdir_("//LUN10"," ",7,1);
+  hcdir_("//PAWC"," ",6,1);
   convert_dir_hbk2hbk(shm_flag,shm_name_str.c_str(),"//PAWC","//LUN10");
   hcdir_("//PAWC"," ",6,1);
   hcdir_("//LUN10"," ",7,1);
@@ -533,7 +515,6 @@ void shm2hbk(const char* shm_name, const char* hbk_name){
 }
 
 void shm2root(const char *shm_name, const char *root_name) {
-  if(init_hbook(0)==0){return;}
   std::string shm_name_str = open_input_shm(shm_name);
   if(shm_name_str==""){return;}
   TFile *f = open_output_root(shm_name,root_name);
@@ -545,7 +526,6 @@ void shm2root(const char *shm_name, const char *root_name) {
 }
 
 void shm2srv(const char *shm_name, int port, TDirectory* root_dir) {
-  if(init_hbook(0)==0){return;}
   std::string shm_name_str = open_input_shm(shm_name);
   if(shm_name_str==""){return;}
   THttpServer* serv = open_output_srv(port);
@@ -581,7 +561,6 @@ void shms2dir(const char *shm_names, TDirectory* root_dir) {
 }
 
 void shms2hbk(const char *shm_names, const char *hbk_name) {
-  if(init_hbook(0)==0){return;}
   std::string shm_names_str = get_shm_names_str(shm_names);
   std::string hbk_name_str = open_output_hbk("shms",hbk_name);
   if(hbk_name_str==""){return;}
@@ -702,7 +681,6 @@ void srv2dir(const char* srv_url, TDirectory* root_dir){
 }
 
 void srv2hbk(const char* srv_url, const char *hbk_name){
-  if(init_hbook(0)==0){return;}
   TXMLEngine xml;
   XMLDocPointer_t xmldoc = open_input_srv(xml, srv_url);
   if(xmldoc == 0){return;}
@@ -737,7 +715,6 @@ void srv2root(const char* srv_url, const char* root_name){
 }
 
 void srv2shm(const char* srv_url, const char *shm_name){
-  if(init_hbook(1)==0){return;}
   TXMLEngine xml;
   XMLDocPointer_t xmldoc = open_input_srv(xml, srv_url);
   if(xmldoc == 0){return;}

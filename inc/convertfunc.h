@@ -11,7 +11,7 @@ void shms2srv_sync(int);
 void lshm();
 void dshm(const char *);
 
-int init_hbook(int);
+void init_hbook();
 std::string get_shm_names_str(const char *);
 std::string open_input_shm(const char*);
 std::string open_input_hbk(const char*);

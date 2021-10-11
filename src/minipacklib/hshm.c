@@ -23,9 +23,15 @@
 #define  SHM_W      0200
 
 static int    shm_pawc;
-static void  *paddr;
+static void  *paddr = 0; /* 0 was added nobu */
 static long   len;
  
+
+/* Nobu added 2021.10.11 --> */
+static void  *paddr_cre = 0;
+int hfreem_(long *);
+int hfreem_cre_(long *);
+/* <-- */
 
  
 /***********************************************************************
@@ -49,7 +55,13 @@ int hcreatei_(key_t *mkey, int *size, long *comaddr)
 #else
    len = *size * 8;
 #endif
- 
+
+   /* Nobu added 2021.10.11 --> */
+   if (paddr_cre){
+     hfreem_cre_(0);
+   }
+   /* <-- */
+
    /* create shared memory segment */
    if ((shm_pawc = shmget(*mkey, len, flag)) < 0) {
       perror("shmget");
@@ -62,12 +74,14 @@ int hcreatei_(key_t *mkey, int *size, long *comaddr)
     * starting at req_addr
     */
     req_addr = (void*)(*comaddr);
-    if ((paddr = shmat(shm_pawc, req_addr, SHM_RND)) == (void *)-1) {
+    /*if ((paddr = shmat(shm_pawc, req_addr, SHM_RND)) == (void *)-1) { */
+    if ((paddr_cre = shmat(shm_pawc, req_addr, SHM_RND)) == (void *)-1) {
       perror("shmat");
       istat = -errno;
    } else {
       istat    = 0;
-      inter    = (unsigned long) paddr;
+      /* inter    = (unsigned long) paddr; */
+      inter    = (unsigned long) paddr_cre;
 #if !defined(DOUBLE_PRECISION)
       *comaddr = (long) (inter >> 2);
 #else
@@ -97,7 +111,12 @@ int hmapi_(key_t *mkey, long *comaddr)
    unsigned long    inter;
    void            *req_addr;
    struct shmid_ds  shm_stat;
-   
+
+   /* Nobu added 2021.10.11 --> */
+   if (paddr){
+     hfreem_(0);
+   }
+   /* <-- */
    /*
      printf("hshm.c comaddr %ld\n", comaddr);
      printf("hshm.c *comaddr %ld\n", *comaddr);
@@ -164,7 +183,10 @@ int hfreem_(long *comaddr)
       istat = -errno;
       return(istat);
    }
- 
+   /* Nobu added 2021.10.11 --> */
+   paddr = 0;
+   /* <-- */
+   
    /* delete shared segment */
 /*****
    if ((istat = shmctl(shm_pawc, IPC_RMID, (struct shmid_ds *)0)) == -1) {
@@ -174,3 +196,18 @@ int hfreem_(long *comaddr)
 *****/
    return(istat);
 }
+
+/* Nobu added 2021.10.11 --> */
+int hfreem_cre_(long *comaddr)
+{
+   int istat;
+   /* unmaps segment from address space */
+   if ((istat = shmdt(paddr_cre)) == -1) {
+      perror("shmdt");
+      istat = -errno;
+      return(istat);
+   }
+   paddr_cre = 0;
+   return(istat);
+}
+/* <-- */
