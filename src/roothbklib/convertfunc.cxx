@@ -439,7 +439,6 @@ void hbk2shm(const char* hbk_name, const char* shm_name){
   convert_dir_hbk2hbk(shm_flag,hbk_name_str.c_str(),"//PAWC","");
   hcdir_("//PAWC"," ",6,1);
   hrend_("LUN10",5);
-  hfreem_((long*)0);
   return;
 }
 
