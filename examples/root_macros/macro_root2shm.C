@@ -14,6 +14,6 @@ void macro_root2shm(){
 #if defined(__CINT__)
   gSystem->Load("../../lib/libroothbklib.so");
 #endif
-  root2shm("dir2root.root");
+  root2shm("dir2root.root","EXAM");
   return;
 }

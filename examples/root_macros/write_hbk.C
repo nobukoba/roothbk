@@ -19,7 +19,6 @@ int write_hbk() {
   /* If you want to change the value 32000000 of "hlimit(32000000)",
      also the "HCV(32000000-11)" in inc/hbook/hcbook.inc 
      should be modified in calling from C/C++ programs. */
-  printaddr();
   hlimit(32000000);
   int ier=0, record_size=1024;
   hropen(10,"LUN10","write_hbk.hb","n",record_size,ier);

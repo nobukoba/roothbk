@@ -14,6 +14,6 @@ void macro_hbk2shm(){
 #if defined(__CINT__)
   gSystem->Load("../../lib/libroothbklib.so");
 #endif
-  hbk2shm("write_hbk.hb");
+  hbk2shm("write_hbk.hb","EXAM");
   return;
 }
