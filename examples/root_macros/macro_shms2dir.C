@@ -17,10 +17,10 @@ void macro_shms2dir(){
   shms2dir();
   gROOT->ls();
   std::string homedir = gSystem->GetHomeDirectory();
-  std::string dirname = gSystem->Basename(homedir.c_str());
+  std::string dirname = gSystem->BaseName(homedir.c_str());
   dirname = "EXAM_" + dirname;
   TDirectory* d = (TDirectory*)gROOT->TDirectory::FindObject(dirname.c_str());
-  TH1* h1_test1 = (TH1*)gROOT->TDirectory::FindObject("h1_test1");
+  TH1* h1_test1 = (TH1*)d->TDirectory::FindObject("h1_test1");
   h1_test1->Draw();
   return;
 }

@@ -525,6 +525,8 @@ void shm2hbk(const char* shm_name, const char* hbk_name){
   if(hbk_name_str==""){return;}
   int shm_flag = 1;
   convert_dir_hbk2hbk(shm_flag,shm_name_str.c_str(),"//PAWC","//LUN10");
+  hcdir_("//PAWC"," ",6,1);
+  hcdir_("//LUN10"," ",7,1);
   int icycle = 0;
   hrout_(0,icycle,"T",1);
   hrend_("LUN10",5);
