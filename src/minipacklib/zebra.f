@@ -1008,7 +1008,7 @@ c      ENDIF
       DO 39  JW=1,N
       CALL UPKBYT (INTV(JW),1,MM(1),4,MPAK(1))
       DO 16  J=1,4
-         write(*,*) 'ZITOH MM(J) ',MM(J)
+*         write(*,*) 'ZITOH MM(J) ',MM(J)
          JV = MM(J)
       IF (JV.EQ.0)  JV=45
    16 MM(J) = IQLETT(JV)
