@@ -306,7 +306,10 @@
       INTEGER       KEYS(2)
       DATA KHIDE,KHID1,KHID2,KHCO1,KHCO2/4HHIDE,4HHID1,4HHID2,
      +                                   4hHCO1,4HHCO2/
-* Nobu test lines 2021.10.11
+* Nobu added 2021.10.11 -->
+      INTEGER*8 LOCQ
+* <--
+*     Nobu test lines 2021.10.11
 *     CALL UCTOH ('KHIDE', KHIDE, 4,4)
 *      CALL UCTOH ('KHID1', KHID1, 4,4)
 *      CALL UCTOH ('KHID2', KHID2, 4,4)
