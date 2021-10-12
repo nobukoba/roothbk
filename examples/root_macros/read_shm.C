@@ -23,13 +23,13 @@ int read_shm() {
   hlimap(0, "EXAM");
   int idvec[10000];
   int imax = 0;
-  hrin2(0,9999,0);
+  hrin(0,9999,0);
   hidall(idvec,imax);
   hdelet(0);
   std::cout << "imax: " << imax <<std::endl;
   for (int i=0;i<imax;i++) {
     int id = idvec[i];
-    hrin2(id,999,0);
+    hrin(id,999,0);
     if (quest[0]) {
       std::cout << "Error cannot read ID = " << id << std::endl;
     }

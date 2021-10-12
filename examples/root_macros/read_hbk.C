@@ -29,12 +29,12 @@ int read_hbk() {
   }
   int idvec[10000];
   int imax = 0;
-  hrin2(0,9999,0);
+  hrin(0,9999,0);
   hidall(idvec,imax);
   hdelet(0);
   for (int i=0;i<imax;i++) {
     int id = idvec[i];
-    hrin2(id,999,0);
+    hrin(id,999,0);
     if (quest[0]) {
       printf("Error cannot read ID = %d\n",id);
     }
