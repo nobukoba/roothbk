@@ -21,12 +21,12 @@
          return
       endif
 
-      call hrin2(0,9999,0)
+      call hrin(0,9999,0)
       call hidall(idvec, imax)
       call hdelet(0)
       do i = 1, imax
          id =idvec(i)
-         call hrin2(id,999,0)
+         call hrin(id,999,0)
          if (quest(1).ne.0) then
             write(*,*) 'Error cannot read ID = ', id
             return
