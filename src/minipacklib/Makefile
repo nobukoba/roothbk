@@ -1,4 +1,4 @@
-TARGETS    = ../../lib/libminipacklib.so ../../lib/libminipacklib.a
+TARGETS   = libminipacklib.so libminipacklib.a
 CC        = gcc
 FC        = gfortran
 AR        = ar r
@@ -10,9 +10,9 @@ OBJECTS	  = zebra.o hbook.o cernlib.o kernlib.o hlimap.o hidall.o mzwork.o hcrea
 
 all:	$(TARGETS)
 
-../../lib/libminipacklib.so: $(OBJECTS)
+libminipacklib.so: $(OBJECTS)
 	$(CXX) -shared $(LFLAGS) -o $@ $^
-../../lib/libminipacklib.a:  $(OBJECTS)
+libminipacklib.a:  $(OBJECTS)
 	$(AR) $@  $(OBJECTS)
 
 %.o: %.c
