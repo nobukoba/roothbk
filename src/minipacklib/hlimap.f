@@ -62,10 +62,13 @@
       CHARACTER*4 GNAME
       CHARACTER*64 CHGLOB
       SAVE CHGLOB
-	 COMMON /MMPSHR/ IGSIZE,IGOFF ! nobu
-         INTEGER*8 IGSIZE,IGOFF ! nobu
-         DATA IGSIZE,IGOFF/0,0/
-         INTEGER*8 IOFFST,ILAST ! nobu
+*     nobu modified?
+      COMMON /MMPSHR/ IGSIZE,IGOFF
+*     nobu added
+      INTEGER*8 IGSIZE,IGOFF
+      DATA IGSIZE,IGOFF/0,0/
+*     nobu added
+      INTEGER*8 IOFFST,ILAST
 
 *.___________________________________________
 *
