@@ -13,7 +13,7 @@
 * Zebra
 *
 *
-#include "zebra/pilot.h"
+*#include "zebra/pilot.h"
 #if !defined(CERNLIB_FQXISN)
       SUBROUTINE FZOCV (MS,MT)
 

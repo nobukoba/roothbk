@@ -13,7 +13,7 @@
 * Zebra
 *
 *
-#include "zebra/pilot.h"
+*#include "zebra/pilot.h"
       SUBROUTINE MZCOPY (IXDVFR,LENTP,IXDVTO,LSUPP,JBIASP,CHOPT)
 
 C-    Copy a data-structure, User called
@@ -46,9 +46,13 @@ C-    Copy a data-structure, User called
 *#endif
       DATA  LADESV / 6, 5*0 /
 
-#include "zebra/q_locf.inc"
+*#include "zebra/q_locf.inc"
 
-#include "zebra/qtrace.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
 #if defined(CERNLIB_QDEBUG)
       IF (IQVSTA.NE.0)       CALL ZVAUTX
 #endif
@@ -351,7 +355,8 @@ C----              Connect d/s
 
       IQUEST(1) = 0
       IQUEST(2) = NWBKX
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       RETURN
 
 C----------        Error conditions      -----------------------

@@ -13,7 +13,7 @@
 * Zebra
 *
 *
-#include "zebra/pilot.h"
+*#include "zebra/pilot.h"
       SUBROUTINE FZOTAB
 
 C-    Construct table of material to be output,
@@ -40,12 +40,16 @@ C-    called from FZOUT, RZOUT, MZCOPY
 *      PARAMETER   (NAMESR = 'FZOTAB  ')
 *#endif
 
-#include "zebra/q_jbit.inc"
-#include "zebra/q_jbyt.inc"
-#include "zebra/q_sbit0.inc"
+*#include "zebra/q_jbit.inc"
+*#include "zebra/q_jbyt.inc"
+*#include "zebra/q_sbit0.inc"
 
 
-#include "zebra/qtrace.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
 
   101 MQDVGA = 0
       MQDVWI = 0
@@ -363,6 +367,7 @@ C-------------------------------------------------
       ENDIF
       IQUEST(1) = -2
 
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       RETURN
       END

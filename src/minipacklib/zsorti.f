@@ -13,7 +13,7 @@
 * Zebra
 *
 *
-#include "zebra/pilot.h"
+*#include "zebra/pilot.h"
       SUBROUTINE ZSORTI (IXSTOR,LGOP,JWORD)
 
 C-    SORT BANKS AT LGO FOR WORDS IQ(L+JWORD) TO BE IN INCREASING ORDER
@@ -34,13 +34,17 @@ C-    SORT BANKS AT LGO FOR WORDS IQ(L+JWORD) TO BE IN INCREASING ORDER
 *      PARAMETER   (NAMESR = 'ZSORTI  ')
 *#endif
 
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbyt.inc"
 
       LGO = LGOP(1)
       IF (LGO.EQ.0)          RETURN
 
-#include "zebra/qtraceq.inc"
-#include "zebra/qstore.inc"
+*#include "zebra/qtraceq.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*#include "zebra/qstore.inc"
+      IF (JBYT(IXSTOR,27,6).NE.JQSTOR)  CALL MZSDIV (IXSTOR,-7)
 
       JW    = JWORD(1)
       KGONG = LQSTA(KQT+2) - 1
@@ -121,6 +125,7 @@ C----              FINISHED, LINK +VE AND -VE STREAMS, CHAIN K-LINKS
       LQ(KQS+L+2) = K
       GO TO 84
 
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       RETURN
       END

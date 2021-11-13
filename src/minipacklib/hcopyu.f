@@ -6,7 +6,7 @@
 * First import
 *
 *
-#include "hbook/pilot.h"
+*#include "hbook/pilot.h"
 *CMZ :  4.21/00 23/10/93  16.53.51  by  Rene Brun
 *-- Author :    Rene Brun   29/03/91
       SUBROUTINE HCOPYU(ID,IPAWD,IOFSET)

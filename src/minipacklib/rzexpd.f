@@ -10,7 +10,7 @@
 * Zebra
 *
 *
-#include "zebra/pilot.h"
+*#include "zebra/pilot.h"
       SUBROUTINE RZEXPD(CHROUT,NMORE)
 *
 ************************************************************************
@@ -33,7 +33,7 @@
 *
 *-----------------------------------------------------------------------
 *
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbyt.inc"
 *
       LD = IQ(KQSP+LCDIR+KLD)
       LB = IQ(KQSP+LCDIR+KLB)

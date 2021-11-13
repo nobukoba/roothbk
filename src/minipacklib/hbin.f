@@ -6,7 +6,7 @@
 * First import
 *
 *
-#include "hbook/pilot.h"
+*#include "hbook/pilot.h"
 *CMZ :          30/06/95  09.31.39  by  Rene Brun
 *-- Author :
       SUBROUTINE HBIN(A1,A2,NAA,BL,BH,NB,BWID)

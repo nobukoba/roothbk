@@ -6,7 +6,7 @@
 * First import
 *
 *
-#include "hbook/pilot.h"
+*#include "hbook/pilot.h"
 *CMZ :  4.19/00 26/04/93  11.57.51  by  Rene Brun
 *-- Author :
       SUBROUTINE HRNDM2(IDD,XR,YR)

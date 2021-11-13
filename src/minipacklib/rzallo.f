@@ -10,7 +10,7 @@
 * Zebra
 *
 *
-#include "zebra/pilot.h"
+*#include "zebra/pilot.h"
       SUBROUTINE RZALLO(CHROUT,N,IALLOC)
 *
 ***********************************************************************
@@ -40,7 +40,7 @@
 *-----------------------------------------------------------------------
 *
 
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbyt.inc"
 
       LOGLV=JBYT(IQ(KQSP+LTOP),15,3)-3
       IF(LFREE.EQ.0)GO TO 90

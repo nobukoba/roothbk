@@ -13,7 +13,7 @@
 * Zebra
 *
 *
-#include "zebra/pilot.h"
+*#include "zebra/pilot.h"
       SUBROUTINE MZWORK (IXSTOR,DFIRST,DLAST,IFLAGP)
 
 C-    Allocate working space, user called
@@ -53,11 +53,10 @@ C-             4  vary  only DFIRST limit, keep common links
 *#include "zebra/q_jbit.inc"
 * --> c/o Nobu
 * Added Nobu see minicern/zebra.f and rzfile -->
-      JBIT(IZW,IZP) = IAND(ISHFT(IZW,-(IZP-1)),1)
+*      JBIT(IZW,IZP) = IAND(ISHFT(IZW,-(IZP-1)),1)
 * --> Added Nobu
-
-#include "zebra/q_jbyt.inc"
-#include "zebra/q_locf.inc"
+*#include "zebra/q_jbyt.inc"
+*#include "zebra/q_locf.inc"
 *      write(*,*) 'mzwork 1 NQOFFT(1+1)', NQOFFT(1+1)
 *      write(*,*) 'mzwork 1 LQSTA(NQOFFT(1+1)+1)'
 *      write(*,*) LQSTA(NQOFFT(1+1)+1)
@@ -66,8 +65,13 @@ C-             4  vary  only DFIRST limit, keep common links
       IFLAG = IFLAGP(1)
 *      write(*,*) 'mzwork 1 IFLAG', IFLAG
 
-#include "zebra/qtrace.inc"
-#include "zebra/qstore.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
+*#include "zebra/qstore.inc"
+      IF (JBYT(IXSTOR,27,6).NE.JQSTOR)  CALL MZSDIV (IXSTOR,-7)
 
 * c/o Nobu see minicern/zebra.f and mzlink.F -->
 *#if defined(CERNLIB_QDEBUG)
@@ -172,7 +176,8 @@ C----              Set new limits
 * c/o Nobu see  minicern/zebra.f and mzgar1.F -->
 *#endif
 * --> c/o Nobu
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
 *      write(*,*) 'mzwork * NQOFFT(1+1)', NQOFFT(1+1)
 *      write(*,*) 'mzwork * LQSTA(NQOFFT(1+1)+1)'
 *      write(*,*) LQSTA(NQOFFT(1+1)+1)
@@ -192,5 +197,8 @@ C------            Error conditions
       IQUEST(12) = NEWL
       IQUEST(13) = NEWD
       IQUEST(14) = IFLAG
-#include "zebra/qtofatal.inc"
+*#include "zebra/qtofatal.inc"
+      IQUEST(9) = NAMESR(1)
+      IQUEST(10)= NAMESR(2)
+*      CALL ZFATAL
       END

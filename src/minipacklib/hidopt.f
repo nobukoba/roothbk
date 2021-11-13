@@ -6,7 +6,7 @@
 * First import
 *
 *
-#include "hbook/pilot.h"
+*#include "hbook/pilot.h"
 *CMZ :  4.22/04 02/06/94  14.13.27  by  Rene Brun
 *-- Author :
       SUBROUTINE HIDOPT(ID1,KKOPT)
