@@ -13,7 +13,7 @@
 * Zebra
 *
 *
-#include "zebra/pilot.h"
+*#include "zebra/pilot.h"
       SUBROUTINE MZMARK (IXSTOR,LHEADP,CHOPT,NIDP,IDLIST)
 
 C-    Run through d/s to set status-bit IQMARK into all banks
@@ -42,18 +42,23 @@ C-    an IDH present (or not present) in IDLIST, user called
 *      PARAMETER   (NAMESR = 'MZMARK  ')
 *#endif
 
-#include "zebra/q_jbit.inc"
-#include "zebra/q_jbyt.inc"
-#include "zebra/q_sbit0.inc"
-#include "zebra/q_sbit1.inc"
+*#include "zebra/q_jbit.inc"
+*#include "zebra/q_jbyt.inc"
+*#include "zebra/q_sbit0.inc"
+*#include "zebra/q_sbit1.inc"
 
 
       LHEAD = LHEADP(1)
       NID   = NIDP(1)
       IF (LHEAD.EQ.0)        RETURN
 
-#include "zebra/qtrace.inc"
-#include "zebra/qstore.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
+*#include "zebra/qstore.inc"
+      IF (JBYT(IXSTOR,27,6).NE.JQSTOR)  CALL MZSDIV (IXSTOR,-7)
 
 #if defined(CERNLIB_QDEBUG)
       IF (IQVSTA.NE.0)       CALL ZVAUTX
@@ -202,7 +207,8 @@ C----              Done, mark header bank
       LQLIMH = MAX (LQLIMH,LHEAD)
       NWVOL  = NWVOL + 10 + JBYT (IQ(KQS+LHEAD),19,4) +
      +                      IQ(KQS+LHEAD-1) + IQ(KQS+LHEAD-3)
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       IQUEST(2) = NWVOL
       RETURN
 
@@ -226,5 +232,8 @@ C------            Error conditions
    91 NQCASE = NQCASE + 1
       NQFATA = NQFATA + 1
       IQUEST(11) = LHEAD
-#include "zebra/qtofatal.inc"
+*#include "zebra/qtofatal.inc"
+      IQUEST(9) = NAMESR(1)
+      IQUEST(10)= NAMESR(2)
+*      CALL ZFATAL
       END

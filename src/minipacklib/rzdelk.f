@@ -10,7 +10,7 @@
 * Zebra
 *
 *
-#include "zebra/pilot.h"
+*#include "zebra/pilot.h"
       SUBROUTINE RZDELK(KEYU,ICYCLE,CHOPT)
 *
 ************************************************************************
@@ -60,7 +60,7 @@
 *
 *-----------------------------------------------------------------------
 *
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbyt.inc"
 *
       IQUEST(1) = 0
       IQWARN    = 0

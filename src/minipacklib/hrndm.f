@@ -6,7 +6,7 @@
 * First import
 *
 *
-#include "hbook/pilot.h"
+*#include "hbook/pilot.h"
 *CMZ :  4.10/05 21/02/89  16.14.53  by  Rene Brun
 *-- Author :
       FUNCTION HRNDM(IDD)

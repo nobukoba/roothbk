@@ -6,7 +6,7 @@
 * First import
 *
 *
-#include "hbook/pilot.h"
+*#include "hbook/pilot.h"
 *CMZ :  4.20/08 12/09/93  18.56.12  by  Rene Brun
 *-- Author :
       SUBROUTINE HBOOKB(IDD,CHTITL,NX,XBINS,VALMAX)

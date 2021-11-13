@@ -11,7 +11,7 @@
 * First import
 *
 *
-#include "hbook/pilot.h"
+*#include "hbook/pilot.h"
 *CMZ :  4.20/08 10/09/93  09.16.55  by  Rene Brun
 *-- Author :
       SUBROUTINE HF1(ID1,X,W)
@@ -24,7 +24,7 @@
 #include "hbook/hcprin.inc"
       DOUBLE PRECISION SWX(2),DBLX,DBLZ
 *.___________________________________________
-#include "hbook/jbyt.inc"
+*#include "hbook/jbyt.inc"
       IF(ID1.NE.IDLAST)THEN
          ID=ID1
          IDPOS=LOCATI(IQ(LTAB+1),IQ(LCDIR+KNRH),ID)

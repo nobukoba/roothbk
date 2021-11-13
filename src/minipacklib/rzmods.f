@@ -10,7 +10,7 @@
 * Zebra
 *
 *
-#include "zebra/pilot.h"
+*#include "zebra/pilot.h"
       SUBROUTINE RZMODS(CHROUT,IFLAG)
 *
 ************************************************************************
@@ -37,8 +37,8 @@
 *
 *-----------------------------------------------------------------------
 *
-#include "zebra/q_jbit.inc"
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbit.inc"
+*#include "zebra/q_jbyt.inc"
 
 *
 *            Check permission

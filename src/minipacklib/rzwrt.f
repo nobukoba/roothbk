@@ -6,7 +6,7 @@
 * Zebra
 *
 *
-#include "zebra/pilot.h"
+*#include "zebra/pilot.h"
       SUBROUTINE RZWRT(V,N,IOPTB,IEVENT)
 *
 ************************************************************************

@@ -67,7 +67,7 @@
 #include "zebra/zvfaut.inc"
 #include "zebra/quest.inc"
       DIMENSION LIST(9)
-#include "zebra/q_jbit.inc"
+*#include "zebra/q_jbit.inc"
       CALL VZEROI (IQUEST,100)
       CALL VZEROI (IQVID,18)
       CALL VZEROI (NQPHAS,15)
@@ -208,9 +208,9 @@
       DATA  NAMEDV4 / 4HQDIV /
       INTEGER*8  LQATAB8, LQASTO8
 
-#include "zebra/q_sbit1.inc"
-#include "zebra/q_shiftl.inc"
-#include "zebra/q_locf.inc"
+*#include "zebra/q_sbit1.inc"
+*#include "zebra/q_shiftl.inc"
+*#include "zebra/q_locf.inc"
 
 *      write(*,*) 'mzstor 1 NQOFFT(1+1)', NQOFFT(1+1)
 *      write(*,*) 'mzstor 1 LQSTA(NQOFFT(1+1)+1)'
@@ -258,7 +258,11 @@ c      NQTSYS = LOCF(IQDN2(20)) - LQATAB
  9011 FORMAT (1X/' MZSTOR.  ZEBRA table base TAB(0) in /MZCC/ at adr'
      F,I12,1X,Z11,' HEX')
    13 CONTINUE
-#include "zebra/qtrace.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
       CALL UOPTC (CHOPT,'Q:',IQUEST)
       LOGQ   = IQUEST(1)
       IFLSPL = IQUEST(2)
@@ -468,7 +472,10 @@ c      ENDIF
       IQUEST(17) = NDATAT
       IQUEST(18) = NQMINR
       IQUEST(19) = NWF
-#include "zebra/qtofatal.inc"
+*#include "zebra/qtofatal.inc"
+      IQUEST(9) = NAMESR(1)
+      IQUEST(10)= NAMESR(2)
+*      CALL ZFATAL
       END
 
 *-------------------------------------------------------------------------------
@@ -714,7 +721,7 @@ c      ENDIF
 #include "zebra/rzcstr.inc"
       DIMENSION IBUF(JREC)
       PARAMETER (MEDIUM=0)
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbyt.inc"
       RZXIO(IRW) = RZXIO(IRW) + JREC
       IREC=IREC1
       IF(LUNRZ.GT.0)THEN
@@ -819,7 +826,7 @@ c      ENDIF
       EQUIVALENCE (IOPTA,IQUEST(91)), (IOPTC,IQUEST(92))
      +,      (IOPTD,IQUEST(93)), (IOPTN,IQUEST(94)), (IOPTR,IQUEST(95))
      +,      (IOPTS,IQUEST(96))
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbyt.inc"
       LRIN=LQ(KQSP+LTOP-7)
       IF(LRIN.EQ.0)THEN
          CALL MZBOOK(JQPDVS,LRIN,LTOP,-7,'RZIN',0,0,LREC+1,2,-1)
@@ -882,7 +889,7 @@ c      ENDIF
 #include "zebra/rzclun.inc"
       DIMENSION    IXDIVP(9),LSUPP(9),JBIASP(9),IDUM(3)
       EQUIVALENCE (IOPTR,IQUEST(95))
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbyt.inc"
       IXDIVI = IXDIVP(1)
       JRETCD = 0
       JERROR = 0
@@ -1020,8 +1027,8 @@ c      ENDIF
 
       SUBROUTINE MZRESV
 #include "zebra/mqsys.inc"
-#include "zebra/q_jbit.inc"
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbit.inc"
+*#include "zebra/q_jbyt.inc"
       JQDIVR = JQDIVI
       IF (JQDIVR.LT.3)             GO TO 41
       JQMODE = JBIT (IQMODE(KQT+JQDIVR), 1)
@@ -1078,7 +1085,7 @@ c      ENDIF
 #include "zebra/rzcl.inc"
 #include "zebra/rzclun.inc"
 #include "zebra/rzk.inc"
-#include "zebra/q_jbit.inc"
+*#include "zebra/q_jbit.inc"
       IF(LQRS.EQ.0)GO TO 99
       IF(LTOP.EQ.0)GO TO 99
       IF(JBIT(IQ(KQSP+LTOP),2).NE.0)THEN
@@ -1409,11 +1416,12 @@ c      ENDIF
 #include "zebra/mqsys.inc"
 #include "zebra/mzcn.inc"
       DIMENSION    IXST(9), LP(9)
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbyt.inc"
       IXSTOR = IXST(1)
       IQLS   = LP(1)
       IF (IXSTOR.EQ.-7)                 GO TO 21
-#include "zebra/qstore.inc"
+*#include "zebra/qstore.inc"
+      IF (JBYT(IXSTOR,27,6).NE.JQSTOR)  CALL MZSDIV (IXSTOR,-7)
  21   continue
 *      write(*,*) 'mzchls IQLS, LQSTA(KQT+1)', IQLS, LQSTA(KQT+1)
 *      write(*,*) 'mzchls LQSTA(KQT+21)', LQSTA(KQT+21)
@@ -1467,7 +1475,7 @@ c      ENDIF
       CHARACTER    CHIDH*(*)
       DIMENSION    NAMESR(2)
       DATA  NAMESR / 4HMZBO, 4HOK   /
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbyt.inc"
       MQTRAC(NQTRAC+1) = NAMESR(1)
       MQTRAC(NQTRAC+2) = NAMESR(2)
       NQTRAC = NQTRAC + 2
@@ -1499,7 +1507,8 @@ c      ENDIF
         CALL MZLIFT (IXP,LP,LSUPP,63, NQID, NZP)
 *        write(*,*) 'MZBOOK 2 LOCF(LSUPP(1))', LOCF(LSUPP(1))
 *        write(*,*) 'MZBOOK 2 LSUPP, KQT', LSUPP, KQT
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       END
 
 *-------------------------------------------------------------------------------
@@ -1518,10 +1527,14 @@ c      ENDIF
       DIMENSION    IXDIV(9), LP(9), LSUPP(9), NAME(9)
       DIMENSION    NAMESR(2)
       DATA  NAMESR / 4HMZLI, 4HFT   /
-#include "zebra/q_jbit.inc"
-#include "zebra/q_jbyt.inc"
-#include "zebra/q_sbyt.inc"
-#include "zebra/qtrace.inc"
+*#include "zebra/q_jbit.inc"
+*#include "zebra/q_jbyt.inc"
+*#include "zebra/q_sbyt.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
 ******IF (IQVSTA.NE.0)       CALL ZVAUTX
       
 *      write(*,*) '#################### mzlift #####################'
@@ -1830,7 +1843,10 @@ c Nobu c/o 20210905
       IQUEST(15) = NQNS
       IQUEST(16) = NQND
       IQUEST(17) = ICHORG
-#include "zebra/qtofatal.inc"
+*#include "zebra/qtofatal.inc"
+      IQUEST(9) = NAMESR(1)
+      IQUEST(10)= NAMESR(2)
+*      CALL ZFATAL
       END
 
 *-------------------------------------------------------------------------------
@@ -1845,12 +1861,17 @@ c Nobu c/o 20210905
       CHARACTER    *(*) CHNAME
       DIMENSION    NAMESR(2)
       DATA  NAMESR / 4HMZLI, 4HNK   /
-#include "zebra/q_jbyt.inc"
-#include "zebra/q_locf.inc"
+*#include "zebra/q_jbyt.inc"
+*#include "zebra/q_locf.inc"
 * Nobu 2021.09.05
       NQTRAC = 0
-#include "zebra/qtrace.inc"
-#include "zebra/qstore.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
+*#include "zebra/qstore.inc"
+      IF (JBYT(IXSTOR,27,6).NE.JQSTOR)  CALL MZSDIV (IXSTOR,-7)
 ******IF (IQVSTA.NE.0)       CALL ZVAUTX
       LSYS  = LQSYSS(KQT+1)
       NWTAB = IQ(KQS+LSYS+1)
@@ -1945,7 +1966,10 @@ c Nobu c/o 20210905
       IQUEST(15) = LOCRL + LQSTOR
       IQUEST(16) = NS
       IQUEST(17) = NL
-#include "zebra/qtofatal.inc"
+*#include "zebra/qtofatal.inc"
+      IQUEST(9) = NAMESR(1)
+      IQUEST(10)= NAMESR(2)
+*      CALL ZFATAL
       END
 
 *-------------------------------------------------------------------------------
@@ -1963,11 +1987,15 @@ c Nobu c/o 20210905
       CHARACTER *(*) CHOPT
       DIMENSION NAMESR(2)
       DATA NAMESR / 4HMZPU, 4HSH  /
-#include "zebra/q_jbit.inc"
-#include "zebra/q_jbyt.inc"
-#include "zebra/q_sbit1.inc"
-#include "zebra/q_sbyt.inc"
-#include "zebra/qtrace.inc"
+*#include "zebra/q_jbit.inc"
+*#include "zebra/q_jbyt.inc"
+*#include "zebra/q_sbit1.inc"
+*#include "zebra/q_sbyt.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
       IF (IXDIV(1).EQ.-7) GO TO 12
       CALL MZSDIV (IXDIV,0)
    12 CALL MZCHNB (LORGP)
@@ -2190,7 +2218,10 @@ c Nobu c/o 20210905
    91 NQCASE = NQCASE + 1
       NQFATA = NQFATA + 1
       IQUEST(11) = LORG
-#include "zebra/qtofatal.inc"
+*#include "zebra/qtofatal.inc"
+      IQUEST(9) = NAMESR(1)
+      IQUEST(10)= NAMESR(2)
+*      CALL ZFATAL
       END
 
 *-------------------------------------------------------------------------------
@@ -2204,8 +2235,12 @@ c Nobu c/o 20210905
       CHARACTER *(*) CHOPT
       DIMENSION NAMESR(2)
       DATA NAMESR / 4HMZNE, 4HED  /
-#include "zebra/q_jbyt.inc"
-#include "zebra/qtrace.inc"
+*#include "zebra/q_jbyt.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
       JDV = IXDIV(1)
       NEED = NEEDP(1)
       IF (JBYT(JDV,27,6).NE.JQSTOR) GO TO 22
@@ -2224,7 +2259,8 @@ c Nobu c/o 20210905
      + WRITE (IQLOG,9029) JQSTOR,JQDIVI,NEED,NQRESV,CHOPT
  9029 FORMAT (' MZNEED-  Store/Div',2I3,' NEED/Excess=',2I8
      F,' Opt=',A)
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       RETURN
    41 CALL UOPTC (CHOPT,'G',IQUEST)
       IF (IQUEST(1).EQ.0) GO TO 28
@@ -2237,7 +2273,7 @@ c Nobu c/o 20210905
 *-------------------------------------------------------------------------------
 
       SUBROUTINE RZDATE(IWORD,IDATE,ITIME,ICASE)
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbyt.inc"
       IF(ICASE.EQ.1)THEN
          ICONT = JBYT(IWORD,9,24)
          IMINUT= MOD(ICONT,60)
@@ -2288,8 +2324,8 @@ c Nobu c/o 20210905
       EQUIVALENCE (IOPTK,IOPTV(4)), (IOPTQ,IOPTV(5))
       CHARACTER*(*) CHPATH,CHOPT
       CHARACTER*1 COPTQ
-#include "zebra/q_jbit.inc"
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbit.inc"
+*#include "zebra/q_jbyt.inc"
       IQUEST(1)=0
       CALL UOPTC (CHOPT,'RPUKQ',IOPTV)
       IF(IOPTK.NE.0) IOPTU=0
@@ -2413,8 +2449,8 @@ c Nobu c/o 20210905
       EQUIVALENCE (IOPT1,IOPTV(5)), (IOPTD,IOPTV(6))
       EQUIVALENCE (IOPTC,IOPTV(7)), (IOPTX,IOPTV(8))
       EQUIVALENCE (IOPTB,IOPTV(9)), (IOPTH,IOPTV(10))
-#include "zebra/q_jbit.inc"
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbit.inc"
+*#include "zebra/q_jbyt.inc"
       IQUEST(1)=0
       LOGLV = MIN(NQLOGD,4)
       LOGLV = MAX(LOGLV,-3)
@@ -2599,8 +2635,8 @@ c Nobu c/o 20210905
       DIMENSION IHDIR(4)
       LOGICAL RZSAME
       INTEGER FQUOTA
-#include "zebra/q_jbit.inc"
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbit.inc"
+*#include "zebra/q_jbyt.inc"
       IOPTQ = INDEX(CHOPT,'Q')
       LT=0
       LDIR=0
@@ -2733,9 +2769,13 @@ c Nobu c/o 20210905
       EQUIVALENCE (LSTAV(1),IQUEST(60)), (LENDV(1),IQUEST(80))
       DIMENSION NAMESR(2)
       DATA NAMESR / 4HFZIM, 4HTB  /
-#include "zebra/q_shiftl.inc"
-#include "zebra/q_jbyt.inc"
-#include "zebra/qtrace.inc"
+*#include "zebra/q_shiftl.inc"
+*#include "zebra/q_jbyt.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
       IFLGAR = 0
       IF (NQSEG.LE.0) THEN
           NQSEG = 1
@@ -2913,7 +2953,8 @@ c Nobu c/o 20210905
  9058 FORMAT (' FZIMTB-  read segment',I3,' into division/from/to'
      F,I3,2I9)
    59 LMT = LMT + 8
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       RETURN
    61 IF (IFLGAR.GE.2) GO TO 721
       IXSTOR = ISHFT (JQSTOR,26)
@@ -3027,7 +3068,7 @@ c Nobu c/o 20210905
       EQUIVALENCE (IOPTA,IQUEST(91)), (IOPTC,IQUEST(92))
      +, (IOPTD,IQUEST(93)), (IOPTN,IQUEST(94)), (IOPTR,IQUEST(95))
      +, (IOPTS,IQUEST(96))
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbyt.inc"
       IQUEST(1)=0
       CALL UOPTC(CHOPT,'ACDNRS',IQUEST(91))
       LK=IQ(KQSP+LCDIR+KLK)
@@ -3542,11 +3583,12 @@ c Nobu c/o 20210905
 #include "zebra/mqsys.inc"
 #include "zebra/mzcn.inc"
       DIMENSION IXST(9), LP(9)
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbyt.inc"
       IXSTOR = IXST(1)
       IQLN = LP(1)
       IF (IXSTOR.EQ.-7) GO TO 21
-#include "zebra/qstore.inc"
+*#include "zebra/qstore.inc"
+      IF (JBYT(IXSTOR,27,6).NE.JQSTOR)  CALL MZSDIV (IXSTOR,-7)
    21 IF (IQLN.LT.LQSTA(KQT+1)) GO TO 98
       IF (IQLN.GE.LQSTA(KQT+21)) GO TO 98
       IWD = LQ(KQS+IQLN)
@@ -3593,12 +3635,19 @@ c Nobu c/o 20210905
       K = LOCF (LIX(1)) - LQSTOR
       IF (K.LT.LQSTA(KQT+1)) RETURN
       IF (K.GE.LQEND(KQT+20)) RETURN
-#include "zebra/qtrace.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
       NQCASE = 1
       NQFATA = 2
       IQUEST(11) = K
       IQUEST(12) = LIX(1)
-#include "zebra/qtofatal.inc"
+*#include "zebra/qtofatal.inc"
+      IQUEST(9) = NAMESR(1)
+      IQUEST(10)= NAMESR(2)
+*      CALL ZFATAL
       END
 
 *-------------------------------------------------------------------------------
@@ -3613,11 +3662,16 @@ c Nobu c/o 20210905
       CHARACTER *(*) CHOPT
       DIMENSION NAMESR(2)
       DATA NAMESR / 4HMZDR, 4HOP  /
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbyt.inc"
       LHEAD = LHEADP(1)
       IF (LHEAD.EQ.0) RETURN
-#include "zebra/qtrace.inc"
-#include "zebra/qstore.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
+*#include "zebra/qstore.inc"
+      IF (JBYT(IXSTOR,27,6).NE.JQSTOR)  CALL MZSDIV (IXSTOR,-7)
       CALL UOPTC (CHOPT,'LV',IQUEST)
       IFLAG = IQUEST(1)
       IF (IQUEST(2).NE.0) IFLAG=-1
@@ -3643,7 +3697,8 @@ c Nobu c/o 20210905
       GO TO 999
    41 CALL MZFLAG (IXSTOR,LHEAD,IQDROP,'L')
    88 IF (KHEAD.NE.0) LQ(KQS+KHEAD)=0
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       RETURN
    92 NQCASE = 1
       NQFATA = 1
@@ -3651,7 +3706,10 @@ c Nobu c/o 20210905
    91 NQCASE = NQCASE + 1
       NQFATA = NQFATA + 1
       IQUEST(11) = LHEAD
-#include "zebra/qtofatal.inc"
+*#include "zebra/qtofatal.inc"
+      IQUEST(9) = NAMESR(1)
+      IQUEST(10)= NAMESR(2)
+*      CALL ZFATAL
       END
 
 *-------------------------------------------------------------------------------
@@ -3663,11 +3721,15 @@ c Nobu c/o 20210905
       DIMENSION IXDIVP(9)
       DIMENSION NAMESR(2)
       DATA NAMESR / 4HMZDV, 4HAC  /
-#include "zebra/q_jbyt.inc"
-#include "zebra/q_sbit1.inc"
-#include "zebra/q_jbytet.inc"
+*#include "zebra/q_jbyt.inc"
+*#include "zebra/q_sbit1.inc"
+*#include "zebra/q_jbytet.inc"
       IXIN = IXDIVP(1)
-#include "zebra/qtrace.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
       JST = JBYT (IXIN,27,6)
       IF (JST.EQ.JQSTOR) GO TO 31
       IF (JST-16.EQ.JQSTOR) GO TO 21
@@ -3692,7 +3754,8 @@ c Nobu c/o 20210905
    47 JDIV = JDIV + 1
       IF (JDIV.LT.21) GO TO 42
    59 MZDVAC = IXAC
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       END
 
 *-------------------------------------------------------------------------------
@@ -3708,7 +3771,11 @@ c Nobu c/o 20210905
       DATA NAMESR / 4HMZGA, 4HRB  /
       IXGARB = IXGP(1)
       IXWIPE = IXWP(1)
-#include "zebra/qtrace.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
       JVLEV = 2
       MQDVGA = 0
       MQDVWI = 0
@@ -3741,13 +3808,17 @@ c Nobu c/o 20210905
       CALL MZRELX
       CALL MZMOVE
       IF (IQPART.NE.0) GO TO 24
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       RETURN
    91 NQCASE = 1
       NQFATA = 2
       IQUEST(11) = JSTO
       IQUEST(12) = JQSTOR
-#include "zebra/qtofatal.inc"
+*#include "zebra/qtofatal.inc"
+      IQUEST(9) = NAMESR(1)
+      IQUEST(10)= NAMESR(2)
+*      CALL ZFATAL
       END
 
 *-------------------------------------------------------------------------------
@@ -3761,8 +3832,12 @@ c Nobu c/o 20210905
 #include "zebra/mzct.inc"
       DIMENSION NAMESR(2)
       DATA NAMESR / 4HMZGA, 4HR1  /
-#include "zebra/q_sbit1.inc"
-#include "zebra/qtrace.inc"
+*#include "zebra/q_sbit1.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
       IQVREM(1,1) = IQVID(1)
       IQVREM(2,1) = IQVID(2)
       MQDVGA = 0
@@ -3827,7 +3902,8 @@ c Nobu c/o 20210905
       CALL MZRELX
    67 CALL MZMOVE
    68 IF (NQRESV.LT.0) GO TO 71
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       RETURN
    71 IF (IQPART.NE.0) GO TO 29
    72 IQUEST(11) = NQRESV
@@ -3840,7 +3916,10 @@ c Nobu c/o 20210905
       print*,'>>>>>> CALL ZTELL (99,1)'
    91 NQCASE = 1
       NQFATA = 1
-#include "zebra/qtofatal.inc"
+*#include "zebra/qtofatal.inc"
+      IQUEST(9) = NAMESR(1)
+      IQUEST(10)= NAMESR(2)
+*      CALL ZFATAL
       END
 
 *-------------------------------------------------------------------------------
@@ -3861,7 +3940,7 @@ c Nobu c/o 20210905
       DATA MMIX4 / 4HQIOX, 0, 0, 7, 2 /
       DATA MMIO4 / 4HQIOD, 0, 0, 50, 1 /
       
-#include "zebra/q_sbyt.inc"
+*#include "zebra/q_sbyt.inc"
 
 *      write(*,*) '################## mzform #################'
       do i = 1,5
@@ -3941,7 +4020,7 @@ c Nobu c/o 20210905
       FUNCTION MZFDIV (IXST,LIXP)
 #include "zebra/mqsys.inc"
       DIMENSION IXST(9), LIXP(9)
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbyt.inc"
       IXSTOR = IXST(1)
       LIX = LIXP(1)
       IF (IXSTOR.NE.-7) THEN
@@ -4085,8 +4164,12 @@ c Nobu c/o 20210905
       EQUIVALENCE (LS,IQLS), (LNX,IQNX)
       DIMENSION NAMESR(2)
       DATA NAMESR / 4HMZTA, 4HBC  /
-#include "zebra/q_jbit.inc"
-#include "zebra/qtrace.inc"
+*#include "zebra/q_jbit.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
       NQFRTC = 0
       NQLIVE = 0
       N = 0
@@ -4129,7 +4212,8 @@ c Nobu c/o 20210905
       LQ(LQTE+2) = 0
       LQ(LQTE+3) = 0
    45 LQTE = LQTE + 4
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       RETURN
    91 NQCASE = 1
       NQFATA = 3
@@ -4138,7 +4222,10 @@ c Nobu c/o 20210905
       IQUEST(13) = LQMTC2
       IQUEST(9) = NAMESR(1)
       IQUEST(10)= NAMESR(2)
-#include "zebra/qtofatal.inc"
+*#include "zebra/qtofatal.inc"
+      IQUEST(9) = NAMESR(1)
+      IQUEST(10)= NAMESR(2)
+*      CALL ZFATAL
       END
 
 *-------------------------------------------------------------------------------
@@ -4150,8 +4237,12 @@ c Nobu c/o 20210905
 #include "zebra/mzct.inc"
       DIMENSION NAMESR(2)
       DATA NAMESR / 4HMZTA, 4HBF  /
-#include "zebra/q_jbit.inc"
-#include "zebra/qtrace.inc"
+*#include "zebra/q_jbit.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
       LMT = LQMTA
       NCOLL = 0
       NGARB = 0
@@ -4221,7 +4312,8 @@ c Nobu c/o 20210905
       IF (NCOLL.EQ.0) GO TO 81
       LQTE = LQRTA + LQ(LCOLL+5)
    81 CONTINUE
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       END
 
 *-------------------------------------------------------------------------------
@@ -4233,7 +4325,11 @@ c Nobu c/o 20210905
 #include "zebra/mzct.inc"
       DIMENSION NAMESR(2)
       DATA NAMESR / 4HMZTA, 4HBH  /
-#include "zebra/qtrace.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
       IF (JQGAPM.NE.0) GO TO 41
       CALL MZFGAP
       NW = LQMTE+1 - LQMTA
@@ -4249,7 +4345,8 @@ c Nobu c/o 20210905
       LQRTE = LQRTE + 161
       IQGAP(1,JQGAPM) = IQGAP(1,JQGAPM) - NW
       IQGAP(2,JQGAPM) = IQGAP(2,JQGAPM) + NW
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       RETURN
    26 IF (IQTNMV.EQ.0) JQGAPM=NQGAP
       IF (JQGAPM.NE.0) GO TO 23
@@ -4290,9 +4387,13 @@ c Nobu c/o 20210905
 #include "zebra/mzct.inc"
       DIMENSION NAMESR(2)
       DATA NAMESR / 4HMZTA, 4HBM  /
-#include "zebra/q_jbit.inc"
-#include "zebra/q_sbit1.inc"
-#include "zebra/qtrace.inc"
+*#include "zebra/q_jbit.inc"
+*#include "zebra/q_sbit1.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
       LQMTBR = 0
       IQTBIT = IQDROP
       IQTVAL = 0
@@ -4360,9 +4461,13 @@ c Nobu c/o 20210905
       EQUIVALENCE (LMT,LQMTB)
       DIMENSION NAMESR(2)
       DATA NAMESR / 4HMZTA, 4HBR  /
-#include "zebra/q_sbit0.inc"
-#include "zebra/q_sbit1.inc"
-#include "zebra/qtrace.inc"
+*#include "zebra/q_sbit0.inc"
+*#include "zebra/q_sbit1.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
       IF (LQMTBR.NE.0) GO TO 81
       LQTA = LQRTA + 2
       LQTE = LQTA
@@ -4417,7 +4522,8 @@ c Nobu c/o 20210905
       IF (LMT.LT.LQMTE) GO TO 41
       JDIV = LQ(LMT)
       LQ(LQTE) = LQSTA(KQT+JDIV)
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       RETURN
    81 LMT = LQMTBR
       LQMTBR = 0
@@ -4448,7 +4554,7 @@ c Nobu c/o 20210905
       SUBROUTINE MZTABS
 #include "zebra/mqsys.inc"
 #include "zebra/mzct.inc"
-#include "zebra/q_sbit1.inc"
+*#include "zebra/q_sbit1.inc"
       LMT = LQMTA
    21 LMT = LMT + 8
       JDIV = LQ(LMT)
@@ -4467,8 +4573,8 @@ c Nobu c/o 20210905
       SUBROUTINE MZTABX
 #include "zebra/mqsys.inc"
 #include "zebra/mzct.inc"
-#include "zebra/q_or.inc"
-#include "zebra/q_jbytet.inc"
+*#include "zebra/q_or.inc"
+*#include "zebra/q_jbytet.inc"
       MERGE = 0
       LMT = LQMTA
    22 IF (LQ(LMT+1).LT.2) GO TO 27
@@ -4518,9 +4624,13 @@ c Nobu c/o 20210905
       DATA MXVALA / 0, 65536, 1024, 256 /
       DATA MXVALB / 0, 16384, 512, 128 /
       DATA MXVALC / 0, 2048, 64, 16, 4, 2, 2 /
-#include "zebra/q_sbit1.inc"
-#include "zebra/q_sbyt.inc"
-#include "zebra/qtrace.inc"
+*#include "zebra/q_sbit1.inc"
+*#include "zebra/q_sbyt.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
       NWIOMX = NWIOMP(1)
       NCH = LEN (CHFORM)
       IF (NCH.GE.121) GO TO 90
@@ -4732,7 +4842,8 @@ c Nobu c/o 20210905
       IQCETK(121) = IQBLAN
       IF (NQLOGM.GE.1) WRITE (IQLOG,9088) NWIO,CHFORM
  9088 FORMAT (' MZIOCH-',I5,' extra I/O words for Format ',A)
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       RETURN
    90 NQFATA = 2
       IQUEST(12) = NCH
@@ -4769,7 +4880,10 @@ c Nobu c/o 20210905
    88 CONTINUE
       NQFATA = (NCH-1)/4 + 4
    99 IQUEST(11) = IQCETK(121)
-#include "zebra/qtofatal.inc"
+*#include "zebra/qtofatal.inc"
+      IQUEST(9) = NAMESR(1)
+      IQUEST(10)= NAMESR(2)
+*      CALL ZFATAL
       END
 
 *-------------------------------------------------------------------------------
@@ -4786,15 +4900,20 @@ c Nobu c/o 20210905
       CHARACTER *(*) CHOPT
       DIMENSION NAMESR(2)
       DATA NAMESR / 4HMZFL, 4HAG  /
-#include "zebra/q_jbit.inc"
-#include "zebra/q_jbyt.inc"
-#include "zebra/q_sbit0.inc"
-#include "zebra/q_sbit1.inc"
-#include "zebra/q_sbit.inc"
+*#include "zebra/q_jbit.inc"
+*#include "zebra/q_jbyt.inc"
+*#include "zebra/q_sbit0.inc"
+*#include "zebra/q_sbit1.inc"
+*#include "zebra/q_sbit.inc"
       LHEAD = LHEADP(1)
       IF (LHEAD.EQ.0) RETURN
-#include "zebra/qtrace.inc"
-#include "zebra/qstore.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
+*#include "zebra/qstore.inc"
+      IF (JBYT(IXSTOR,27,6).NE.JQSTOR)  CALL MZSDIV (IXSTOR,-7)
       CALL MZCHLS (-7,LHEAD)
       IF (IQFOUL.NE.0) GO TO 92
       LQLIML = LQSTA(KQT+21)
@@ -4858,7 +4977,8 @@ c Nobu c/o 20210905
       IQ(KQS+LHEAD) = MSBIT (IQTVAL,IQ(KQS+LHEAD),IQTBIT)
       LQLIML = MIN (LQLIML,LHEAD)
       LQLIMH = MAX (LQLIMH,LHEAD)
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       RETURN
    95 NQCASE = 2
       NQFATA = 1
@@ -4875,7 +4995,10 @@ c Nobu c/o 20210905
    91 NQCASE = NQCASE + 1
       NQFATA = NQFATA + 1
       IQUEST(11) = LHEAD
-#include "zebra/qtofatal.inc"
+*#include "zebra/qtofatal.inc"
+      IQUEST(9) = NAMESR(1)
+      IQUEST(10)= NAMESR(2)
+*      CALL ZFATAL
       END
 
 *-------------------------------------------------------------------------------
@@ -4928,8 +5051,8 @@ c Nobu c/o 20210905
       DATA NBITVA / 32, 16, 10, 8 /
       DATA NBITVB / 29, 14, 9, 7 /
       DATA NBITVC / 26, 11, 6, 4, 2, 1, 1 /
-#include "zebra/q_jbit.inc"
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbit.inc"
+*#include "zebra/q_jbyt.inc"
       NWFODN = 0
       JFOCUR = 0
       JTYPR = IOW(1)
@@ -5050,10 +5173,10 @@ c Nobu c/o 20210905
       EQUIVALENCE (IXV(1),IQUEST(11))
       DIMENSION NAMESR(2)
       DATA NAMESR / 4HMZIX, 4HCO  /
-#include "zebra/q_jbyt.inc"
-#include "zebra/q_sbit1.inc"
-#include "zebra/q_sbyt.inc"
-#include "zebra/q_mbytor.inc"
+*#include "zebra/q_jbyt.inc"
+*#include "zebra/q_sbit1.inc"
+*#include "zebra/q_sbyt.inc"
+*#include "zebra/q_mbytor.inc"
       IXV(1) = IXAA(1)
       IXV(2) = IXBB(1)
       IXV(3) = IXCC(1)
@@ -5097,8 +5220,15 @@ c Nobu c/o 20210905
       IQUEST(15) = JL
       IQUEST(16) = JST
       IQUEST(17) = JDV
-#include "zebra/qtrace.inc"
-#include "zebra/qtofatal.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
+*#include "zebra/qtofatal.inc"
+      IQUEST(9) = NAMESR(1)
+      IQUEST(10)= NAMESR(2)
+*      CALL ZFATAL
       MZIXCO = 0
       END
 
@@ -5111,8 +5241,12 @@ c Nobu c/o 20210905
 #include "zebra/mzct.inc"
       DIMENSION NAMESR(2)
       DATA NAMESR / 4HMZMO, 4HVE  /
-#include "zebra/q_jbit.inc"
-#include "zebra/qtrace.inc"
+*#include "zebra/q_jbit.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
       LMT = LQMTA
    23 JDIV = LQ(LMT)
       IACT = LQ(LMT+1)
@@ -5168,7 +5302,8 @@ c Nobu c/o 20210905
    88 IF (LTR.NE.LTF) GO TO 81
       LTF = LTFN
       IF (LTF.NE.LQTE) GO TO 61
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       END
 
 *-------------------------------------------------------------------------------
@@ -5177,8 +5312,8 @@ c Nobu c/o 20210905
 #include "zebra/zbcd.inc"
 #include "zebra/mqsysh.inc"
       DIMENSION LP(9),NWP(9)
-#include "zebra/q_sbit1.inc"
-#include "zebra/q_sbyt.inc"
+*#include "zebra/q_sbit1.inc"
+*#include "zebra/q_sbyt.inc"
       L = LP(1)
       NW = NWP(1)
       ND = NW - 10
@@ -5207,8 +5342,12 @@ c Nobu c/o 20210905
 #include "zebra/mzct.inc"
       DIMENSION NAMESR(2)
       DATA NAMESR / 4HMZRE, 4HLB  /
-#include "zebra/q_jbyt.inc"
-#include "zebra/qtrace.inc"
+*#include "zebra/q_jbyt.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
       LFIXLO = LQ(LQTA-1)
       LFIXRE = LQ(LQTA)
       LFIXHI = LQ(LQTE)
@@ -5346,13 +5485,17 @@ c Nobu c/o 20210905
       NQFATA = NQFATA + 1
       IQUEST(11) = LN
       IF (IQFLIO.NE.0) GO TO 98
-#include "zebra/qtofatal.inc"
+*#include "zebra/qtofatal.inc"
+      IQUEST(9) = NAMESR(1)
+      IQUEST(10)= NAMESR(2)
+*      CALL ZFATAL
    98 IQUEST(9) = NQCASE
       IQUEST(10)= NQFATA
       NQCASE = 0
       NQFATA = 0
       IQFLIO = -7
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       END
 
 *-------------------------------------------------------------------------------
@@ -5366,9 +5509,13 @@ c Nobu c/o 20210905
       DIMENSION MDESV(99)
       DIMENSION NAMESR(2)
       DATA NAMESR / 4HMZRE, 4HLL  /
-#include "zebra/q_jbit.inc"
-#include "zebra/q_jbyt.inc"
-#include "zebra/qtrace.inc"
+*#include "zebra/q_jbit.inc"
+*#include "zebra/q_jbyt.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
       LFIXLO = LQ(LQTA-1)
       LFIXRE = LQ(LQTA)
       LFIXHI = LQ(LQTE)
@@ -5460,8 +5607,12 @@ c Nobu c/o 20210905
       IQUEST(13) = LINK
       IQUEST(14) = MDESV(JDES+4)
       IQUEST(15) = MDESV(JDES+5)
-#include "zebra/qtofatal.inc"
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtofatal.inc"
+      IQUEST(9) = NAMESR(1)
+      IQUEST(10)= NAMESR(2)
+*      CALL ZFATAL
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       END
 
 *-------------------------------------------------------------------------------
@@ -5473,14 +5624,19 @@ c Nobu c/o 20210905
 #include "zebra/mzct.inc"
       DIMENSION NAMESR(2)
       DATA NAMESR / 4HMZRE, 4HLX  /
-#include "zebra/qtrace.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
       L = LQSYSS(KQT+1)
       IF (L.NE.0) THEN
           IQ(KQS+L+3) = IQ(KQS+L+2) + NQLINK
           CALL MZRELL (IQ(KQS+L+1))
         ENDIF
       CALL MZRELB
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       END
 
 *-------------------------------------------------------------------------------
@@ -5491,7 +5647,7 @@ c Nobu c/o 20210905
       DIMENSION IXDIVP(9), IFLAGP(9)
       DIMENSION NAMESR(2)
       DATA NAMESR / 4HMZSD, 4HIV  /
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbyt.inc"
 *      write(*,*) 'MZSDIV 1 KQT', KQT
 *      write(*,*) 'MZSDIV 1 LQSTA(KQT+21)',  LQSTA(KQT+21)
 *      write(*,*) 'MZSDIV 1 LQSTA(KQT+1)',  LQSTA(KQT+1)
@@ -5564,8 +5720,15 @@ c Nobu c/o 20210905
       IQUEST(11) = IXIN
       IQUEST(12) = IFLAG
       IQUEST(13) = JSTO
-#include "zebra/qtrace.inc"
-#include "zebra/qtofatal.inc"
+*#include "zebra/qtrace.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
+*      IF (NQTRAC.GE.41)      CALL ZFATAL
+*#include "zebra/qtofatal.inc"
+      IQUEST(9) = NAMESR(1)
+      IQUEST(10)= NAMESR(2)
+*      CALL ZFATAL
       END
 
 *-------------------------------------------------------------------------------
@@ -5577,15 +5740,19 @@ c Nobu c/o 20210905
       DIMENSION LSHP(9),LSUPP(9),JBIASP(9),IFLAGP(9)
       DIMENSION NAMESR(2)
       DATA NAMESR / 4HZSHU, 4HNT  /
-#include "zebra/q_jbyt.inc"
-#include "zebra/q_locf.inc"
-#include "zebra/qtraceq.inc"
+*#include "zebra/q_jbyt.inc"
+*#include "zebra/q_locf.inc"
+*#include "zebra/qtraceq.inc"
+      MQTRAC(NQTRAC+1) = NAMESR(1)
+      MQTRAC(NQTRAC+2) = NAMESR(2)
+      NQTRAC = NQTRAC + 2
       LSH = LSHP(1)
       IF (LSH.EQ.0) GO TO 999
       LSUP = LSUPP(1)
       JBIAS = JBIASP(1)
       IFLAG = IFLAGP(1)
-#include "zebra/qstore.inc"
+*#include "zebra/qstore.inc"
+      IF (JBYT(IXSTOR,27,6).NE.JQSTOR)  CALL MZSDIV (IXSTOR,-7)
       CALL MZCHLS (-7,LSH)
       IF (IQFOUL.NE.0) GO TO 91
       IF (NQLOGL.GE.2) THEN
@@ -5668,7 +5835,8 @@ c Nobu c/o 20210905
       LQ(KQS+LSH+2) = KIN
       LQ(KQS+LEND) = LNIN
       IF (LNIN.NE.0) LQ(KQS+LNIN+2) = LEND
-#include "zebra/qtrace99.inc"
+*#include "zebra/qtrace99.inc"
+  999 NQTRAC = NQTRAC - 2
       RETURN
    95 NQCASE = 1
       NQFATA = 1
@@ -5684,7 +5852,10 @@ c Nobu c/o 20210905
       IQUEST(12) = LSUP
       IQUEST(13) = JBIAS
       IQUEST(14) = IFLAG
-#include "zebra/qtofatal.inc"
+*#include "zebra/qtofatal.inc"
+      IQUEST(9) = NAMESR(1)
+      IQUEST(10)= NAMESR(2)
+*      CALL ZFATAL
       END
 
 *-------------------------------------------------------------------------------
@@ -5790,8 +5961,8 @@ c Nobu c/o 20210905
       CHARACTER  CHDIR*(*)
       DIMENSION IHDIR(4)
       LOGICAL RZSAME
-#include "zebra/q_jbit.inc"
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbit.inc"
+*#include "zebra/q_jbyt.inc"
       IQUEST(1)=0
       IF(LQRS.EQ.0)GO TO 99
       CALL RZSAVE

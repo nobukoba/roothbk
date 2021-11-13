@@ -13,7 +13,7 @@
 * Zebra
 *
 *
-#include "zebra/pilot.h"
+*#include "zebra/pilot.h"
       SUBROUTINE RZOUT(IXDIV,LSUP,KEYU,ICYCLE,CHOPT)
 *
 ************************************************************************
@@ -99,7 +99,7 @@
 *
 *-----------------------------------------------------------------------
 *
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbyt.inc"
 *
       IQUEST(1)=0
       CALL MZSDIV(IXDIV,1)

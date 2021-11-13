@@ -10,7 +10,7 @@
 * Zebra
 *
 *
-#include "zebra/pilot.h"
+*#include "zebra/pilot.h"
       SUBROUTINE RZMDIR(CHDIR,NWKEY,CHFORM,CHTAG)
 *
 ************************************************************************
@@ -52,7 +52,7 @@
 *
 *-----------------------------------------------------------------------
 *
-#include "zebra/q_jbyt.inc"
+*#include "zebra/q_jbyt.inc"
       IQUEST(1)=0
       IF(LQRS.EQ.0)GO TO 99
 *

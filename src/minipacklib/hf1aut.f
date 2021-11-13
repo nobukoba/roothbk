@@ -6,7 +6,7 @@
 * First import
 *
 *
-#include "hbook/pilot.h"
+*#include "hbook/pilot.h"
 *CMZ :  4.19/00 26/04/93  11.57.51  by  Rene Brun
 *-- Author :
       SUBROUTINE HF1AUT(X,W)
@@ -18,7 +18,7 @@
 #include "hbook/hcprin.inc"
       DOUBLE PRECISION SWX(2),DBLX,DBLZ
 *.___________________________________________
-#include "hbook/jbyt.inc"
+*#include "hbook/jbyt.inc"
       LAUTO=LQ(LCONT-2)
       IF(LAUTO.LE.0)GO TO 99
       NOENT=IQ(LCONT+KNOENT)

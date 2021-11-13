@@ -6,7 +6,7 @@
 * First import
 *
 *
-#include "hbook/pilot.h"
+*#include "hbook/pilot.h"
 *CMZ :          16/05/95  18.30.41  by  Julian Bunn
 *-- Author :
       SUBROUTINE HMDIR(CHDIR,CHOPT)

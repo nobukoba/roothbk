@@ -6,7 +6,7 @@
 * First import
 *
 *
-#include "hbook/pilot.h"
+*#include "hbook/pilot.h"
 *CMZ :  4.21/07 20/12/93  10.24.13  by  Rene Brun
 *-- Author :    Rene Brun   20/12/93
       SUBROUTINE HRDIRM(IPAWD,MAXDIR,CHDIR,NDIR)
