@@ -7,7 +7,15 @@ for str in *.f
 do
     echo $str
     ../conv.py < $str > ../minipacklib/$str
+    sed -i 's/\.ne\./\/=/g' ../minipacklib/$str
+    sed -i 's/\.eq\./==/g' ../minipacklib/$str
+    sed -i 's/\.ge\./>=/g' ../minipacklib/$str
+    sed -i 's/\.le\./<=/g' ../minipacklib/$str
+    sed -i 's/\.gt\./>/g' ../minipacklib/$str
+    sed -i 's/\.lt\./</g' ../minipacklib/$str
 done
+
+sed -i 's/and<=gt/and\.le.gt/'  ../minipacklib/rzout.f
 
 cd hbook
 for str in *.inc
