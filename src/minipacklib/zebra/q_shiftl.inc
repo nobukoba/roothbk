@@ -1,1 +1,0 @@
-      ISHFTL (IZW,NZB) = ISHFT (IZW, NZB)

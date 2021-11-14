@@ -1,1 +1,0 @@
-      MSBIT0 (IZW,IZP) = IAND (IZW, NOT(ISHFT(1,IZP-1)))

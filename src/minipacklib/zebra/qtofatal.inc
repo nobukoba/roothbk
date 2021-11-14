@@ -1,3 +1,0 @@
-      IQUEST(9) = NAMESR(1)
-      IQUEST(10)= NAMESR(2)
-*      CALL ZFATAL

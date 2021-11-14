@@ -1,249 +1,243 @@
 *
-* $Id: fzocv.F,v 1.3 1999/06/18 13:29:30 couet Exp $
+* $id: fzocv.f,v 1.3 1999/06/18 13:29:30 couet exp $
 *
-* $Log: fzocv.F,v $
-* Revision 1.3  1999/06/18 13:29:30  couet
-* - qcardl.inc was empty: It is now removed and not used.
-*   Comment END CDE removed.
+* $log: fzocv.f,v $
+* revision 1.3  1999/06/18 13:29:30  couet
+* - qcardl.inc was empty: it is now removed and not used.
+*   comment end cde removed.
 *
-* Revision 1.2  1996/04/18 16:10:46  mclareni
-* Incorporate changes from J.Zoll for version 3.77
+* revision 1.2  1996/04/18 16:10:46  mclareni
+* incorporate changes from j.zoll for version 3.77
 *
-* Revision 1.1.1.1  1996/03/06 10:47:11  mclareni
-* Zebra
+* revision 1.1.1.1  1996/03/06 10:47:11  mclareni
+* zebra
 *
 *
 *#include "zebra/pilot.h"
-#if !defined(CERNLIB_FQXISN)
-      SUBROUTINE FZOCV (MS,MT)
+*#if !defined(cernlib_fqxisn)
+      subroutine fzocv (ms,mt)
 
-C-    Convert for output with copy
-C-    from source in native to target in exchange data format
+c-    convert for output with copy
+c-    from source in native to target in exchange data format
 
 #include "zebra/quest.inc"
 #include "zebra/mzioc.inc"
 *
-      DIMENSION    MS(99), MT(99)
+      dimension    ms(99), mt(99)
 
-      DOUBLE PRECISION   THDB
-      DIMENSION    THIS(2)
-      EQUIVALENCE  (THDB,THIS)
-      EQUIVALENCE  (ITHA,THA,THIS(1)), (ITHB,THB,THIS(2))
+      double precision   thdb
+      dimension    this(2)
+      equivalence  (thdb,this)
+      equivalence  (itha,tha,this(1)), (ithb,thb,this(2))
 
-C----            Conversion Control in /MZIOC/ :
+c----            conversion control in /mzioc/ :
 
-C-    for a given call translation source MS -> target MT is done
-C-        either  for a complete batch of NWFOTT words
-C-                      if NWFODN.EQ.0  and  NWFOAV.GE.NWFOTT
+c-    for a given call translation source ms -> target mt is done
+c-        either  for a complete batch of nwfott words
+c-                      if nwfodn==0  and  nwfoav>=nwfott
 
-C-            or  for the first instalment of a batch of NWFOTT words
-C-                      if NWFODN.EQ.0  and  NWFOAV.LT.NWFOTT
+c-            or  for the first instalment of a batch of nwfott words
+c-                      if nwfodn==0  and  nwfoav<nwfott
 
-C-            or  for a new instalment of N=MIN(NWFOAV,NWFOTT-NWFODN)
-C-                      words, if  NWFODN.NE.0
+c-            or  for a new instalment of n=min(nwfoav,nwfott-nwfodn)
+c-                      words, if  nwfodn/=0
 
-C-    *  marks words to be initialized by the caller
-C-       only for the call at the beginning of a new batch
-C-
-C-         NWFOAV  number of words available in the buffer to receive
-C-                                                         the result
-C-                    set by the caller whenever a new lot of data
-C-                    becomes available for conversion (new buffer)
-C-                    counted down by FZOCV
-C-       * NWFOTT  total number of words in the batch to be done,
-C-                    maybe in several instalments
-C-       * NWFODN  number of words in the batch already done
-C-                    set to zero by the caller at start of batch
-C-                    (in fact MZIOCR sets it to zero)
-C-         NWFORE  n.w. remaining to be done for the pending batch
-C-                    set by FZOCV, zero if end of batch
-C-
-C-         IFOCON  remembers the last conversion problem
-C-            (1)  error code if -ve, expected type if +ve
-C-            (2)  location of the word
-C-            (3)  content  of the word
+c-    *  marks words to be initialized by the caller
+c-       only for the call at the beginning of a new batch
+c-
+c-         nwfoav  number of words available in the buffer to receive
+c-                                                         the result
+c-                    set by the caller whenever a new lot of data
+c-                    becomes available for conversion (new buffer)
+c-                    counted down by fzocv
+c-       * nwfott  total number of words in the batch to be done,
+c-                    maybe in several instalments
+c-       * nwfodn  number of words in the batch already done
+c-                    set to zero by the caller at start of batch
+c-                    (in fact mziocr sets it to zero)
+c-         nwfore  n.w. remaining to be done for the pending batch
+c-                    set by fzocv, zero if end of batch
+c-
+c-         ifocon  remembers the last conversion problem
+c-            (1)  error code if -ve, expected type if +ve
+c-            (2)  location of the word
+c-            (3)  content  of the word
 
-C-         MFOSAV
-C-          (1+2)  saves type and word-count for re-entry
+c-         mfosav
+c-          (1+2)  saves type and word-count for re-entry
 
-C-       * JFOEND  position of last sector plus 1
-C-       * JFOREP  position of repeat sector descr.
-C-         JFOCUR  position of current sector description
+c-       * jfoend  position of last sector plus 1
+c-       * jforep  position of repeat sector descr.
+c-         jfocur  position of current sector description
 
-C-   * MFO(JFO+1)  t= sector type as in format
-C-   *        +2)  c= word count  as in format
-C-                    c > 0 :  no. of words
-C-                    c = 0 :  dynamic sector
-C-                    c < 0 :  indefinite sector, rest of the bank
+c-   * mfo(jfo+1)  t= sector type as in format
+c-   *        +2)  c= word count  as in format
+c-                    c > 0 :  no. of words
+c-                    c = 0 :  dynamic sector
+c-                    c < 0 :  indefinite sector, rest of the bank
 
-C-            JMT  # of words done so far for the current call
-C-            JMS  # of words done so far for the current batch
+c-            jmt  # of words done so far for the current call
+c-            jms  # of words done so far for the current batch
 
 *#include "fzocvd1.inc"
 *#include "fzocvd2.inc"
 
+      jmt = 0
+      if (nwfodn/=0) then
+c--   re-entry to continue
+         jmtex  = min (nwfore,nwfoav)
+         jms    = nwfodn
+         itype  = mfosav(1)
+         nwsec  = mfosav(2)
+      else         
+         nwfore = nwfott
+         jmtex  = min (nwfore,nwfoav)
+         
+         jms    = 0
+         jfocur = 0
+         ifocon(1) = 0
+      endif
 
-      JMT = 0
-      IF (NWFODN.NE.0)             GO TO 30
+      do while (.true.)
+         if (nwfodn==0) then
+            igoto31 = 0
+c------start next sector         
+            itype  = mfo(jfocur+1)
+            if (itype==7) then
+c--   self-describing sector            
+               iword = ms(jms+1)
+               itype = mod (iword,16)
+               nwsec = iword/16
+            else
+               nwsec = mfo(jfocur+2)
+               if   (nwsec < 0) then
+c--   rest of the bank
+                  nwsec = nwfore
+                  igoto31 = 1
+               else if (nwsec == 0 ) then
+c--   dynamic sector
+                  iword = ms(jms+1)
+                  nwsec = iword
+               else
+                  igoto31 = 1
+               endif         
+            endif
+            
+            if (igoto31 == 0) then
+               mt(jmt+1) = iword
+               jmt = jmt + 1
+               jms = jms + 1
+               nwfore = nwfore - 1
+               
+               if (itype>=8)  then
+c--   faulty sector control word
+                  ifocon(1) = -1
+                  ifocon(2) = jms
+                  ifocon(3) = iword
+c--   rest of the bank is unused         
+                  itype = 0
+                  nwsec = nwfore
+               endif
+               if (nwsec==0) then
+c--   rest of the bank is unused         
+                  itype = 0
+                  nwsec = nwfore
+               endif
+               if (nwsec<0) then
+c--   faulty sector control word
+                  ifocon(1) = -1
+                  ifocon(2) = jms
+                  ifocon(3) = iword
+c--   rest of the bank is unused         
+                  itype = 0
+                  nwsec = nwfore
+               endif
+            endif
+         endif
+c------conversion loops
+c     lable # 31 commented out by nobu
+         nwdo   = min (nwsec,jmtex-jmt)
+         if (nwdo/=0) then
+            if ((itype<=0).or.(itype>7)) then
+               call vzero (mt(jmt+1),nwdo)
+               jms = jms + nwdo
+               jmt = jmt + nwdo
+            else if (itype == 4) then
+c--   d - double precision
+               ndpn   = (nwdo+1) / 2
+               nwdodb =  ndpn * 2
+*     #include "fzocvfd.inc"
+*     nobu added -->
+               do jl=1,ndpn
+                  mt(jmt+1) = ms(jms+2)
+                  mt(jmt+2) = ms(jms+1)
+                  jmt = jmt + 2
+                  jms = jms + 2
+               enddo
+*     --> nobu
+               if (nwdodb/=nwdo) then
+                  if ((nwdodb>nwsec).or.(nwdodb>nwfore)) then
+                     jms = jms - 1
+                     jmt = jmt - 1
+                     ifocon(1) = -2
+                     ifocon(2) = jms
+                     ifocon(3) = nwdo
+                  else
+                     nwdo = nwdodb
+                  endif
+               endif
+            else if (itype == 5) then
+c--   h - hollerith
+*     #include "fzocvfh.inc"
+*     --> added nobu
+               call vxinvc (ms(jms+1),mt(jmt+1),nwdo)
+               jmt = jmt + nwdo
+               jms = jms + nwdo
+*     --> nobu
+*     ignoring t=pass
+            else if ((itype <= 3).or.(itype >=6) )then
+c---- copy as is
+*     #include "fzocvjf.inc"
+*     #include "fzocvfai.inc"
+*     nobu added -->
+               call ucopy (ms(jms+1),mt(jmt+1),nwdo)
+               jmt = jmt + nwdo
+               jms = jms + nwdo
+*     --> nobu
+c------end of sector
+            endif
+c--   rest of the bank unused
+c--   b - bit strings
+c--   i - integers
+*     #include "fzocvfi.inc"
+*     ignoring t=pass
+c--   f - floating
+*     #include "fzocvff.inc"
+*     ignoring t=pass
+c--   error : odd number of double-precision words
+         endif
+         
+         nwfore = nwfott - jms
+         if (jmt>=jmtex) then
+            exit
+         endif
+         jfocur = jfocur + 2
+         if (jfocur<jfoend) then
+            cycle
+         endif
+         jfocur = jforep
+      enddo      
+c--   data or buffer exhausted
 
-      NWFORE = NWFOTT
-      JMTEX  = MIN (NWFORE,NWFOAV)
-
-      JMS    = 0
-      JFOCUR = 0
-      IFOCON(1) = 0
-
-C------            Start next sector
-
-   21 ITYPE  = MFO(JFOCUR+1)
-      IF (ITYPE.EQ.7)              GO TO 24
-      NWSEC = MFO(JFOCUR+2)
-      IF   (NWSEC)           22, 23, 31
-
-C--                Rest of the bank
-
-   22 NWSEC = NWFORE
-      GO TO 31
-
-C--                Dynamic sector
-
-   23 IWORD = MS(JMS+1)
-      NWSEC = IWORD
-      GO TO 25
-
-C--                Self-describing sector
-
-   24 IWORD = MS(JMS+1)
-      ITYPE = MOD (IWORD,16)
-      NWSEC = IWORD/16
-
-   25 MT(JMT+1) = IWORD
-      JMT = JMT + 1
-      JMS = JMS + 1
-      NWFORE = NWFORE - 1
-
-      IF (ITYPE.GE.8)              GO TO 27
-      IF (NWSEC.EQ.0)              GO TO 29
-      IF (NWSEC.GT.0)              GO TO 31
-
-C--                Faulty sector control word
-
-   27 IFOCON(1) = -1
-      IFOCON(2) = JMS
-      IFOCON(3) = IWORD
-
-C--                Rest of the bank is unused
-
-   29 ITYPE = 0
-      NWSEC = NWFORE
-      GO TO 31
-
-C--                RE-ENTRY TO CONTINUE
-
-   30 JMTEX  = MIN (NWFORE,NWFOAV)
-      JMS    = NWFODN
-      ITYPE  = MFOSAV(1)
-      NWSEC  = MFOSAV(2)
-
-C------            CONVERSION LOOPS
-
-   31 NWDO   = MIN (NWSEC,JMTEX-JMT)
-      IF (NWDO.EQ.0)               GO TO 801
-      IF (ITYPE.LE.0)              GO TO 91
-      GO TO (101,201,301,401,501,101,101), ITYPE
-
-C--                Rest of the bank unused
-
-   91 CALL VZERO (MT(JMT+1),NWDO)
-      JMS = JMS + NWDO
-      JMT = JMT + NWDO
-      GO TO 801
-
-C--                B - bit strings
-
-C--                I - integers
-
-*#include "fzocvfi.inc"
-* Ignoring t=pass
-
-C--                F - floating
-
-*#include "fzocvff.inc"
-* Ignoring t=pass
-
-C--                D - double precision
-
-  401 NDPN   = (NWDO+1) / 2
-      NWDODB =  NDPN * 2
-*#include "fzocvfd.inc"
-* nobu added -->
-      DO 449  JL=1,NDPN
-      MT(JMT+1) = MS(JMS+2)
-      MT(JMT+2) = MS(JMS+1)
-      JMT = JMT + 2
-  449 JMS = JMS + 2
-* --> Nobu
-      IF (NWDODB.EQ.NWDO)          GO TO 801
-      IF (NWDODB.GT.NWSEC)         GO TO 471
-      IF (NWDODB.GT.NWFORE)        GO TO 471
-      NWDO = NWDODB
-      GO TO 801
-
-C--                Error : odd number of double-precision words
-
-  471 JMS = JMS - 1
-      JMT = JMT - 1
-      IFOCON(1) = -2
-      IFOCON(2) = JMS
-      IFOCON(3) = NWDO
-      GO TO 801
-
-C--                H - hollerith
-
-  501 CONTINUE
-*#include "fzocvfh.inc"
-* --> added nobu
-      CALL VXINVC (MS(JMS+1),MT(JMT+1),NWDO)
-      JMT = JMT + NWDO
-      JMS = JMS + NWDO
-      GO TO 801
-* --> nobu
-* Ignoring t=pass
-
-C----              COPY AS IS
-
-*#include "fzocvjf.inc"
-* nobu added -->
-  301 CONTINUE
-  201 CONTINUE
-  101 CONTINUE
-* --> nobu
-*#include "fzocvfai.inc"
-* nobu added -->
-      CALL UCOPY (MS(JMS+1),MT(JMT+1),NWDO)
-      JMT = JMT + NWDO
-      JMS = JMS + NWDO
-* --> nobu
-C------            END OF SECTOR
-
-  801 NWFORE = NWFOTT - JMS
-      IF (JMT.GE.JMTEX)            GO TO 804
-      JFOCUR = JFOCUR + 2
-      IF (JFOCUR.LT.JFOEND)        GO TO 21
-      JFOCUR = JFOREP
-      GO TO 21
-
-C--                Data or buffer exhausted
-
-  804 IQUEST(1) = JMT
-      NWFOAV = NWFOAV - JMT
-      IF (NWFORE.EQ.0)             RETURN
-
-C--                Ready for re-entry
-
-      NWFODN    = JMS
-      MFOSAV(1) = ITYPE
-      MFOSAV(2) = NWSEC - NWDO
-      RETURN
-      END
-#endif
+      iquest(1) = jmt
+      nwfoav = nwfoav - jmt
+      if (nwfore==0)             return
+      
+c--   ready for re-entry
+      
+      nwfodn    = jms
+      mfosav(1) = itype
+      mfosav(2) = nwsec - nwdo
+      return
+      end
+*#endif

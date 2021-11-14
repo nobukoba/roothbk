@@ -1,1 +1,0 @@
-      MSBIT1 (IZW,IZP) = IOR (IZW, ISHFT(1,IZP-1))
