@@ -160,6 +160,41 @@ std::string get_shm_names_str(const char *shm_names){
   return shm_names_str;
 }
 
+void hrout_rec(const char *pawdir_in, const char *lundir_in) {
+  /*std::cout <<  "pawdir_in: " << pawdir_in << std::endl;
+    std::cout <<  "lundir_in: " << lundir_in << std::endl;*/
+  std::string pawdir = pawdir_in;
+  std::string lundir = lundir_in;
+  hcdir_(pawdir.c_str(), " ", pawdir.length(), 1);
+  hcdir_(lundir.c_str(), " ", lundir.length(), 1);
+  int icycle = 0;
+  hrout_(0,icycle," ",1);
+  int ndir = 0;
+  char subdirs[50][16];
+  hrdir_(50, subdirs[0], ndir, 16);
+  /*std::cout <<  "ndir: " << ndir << std::endl;*/
+  char chdir[17];
+  for (int k=0;k<ndir;k++) {
+    strlcpy(chdir,subdirs[k],16);
+    if (strchr(chdir,'/')) {
+      printf("Sorry cannot convert directory name %s because it contains a slash\n",chdir);
+      continue;
+    }
+    chdir[16] = 0;
+    for (int i=16;i>0;i--) {
+      if (chdir[i] == 0) continue;
+      if (chdir[i] != ' ') break;
+      chdir[i] = 0;
+    }
+    std::string new_pawdir = pawdir + "/" + chdir;
+    std::string new_lundir = lundir + "/" + chdir;
+    hrout_rec(new_pawdir.c_str(), new_lundir.c_str());
+  }
+  hcdir_(pawdir.c_str()," ",pawdir.length(),1);
+  hcdir_(lundir.c_str()," ",lundir.length(),1);
+  return;    
+}
+
 std::string open_input_shm(const char* shm_name){
   init_hbook();
   std::string shm_name_str = shm_name;
@@ -229,6 +264,7 @@ XMLDocPointer_t open_input_srv(TXMLEngine& xml, const char* srv_url){
 }
 
 std::string open_output_shm(const char *name, const char* shm_name){
+  init_hbook();
   std::string shm_name_str = shm_name;
   if (!shm_name_str.length()) {
     shm_name_str = name;
@@ -582,11 +618,15 @@ void shms2hbk(const char *shm_names, const char *hbk_name) {
     std::string new_hbk_name_str = "//LUN10/" + shm_name;
     convert_dir_hbk2hbk(shm_flag,shm_name_str.c_str(),
 			new_paw_name_str.c_str(),new_hbk_name_str.c_str());
-    hcdir_("//PAWC"," ",6,1);
-    hcdir_("//LUN10"," ",7,1);
+    hcdir_(shm_name_str.c_str()," ",shm_name_str.length(),1);
+    hcdir_(new_paw_name_str.c_str()," ",new_paw_name_str.length(),1);
+    hcdir_(new_hbk_name_str.c_str()," ",new_hbk_name_str.length(),1);
   }
+  hcdir_("//PAWC"," ",6,1);
+  hcdir_("//LUN10"," ",7,1);
   int icycle = 0;
-  hrout_(0,icycle,"T",1);
+  /*hrout_(0,icycle,"T",1);*/
+  hrout_rec("//PAWC","//LUN10");
   hrend_("LUN10",5);
   return;
 }
@@ -731,6 +771,7 @@ void srv2shm(const char* srv_url, const char *shm_name){
 
 void convert_dir_hbk2hbk(int shm_flag, const char* cur_dir, const char *pawdir_in, const char *lundir_in) {
   std::string cur_dir_str = cur_dir;
+  /*std::cout << "cur_dir_str:" << cur_dir_str << std::endl;*/
   hcdir_(cur_dir_str.c_str()," ",cur_dir_str.length(),1);
   hrin_(0,9999,0);
   /* converting subdirectories of this directory */
@@ -741,9 +782,8 @@ void convert_dir_hbk2hbk(int shm_flag, const char* cur_dir, const char *pawdir_i
   char chdir[17];
   for (int k=0;k<ndir;k++) {
     strlcpy(chdir,subdirs[k],16);
-    /*
-    std::cout <<  "subdirs[k]-->" <<  subdirs[0] << "<--" << std::endl;
-    std::cout <<  "chdir-->" <<  chdir << "<--" << std::endl;*/
+    /*std::cout <<  "subdirs[k]-->" <<  subdirs[0] << "<--" << std::endl;
+      std::cout <<  "chdir-->" <<  chdir << "<--" << std::endl;*/
     if (strchr(chdir,'/')) {
       printf("Sorry cannot convert directory name %s because it contains a slash\n",chdir);
       continue;
@@ -773,6 +813,7 @@ void convert_dir_hbk2hbk(int shm_flag, const char* cur_dir, const char *pawdir_i
     hcdir_(cur_dir_str.c_str()," ",cur_dir_str.length(),1);
     hcdir_(pawdir.c_str()," ",pawdir.length(),1);
     if (shm_flag == 1) {
+      /*std::cout << "lundir: " << lundir << std::endl;*/
       hcdir_(lundir.c_str()," ",lundir.length(),1);
     }
   }

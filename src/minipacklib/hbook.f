@@ -1436,9 +1436,11 @@
 *      write(*,*) 'HCDIR: CHPAT(1)', CHPAT(1)
 *      write(*,*) 'HCDIR: CHTOP(1)', CHTOP(1)
 *      write(*,*) 'HCDIR: CHTOP(2)', CHTOP(2)
+*      write(*,*) 'HCDIR: CHTOP(3)', CHTOP(3)
 *      write(*,*) 'HCDIR: CHPATH ', CHPATH
       DO 10 I=1,NCHTOP
 *         write(*,*) 'HCDIR: 1'
+*         write(*,*) 'HCDIR: CHPAT(1), CHTOP(I)', CHPAT(1), CHTOP(I)
          IF(CHPAT(1).EQ.CHTOP(I))THEN
 *            write(*,*) 'HCDIR: 2'
             ICDIR=I
@@ -1452,6 +1454,7 @@
                   IF(CHPATH(1:1).EQ.'.')THEN
                      CALL HRZCD(' ',CHOPT)
                   ELSE
+*                     write(*,*) 'HCDIR: CHPATH, CHOPT', CHPATH, CHOPT
                      CALL HRZCD(CHPATH,CHOPT)
                   ENDIF
                ENDIF

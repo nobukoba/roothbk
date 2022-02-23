@@ -101,7 +101,10 @@
 *         Save Histogram(s) in Subdirectories if option 'T'
 *
    15 IF(IOPTT.NE.0)THEN
-   20    KLPAT=KLPAT+1
+         write(*,*) 'hrout.f IOPTT .ne. 0'
+
+   20      KLPAT=KLPAT+1
+         write(*,*) 'hrout.f KLPAT: ', KLPAT
          IRET=3
          LCDIR=LQ(LCDIR-1)
    30    LQ(LHBOOK-10-KLPAT)=LCDIR
@@ -119,21 +122,29 @@
 *#endif
             GO TO 30
          ENDIF
+         write(*,*) 'hrout.f before uhtoc'
          CALL UHTOC(IQ(LCDIR+1),4,CHCDIR(KLPAT),16)
          LIDS  = LQ(LCDIR-2)
          LTAB  = LQ(LCDIR-3)
          LBUFM = LQ(LCDIR-4)
          LTMPM = LQ(LCDIR-5)
+         write(*,*) 'hrout.f before ioptn .ne. 0'
          IF(IOPTN.NE.0)THEN
             CALL HMDIR(CHCDIR(KLPAT),'S')
          ELSE
+            write(*,*) 'hrout.f HCDIR'
+            write(*,*) 'hrout.f KLPAT', KLPAT
+            write(*,*) 'hrout.f CHCDIR(KLPAT)', CHCDIR(KLPAT) 
             CALL HCDIR(CHCDIR(KLPAT),' ')
+            write(*,*) 'hrout.f aft HCDIR'
             IF(IQUEST(1).EQ.-1)THEN
                CALL HMDIR(CHCDIR(KLPAT),'S')
             ENDIF
          ENDIF
+         write(*,*) 'hrout.f before go to 90'
          IF(IQUEST(1).NE.0)GO TO 90
 *
+         write(*,*) 'hrout.f before 40'
    40    CALL HLOOP (IDD,'HROUT ',IRET)
          IF (IRET .EQ. 0)                 GO TO 20
          I4=JBIT(IQ(LCID+KBITS),4)
@@ -150,6 +161,7 @@
 *-- goto the correct RZ directory
                NCHRZ = IQ(LCID+ZNCHRZ)
                IF(NCHRZ.NE.0)THEN
+                  write(*,*) 'hrout.f before RZCDIR 1'
                   CALL RZCDIR(CWDRZ,'R')
                   CALL HCDIR(CHOLD,'R')
                   CHDIR = ' '
@@ -164,6 +176,7 @@
             CALL SBIT0(IQ(LC),1)
          ENDIF
          KEYS(1) = ID
+         write(*,*) 'hrout.f before HRZOUT'
          CALL HRZOUT(IHDIV,LCID,KEYS,ICYCLE,' ')
          IF(I4.NE.0)THEN
             IF (IQ(LCID-2) .EQ. 2) THEN
@@ -174,6 +187,7 @@
                IF (NCHRZ.NE.0.AND.CHDIR .NE. CWDRZ) THEN
                   CALL HCDIR(CHOLD,' ')
                   IF (CHOLD .NE. CWDRZ) THEN
+                     write(*,*) 'hrout.f before RZCDIR 2'
                      CALL RZCDIR(CWDRZ,' ')
                   ENDIF
                ENDIF
@@ -187,8 +201,10 @@
 *
 *          Restore Current Directory
 *
-   90    CALL HCDIR(CHWOLD,' ')
+ 90      CALL HCDIR(CHWOLD,' ')
 *
+         write(*,*) 'hrout.f before optt endif'
+
       ENDIF
 *
    99 RETURN
