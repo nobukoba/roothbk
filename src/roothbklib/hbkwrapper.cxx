@@ -150,7 +150,3 @@ void rannor(const float& a, const float& b) {
   rannor_(a,b);
   return;
 }
-void printaddr() {
-  printaddr_();
-  return;
-}
