@@ -4,7 +4,7 @@
 
       FUNCTION JBYTET (MZ,IZW,IZP,NZB)
       JBYTET  = IAND (MZ,
-     + ISHFT (IAND(ISHFT(IZW,33-IZP-NZB),X'FFFFFFFF'),
+     + ISHFT (IAND(ISHFT(IZW,33-IZP-NZB),Z'FFFFFFFF'),
      + -(32-NZB)) )
       END
       
@@ -12,7 +12,7 @@
 
       FUNCTION MBYTOR (MZ,IZW,IZP,NZB)
       MBYTOR  = IOR (IZW,
-     + ISHFT (IAND(ISHFT(MZ,32-NZB),X'FFFFFFFF'),
+     + ISHFT (IAND(ISHFT(MZ,32-NZB),Z'FFFFFFFF'),
      + -(33-IZP-NZB)))
       END
       
@@ -40,8 +40,8 @@
       FUNCTION MSBYT (MZ,IZW,IZP,NZB)
       MSBYT = IOR (
      + IAND (IZW, NOT(ISHFT (
-     + ISHFT(X'FFFFFFFF',-(32-NZB)),IZP-1)))
-     + ,ISHFT (IAND(ISHFT(MZ,32-NZB),X'FFFFFFFF'),
+     + ISHFT(int(Z'FFFFFFFF'),-(32-NZB)),IZP-1)))
+     + ,ISHFT (IAND(ISHFT(MZ,32-NZB),Z'FFFFFFFF'),
      + -(33-IZP-NZB)) )
       END
       

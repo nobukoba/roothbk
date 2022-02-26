@@ -142,7 +142,7 @@ c Nobu added INTEGER*8
 * For -fdefault-integer-8 option of gfortran Nobu 2021.09.06
 *      JBYT = ISHFT(ISHFT(IZW,NBITPW+1-IZP-NZB), -(NBITPW-NZB))
       JBYT = ISHFT(
-     +     IAND(ISHFT(IZW,NBITPW+1-IZP-NZB),X'FFFFFFFF'),
+     +     IAND(ISHFT(IZW,NBITPW+1-IZP-NZB),Z'FFFFFFFF'),
      +     -(NBITPW-NZB))
       END
 
@@ -195,7 +195,7 @@ c Nobu added INTEGER*8
 *      MSK = ISHFT (IALL11, -(NBITPW-NZB))
 *      IZW = IOR ( IAND (IZW, NOT(ISHFT(MSK,IZP-1)))
 *     +, ISHFT(IAND(IT,MSK),IZP-1))
-      MSK = ISHFT (X'FFFFFFFF', -(NBITPW-NZB))
+      MSK = ISHFT (int(Z'FFFFFFFF'), -(NBITPW-NZB))
       IZW = IOR ( IAND (IZW, NOT(ISHFT(MSK,IZP-1)))
      +, ISHFT(IAND(IT,MSK),IZP-1))
       END
