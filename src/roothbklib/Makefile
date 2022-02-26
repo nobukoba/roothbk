@@ -13,7 +13,10 @@ CXXFLAGS   = -g -I../../inc $(shell root-config --cflags) -fPIC
 # If ROOT does not have TBufferJSON::FromJSON class, please use the below CXXFLAG
 #CXXFLAGS   = -g -I../../inc $(shell root-config --cflags) -fPIC -DNoFromJSON
 LFLAGS     = 
-ROOTLIBS   = $(shell root-config --glibs) -lgfortran -lXMLIO -lRHTTP 
+# CentOS 8
+#ROOTLIBS   = $(shell root-config --glibs) -lXMLIO -lRHTTP -lgfortran
+# macOS 12.2
+ROOTLIBS   = $(shell root-config --glibs) -lXMLIO -lRHTTP -L /usr/local/lib/gcc/11/ -lgfortran
 PACKLIB_A  = ../../lib/libminipacklib.a
 PACKLIB_SO = -L../../lib  -lminipacklib
 TARGETS    = libroothbklib.a libroothbklib.so

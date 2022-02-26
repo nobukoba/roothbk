@@ -1,7 +1,11 @@
 CXX       = g++
 CXXFLAGS  = -g -I../../inc $(shell root-config --cflags) -fPIC
 LFLAGS    = 
-ROOTLIBS  = $(shell root-config --glibs) -lgfortran -lXMLIO -lRHTTP 
+
+# Linux
+#ROOTLIBS  = $(shell root-config --glibs) -lXMLIO -lRHTTP  -lgfortran
+# macOS 12.2
+ROOTLIBS  = $(shell root-config --glibs) -lXMLIO -lRHTTP -L /usr/local/lib/gcc/11/ -lgfortran
 
 TARGETS   = ../../bin/shms2hbk ../../bin/shms2root ../../bin/shms2srv ../../bin/shm2hbk ../../bin/shm2root ../../bin/shm2srv ../../bin/hbk2shm ../../bin/hbk2root ../../bin/hbk2srv ../../bin/root2shm ../../bin/root2hbk ../../bin/root2srv ../../bin/srv2shm ../../bin/srv2hbk ../../bin/srv2root ../../bin/lshm ../../bin/dshm ../../bin/shm_monitor
 
