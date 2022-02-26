@@ -14,9 +14,9 @@ CXXFLAGS   = -g -I../../inc $(shell root-config --cflags) -fPIC
 #CXXFLAGS   = -g -I../../inc $(shell root-config --cflags) -fPIC -DNoFromJSON
 LFLAGS     = 
 # CentOS 8
-#ROOTLIBS   = $(shell root-config --glibs) -lXMLIO -lRHTTP -lgfortran
+ROOTLIBS   = $(shell root-config --glibs) -lXMLIO -lRHTTP -lgfortran
 # macOS 12.2
-ROOTLIBS   = $(shell root-config --glibs) -lXMLIO -lRHTTP -L /usr/local/lib/gcc/11/ -lgfortran
+#ROOTLIBS   = $(shell root-config --glibs) -lXMLIO -lRHTTP -L /usr/local/lib/gcc/11/ -lgfortran
 PACKLIB_A  = ../../lib/libminipacklib.a
 PACKLIB_SO = -L../../lib  -lminipacklib
 TARGETS    = libroothbklib.a libroothbklib.so
