@@ -12,6 +12,7 @@ void lshm();
 void dshm(const char *);
 
 void init_hbook(const int);
+void hnoent_put(const int, const int);
 void hrout_rec(const char *, const char *);
 std::string get_shm_names_str(const char *);
 std::string open_input_shm(const char*);

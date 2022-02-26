@@ -73,6 +73,7 @@ extern "C" void  hidopt_(const int&,const char*,const int);
 extern "C" void  hsifla_(const int&,const int&);
 extern "C" void  hrdir_(const int&, char*,const int&,const int);
 extern "C" int   hfreem_(long*);
+extern "C" int   hfind_(const int&, const char*,const int);
 extern "C" void  printaddr_();
 /* --> Nobu */
 #endif

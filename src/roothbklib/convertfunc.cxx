@@ -163,6 +163,36 @@ std::string get_shm_names_str(const char *shm_names){
   return shm_names_str;
 }
 
+void hnoent_put(const int idd, const int numb) {
+  int lcid  = hcbook_[10];
+  int *iq   = &pawc_[17];
+  int *lq   = &pawc_[9];
+  int lcont = lq[lcid-1];
+  int kBITS = 1;
+  int kNOENT = 2;
+  /*std::cout << "hnoent_put() lcid: " << lcid << std::endl;
+    std::cout << "hnoent_put() iq: " << (long int) iq << std::endl;
+    std::cout << "hnoent_put() lcont: " << lcont << std::endl;
+    std::cout << "hnoent_put() iq[lcid+kBITS]: " << iq[lcid+kBITS] << std::endl;
+    std::cout << "hnoent_put() &iq[lcid+kBITS]: " << (long int) &(iq[lcid+kBITS]) << std::endl;
+    std::cout << "hnoent_put() iq[lcont+kNOENT]: " << iq[lcont+kNOENT] << std::endl;
+    std::cout << "hnoent_put() &iq[lcont+kNOENT]: " << (long int) &(iq[lcont+kNOENT]) << std::endl; */
+  hfind_(idd, "HNOENT_PUT", 10);
+  if (quest_[0] != 0) {
+    return;
+  }else{
+    /* I4 = JBIT(IQ(lcid+kBITS),4) */
+    int i4 = 1 & (iq[lcid+kBITS] >> (4-1));
+    if (i4 != 0) {
+      iq[lcid+3] = numb;
+    }else{
+      iq[lcont+kNOENT] = numb;
+    }
+  }
+  return;
+}
+
+
 void hrout_rec(const char *pawdir_in, const char *lundir_in) {
   /*std::cout <<  "pawdir_in: " << pawdir_in << std::endl;
     std::cout <<  "lundir_in: " << lundir_in << std::endl;*/
@@ -395,8 +425,9 @@ void dir2hbk(TDirectory* root_dir, const char* hbk_name){
   if(hbk_name_str==""){return;}
   int shm_flag = 0;
   convert_dir_root2hbk(shm_flag,root_dir,"//PAWC","//LUN10");
-  int icycle = 0;
-  hrout_(0,icycle,"T",1);
+  /*int icycle = 0;
+  hrout_(0,icycle,"T",1);*/
+  hrout_rec("//PAWC","//LUN10");
   hrend_("LUN10",5);
   return;
 }
@@ -509,8 +540,9 @@ void root2hbk(const char *root_name, const char* hbk_name){
   if(hbk_name_str==""){return;}
   int shm_flag = 0;
   convert_dir_root2hbk(shm_flag,(TDirectory*)f,"//PAWC","//LUN10");
-  int icycle = 0;
-  hrout_(0,icycle,"T",1);
+  /*int icycle = 0;
+  hrout_(0,icycle,"T",1);*/
+  hrout_rec("//PAWC","//LUN10");
   hrend_("LUN10",5);
   f->Close();
   return;
@@ -561,8 +593,9 @@ void shm2hbk(const char* shm_name, const char* hbk_name){
   convert_dir_hbk2hbk(shm_flag,shm_name_str.c_str(),"//PAWC","//LUN10");
   hcdir_("//PAWC"," ",6,1);
   hcdir_("//LUN10"," ",7,1);
-  int icycle = 0;
-  hrout_(0,icycle,"T",1);
+  /*int icycle = 0;
+  hrout_(0,icycle,"T",1);*/
+  hrout_rec("//PAWC","//LUN10");
   hrend_("LUN10",5);
   return;
 }
@@ -644,8 +677,8 @@ void shms2hbk(const char *shm_names, const char *hbk_name) {
   }
   hcdir_("//PAWC"," ",6,1);
   hcdir_("//LUN10"," ",7,1);
-  int icycle = 0;
-  /*hrout_(0,icycle,"T",1);*/
+  /*int icycle = 0;
+  hrout_(0,icycle,"T",1);*/
   hrout_rec("//PAWC","//LUN10");
   hrend_("LUN10",5);
   return;
@@ -752,8 +785,9 @@ void srv2hbk(const char* srv_url, const char *hbk_name){
   TString fulldir = "";
   int shm_flag = 0;
   convert_dir_srv2hbk(shm_flag, xml, child, 1, srv_url, fulldir, "//PAWC","//LUN10");
-  int icycle = 0;
-  hrout_(0,icycle,"T",1);
+  /*int icycle = 0;
+  hrout_(0,icycle,"T",1);*/
+  hrout_rec("//PAWC","//LUN10");
   hrend_("LUN10",5);
   xml.FreeDoc(xmldoc);
   return;
@@ -1336,8 +1370,7 @@ void convert_histo_root2hbk(TH1* h, int& id) {
     delete [] zerr;
   }
   int nentires = h->GetEntries();
-  /* Nobu's subroutine made from the hnoent subroutine */
-  hnoentput_(hbook_id, nentires);
+  hnoent_put(hbook_id, nentires);
   /* Error bars will not be shown by default */
   hsifla_(9,0);
   /*hidopt_(hbook_id,"NERR",4);
