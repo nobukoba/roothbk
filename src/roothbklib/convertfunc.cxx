@@ -101,12 +101,14 @@ void lshm(){
   return;
 }
 
-void init_hbook(){
-  static int hlimit_flag = 0;
-  if (hlimit_flag==0){
-    int pawc_size = PAWC_SIZE;
-    hlimit_(pawc_size);
-    hlimit_flag = 1;
+void init_hbook(const int kind){
+  static int kind_saved = -1;
+  if (kind != kind_saved){
+    if (kind == 0){
+      int pawc_size = PAWC_SIZE;
+      hlimit_(pawc_size);
+    }
+    kind_saved = kind;
   }
   return;
 }
@@ -119,6 +121,7 @@ std::string get_shm_names_str(const char *shm_names){
   for (int i = 0; i < shm_names_str.length(); i++) {
     if((int)(shm_names_str[i]) >= 0x61 &&
        (int)(shm_names_str[i]) <= 0x7a){
+      /* Lower case --> Upper case w/o <algorithm> header */
       shm_names_str[i] = (char)((int)shm_names_str[i] - 0x20);
     }
   }
@@ -196,7 +199,8 @@ void hrout_rec(const char *pawdir_in, const char *lundir_in) {
 }
 
 std::string open_input_shm(const char* shm_name){
-  init_hbook();
+  /* std::cout << "open_input_shm starts." << std::endl; */
+  init_hbook(0);
   std::string shm_name_str = shm_name;
   shm_name_str = shm_name_str.substr(0,4);
   if (((int)shm_name_str.find(",")) > -1) {
@@ -208,8 +212,12 @@ std::string open_input_shm(const char* shm_name){
       shm_name_str[i] = (char)((int)shm_name_str[i] - 0x20);
     }
   }
+  /*std::cout << "before hlimap in open_input_shm" << std::endl;*/
   hlimap_(0,shm_name_str.c_str(),shm_name_str.length());
+  /*std::cout << "before hrin in open_input_shm" << std::endl;*/
+  hdelet_(0);
   hrin_(0,9999,0);
+  /*std::cout << "before hdelet in open_input_shm" << std::endl;*/
   hdelet_(0);
   if (quest_[0]) {
     printf("Error: cannot open the shared memory: %s\n",shm_name_str.c_str());
@@ -220,7 +228,7 @@ std::string open_input_shm(const char* shm_name){
 }
 
 std::string open_input_hbk(const char* hbk_name){
-  init_hbook();
+  init_hbook(0);
   std::string hbk_name_str = hbk_name;
   int lun = 10, ier=0, record_size=0;
   hropen_(lun,"LUN10",hbk_name_str.c_str(),"x",record_size,ier,5,hbk_name_str.length(),1);
@@ -264,7 +272,7 @@ XMLDocPointer_t open_input_srv(TXMLEngine& xml, const char* srv_url){
 }
 
 std::string open_output_shm(const char *name, const char* shm_name){
-  init_hbook();
+  init_hbook(1);
   std::string shm_name_str = shm_name;
   if (!shm_name_str.length()) {
     shm_name_str = name;
@@ -282,7 +290,7 @@ std::string open_output_shm(const char *name, const char* shm_name){
 }
 
 std::string open_output_hbk(const char* name, const char* hbk_name){
-  init_hbook();
+  init_hbook(0);
   std::string hbk_name_str = hbk_name;
   if(hbk_name_str.length()==0){
     hbk_name_str = name;
@@ -291,7 +299,14 @@ std::string open_output_hbk(const char* name, const char* hbk_name){
       hbk_name_str.substr(hbk_name_str.length()-5) == ".root"){
     hbk_name_str = hbk_name_str.substr(0,hbk_name_str.length()-5);
   }
-  hbk_name_str += ".hb";
+  if (!((hbk_name_str.length()>=3 &&
+	 hbk_name_str.substr(hbk_name_str.length()-3) == ".hb")||
+	(hbk_name_str.length()>=4 &&
+	 hbk_name_str.substr(hbk_name_str.length()-4) == ".hbk")||
+	(hbk_name_str.length()>=6 &&
+	 hbk_name_str.substr(hbk_name_str.length()-6) == ".hbook"))){
+    hbk_name_str += ".hb";
+  }
   int lun = 10, ier=0, record_size=1024;
   hropen_(lun,"LUN10",hbk_name_str.c_str(),"n",record_size,ier,5,hbk_name_str.length(),1);
   if (ier)  {
@@ -339,7 +354,7 @@ TFile* open_output_root(const char *name, const char *root_name){
 THttpServer* open_output_srv(int port) {
   static THttpServer* serv = 0;
   static int saved_port = 0;
-  static int message_counter = 0;
+  /* static int message_counter = 0; */
   if(port < 0){
     if(serv != 0){
       std::cout << "THttpServer on port " << saved_port << " was deleted." << std::endl;
@@ -363,13 +378,14 @@ THttpServer* open_output_srv(int port) {
     }
     TString thttpserver_str = Form("http:%d?top=pid%d_at_%s", port, gSystem->GetPid(), gSystem->HostName());
     serv = new THttpServer(thttpserver_str.Data());
-  }else{
-    if (message_counter < 3) {
+  }
+  /*else{
+    if (message_counter < 1) {
       std::cout << "THttpServer is already runing on port " << saved_port << "." << std::endl;
       std::cout << "Access to this THttpServer." << std::endl;
-      message_counter++;      
+      message_counter++;
     }
-  }
+    }*/
   return serv;
 }
 
@@ -528,6 +544,7 @@ void shm2dir(const char *shm_name, TDirectory* root_dir) {
   std::string shm_name_str = open_input_shm(shm_name);
   if(shm_name_str==""){return;}
   if (root_dir == 0) {root_dir = gROOT;}
+  std::cout << "convert_dir_hbk2root() shm_name_str, root_dir" << shm_name_str << "," <<  root_dir << std::endl;
   convert_dir_hbk2root(shm_name_str.c_str(), root_dir);
   shm_name_str = shm_name_str.substr(2,4);
   return;
@@ -575,13 +592,15 @@ void shm2srv(const char *shm_name, int port, TDirectory* root_dir) {
 }
 
 void shms2dir(const char *shm_names, TDirectory* root_dir) {
+  std::cout << "shms2dir starts." << std::endl;
   std::string shm_names_str = get_shm_names_str(shm_names);
   if (root_dir == 0) {root_dir = gROOT;}
   std::stringstream ss(shm_names_str);
   std::string shm_name_str;
   while(ss >> shm_name_str){
     if (((int)shm_name_str.find(",")) > -1) {
-      shm_name_str[shm_name_str.find(",")] = '_';
+      /*shm_name_str[shm_name_str.find(",")] = '_';*/
+      shm_name_str = shm_name_str.substr(0,shm_name_str.find(","));
     }
     TDirectory* cur_dir = (TDirectory*)root_dir->TDirectory::FindObject(shm_name_str.c_str());
     if (!cur_dir) {
@@ -591,6 +610,7 @@ void shms2dir(const char *shm_names, TDirectory* root_dir) {
 	return;
       }
     }
+    std::cout << "shm_name_str.c_str(), cur_dir" << shm_name_str << "," << cur_dir << std::endl;
     shm2dir(shm_name_str.c_str(), cur_dir);
   }
   return;
@@ -639,7 +659,8 @@ void shms2root(const char *shm_names, const char* root_name) {
   std::string shm_name_str;
   while(ss >> shm_name_str){
     if (((int)shm_name_str.find(",")) > -1) {
-      shm_name_str[shm_name_str.find(",")] = '_';
+      /*shm_name_str[shm_name_str.find(",")] = '_';*/
+      shm_name_str = shm_name_str.substr(0,shm_name_str.find(","));
     }
     TDirectory* cur_dir = (TDirectory*)f->TDirectory::FindObject(shm_name_str.c_str());
     if (!cur_dir) {
@@ -941,6 +962,7 @@ void convert_dir_hbk2root(const char *cur_dir, TDirectory* output_dir) {
   int idvec[100000];
   int imax = 0;
   std::string cur_dir_str = cur_dir;
+  /*std::cout << "cur_dir_str:" << cur_dir_str << std::endl;*/
   hcdir_(cur_dir_str.c_str()," ",cur_dir_str.length(),1);
   hrin_(0,9999,0);
   hidall_(idvec,imax);
