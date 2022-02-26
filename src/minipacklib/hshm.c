@@ -120,7 +120,7 @@ int hmapi_(key_t *mkey, long *comaddr)
    /*
      printf("hshm.c comaddr %ld\n", comaddr);
      printf("hshm.c *comaddr %ld\n", *comaddr);
-   */   
+   */      
    /* get id of existing shared memory segment */
    if ((shm_pawc = shmget(*mkey, 0, SHM_R | SHM_W)) < 0) {
       perror("shmget");
@@ -144,6 +144,8 @@ int hmapi_(key_t *mkey, long *comaddr)
    req_addr=(void*)(*comaddr);
    /* attach shared memory segment */
 
+   /*printf("hshm.c (unsigned long)req_addr %ld\n", (unsigned long)req_addr);*/
+
    if ((paddr = shmat(shm_pawc, req_addr, SHM_RND)) == (void *)-1) {
       perror("shmat");
       istat = -errno;
@@ -155,11 +157,9 @@ int hmapi_(key_t *mkey, long *comaddr)
 #else
       *comaddr = (long) (inter >> 3);
 #endif
-      /*
-      printf("hshm.c (unsigned long)paddr %ld\n", (unsigned long)paddr);
+      /*printf("hshm.c (unsigned long)paddr %ld\n", (unsigned long)paddr);
       printf("hshm.c comaddr %ld\n", comaddr);
-      printf("hshm.c *comaddr %ld\n", *comaddr);
-      */
+      printf("hshm.c *comaddr %ld\n", *comaddr);*/
    }
    
    return(istat);
