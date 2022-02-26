@@ -195,7 +195,7 @@ c Nobu added INTEGER*8
 *      MSK = ISHFT (IALL11, -(NBITPW-NZB))
 *      IZW = IOR ( IAND (IZW, NOT(ISHFT(MSK,IZP-1)))
 *     +, ISHFT(IAND(IT,MSK),IZP-1))
-      MSK = ISHFT (int(Z'FFFFFFFF'), -(NBITPW-NZB))
+      MSK = ISHFT (Z'FFFFFFFF', -(NBITPW-NZB))
       IZW = IOR ( IAND (IZW, NOT(ISHFT(MSK,IZP-1)))
      +, ISHFT(IAND(IT,MSK),IZP-1))
       END
