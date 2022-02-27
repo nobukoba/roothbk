@@ -13,10 +13,11 @@ CXXFLAGS   = -g -I../../inc $(shell root-config --cflags) -fPIC
 # If ROOT does not have TBufferJSON::FromJSON class, please use the below CXXFLAG
 #CXXFLAGS   = -g -I../../inc $(shell root-config --cflags) -fPIC -DNoFromJSON
 LFLAGS     = 
+ROOTLIBS   = $(shell root-config --glibs) -lXMLIO -lRHTTP
 # CentOS 8
-ROOTLIBS   = $(shell root-config --glibs) -lXMLIO -lRHTTP -lgfortran
+LIBS       = -lgfortran
 # macOS 12.2
-#ROOTLIBS   = $(shell root-config --glibs) -lXMLIO -lRHTTP -L /usr/local/lib/gcc/11/ -lgfortran
+#LIBS       = -L /usr/local/lib/gcc/11/ -lgfortran
 PACKLIB_A  = ../../lib/libminipacklib.a
 PACKLIB_SO = -L../../lib  -lminipacklib
 TARGETS    = libroothbklib.a libroothbklib.so
@@ -26,7 +27,7 @@ all:	$(TARGETS)
 libroothbklib.a:  roothbklibDict.o hbkwrapper.o convertfunc.o
 	$(AR) $@ $^
 libroothbklib.so:  roothbklibDict.o hbkwrapper.o convertfunc.o $(PACKLIB_A)
-	$(CXX) -shared $(LFLAGS) -o $@ $^ $(PACKLIB_A) -Wl,-rpath $(PWD) $(ROOTLIBS)
+	$(CXX) -shared $(LFLAGS) -o $@ $^ $(PACKLIB_A) -Wl,-rpath $(PWD) $(ROOTLIBS) $(LIBS)
 roothbklibDict.cxx: ../../inc/minicfortran.h ../../inc/hbkwrapper.h ../../inc/convertfunc.h ../../inc/roothbklibLinkDef.h
 ifeq ($(ROOT_VER_GTEQ_6),1)
 	$(ROOTCINT) -f $@ $^
