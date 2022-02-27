@@ -190,12 +190,14 @@ c Nobu added INTEGER*8
       SUBROUTINE SBYT (IT,IZW,IZP,NZB)
       PARAMETER (NBITPW=32)
       PARAMETER (NCHAPW=4)
-      PARAMETER (IALL11 = -1)
+*     PARAMETER (IALL11 = -1)
+      INTEGER      IALL11
+      DATA         IALL11/Z'FFFFFFFF'/
 * For -fdefault-integer-8 option of gfortran Nobu 2021.09.06
 *      MSK = ISHFT (IALL11, -(NBITPW-NZB))
 *      IZW = IOR ( IAND (IZW, NOT(ISHFT(MSK,IZP-1)))
 *     +, ISHFT(IAND(IT,MSK),IZP-1))
-      MSK = ISHFT (Z'FFFFFFFF', -(NBITPW-NZB))
+      MSK = ISHFT (IALL11, -(NBITPW-NZB))
       IZW = IOR ( IAND (IZW, NOT(ISHFT(MSK,IZP-1)))
      +, ISHFT(IAND(IT,MSK),IZP-1))
       END

@@ -38,9 +38,11 @@
 *-------------------------------------------------------------------------------
 
       FUNCTION MSBYT (MZ,IZW,IZP,NZB)
+      INTEGER IALL11
+      DATA IALL11/Z'FFFFFFFF'/
       MSBYT = IOR (
      + IAND (IZW, NOT(ISHFT (
-     + ISHFT(Z'FFFFFFFF',-(32-NZB)),IZP-1)))
+     + ISHFT(IALL11,-(32-NZB)),IZP-1)))
      + ,ISHFT (IAND(ISHFT(MZ,32-NZB),Z'FFFFFFFF'),
      + -(33-IZP-NZB)) )
       END
