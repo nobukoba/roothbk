@@ -38,8 +38,8 @@
 *-------------------------------------------------------------------------------
 
       FUNCTION MSBYT (MZ,IZW,IZP,NZB)
-      INTEGER IALL11
-      DATA IALL11/Z'FFFFFFFF'/
+      INTEGER*4 IALL11
+      PARAMETER (IALL11 = -1)
       MSBYT = IOR (
      + IAND (IZW, NOT(ISHFT (
      + ISHFT(IALL11,-(32-NZB)),IZP-1)))

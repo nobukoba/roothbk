@@ -190,9 +190,8 @@ c Nobu added INTEGER*8
       SUBROUTINE SBYT (IT,IZW,IZP,NZB)
       PARAMETER (NBITPW=32)
       PARAMETER (NCHAPW=4)
-*     PARAMETER (IALL11 = -1)
-      INTEGER      IALL11
-      DATA         IALL11/Z'FFFFFFFF'/
+      INTEGER*4      IALL11
+      PARAMETER (IALL11 = -1)
 * For -fdefault-integer-8 option of gfortran Nobu 2021.09.06
 *      MSK = ISHFT (IALL11, -(NBITPW-NZB))
 *      IZW = IOR ( IAND (IZW, NOT(ISHFT(MSK,IZP-1)))
@@ -348,6 +347,7 @@ c Nobu added INTEGER*8
       DIMENSION MIV(99), MBV(99), JTHP(9), NINTP(9), NBITS(2)
       PARAMETER (NBITPW=32)
       PARAMETER (NCHAPW=4)
+      INTEGER*4 IALL11
       PARAMETER (IALL11 = -1)
 
       JTH = JTHP(1)
