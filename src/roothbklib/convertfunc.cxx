@@ -576,7 +576,6 @@ void shm2dir(const char *shm_name, TDirectory* root_dir) {
   std::string shm_name_str = open_input_shm(shm_name);
   if(shm_name_str==""){return;}
   if (root_dir == 0) {root_dir = gROOT;}
-  std::cout << "convert_dir_hbk2root() shm_name_str, root_dir" << shm_name_str << "," <<  root_dir << std::endl;
   convert_dir_hbk2root(shm_name_str.c_str(), root_dir);
   shm_name_str = shm_name_str.substr(2,4);
   return;
