@@ -80,7 +80,9 @@ C this should be a reasonable range for IA64 architectures
 C     Added Nobu 2018/01/26 20:13:07 -->
 c     c/o by Nobu 2021.08.24
 #if !defined(DOUBLE_PRECISION)
-      ICOMAD(1) = ICOMAD(1) + 2**30 * 4 + 2**29
+c     ICOMAD(1) = ICOMAD(1) + 2**30 * 4 + 2**29
+      ICOMAD(1) = ICOMAD(1) + 2**30 * 5
+c      ICOMAD(1) = 0
 #else
       ICOMAD(1) = ICOMAD(1) + 2**31
 #endif

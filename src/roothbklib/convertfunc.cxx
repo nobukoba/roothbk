@@ -260,8 +260,8 @@ std::string open_input_shm(const char* shm_name){
 std::string open_input_hbk(const char* hbk_name){
   init_hbook(0);
   std::string hbk_name_str = hbk_name;
-  int lun = 10, ier=0, record_size=0;
-  hropen_(lun,"LUN10",hbk_name_str.c_str(),"x",record_size,ier,5,hbk_name_str.length(),1);
+  int lun = 60, ier=0, record_size=0;
+  hropen_(lun,"LUN60",hbk_name_str.c_str(),"x",record_size,ier,5,hbk_name_str.length(),1);
   if (ier)  {
     printf(" Error on hropen was %d \n", ier);
     return "";
@@ -270,7 +270,7 @@ std::string open_input_hbk(const char* hbk_name){
     printf("Error cannot open the HBOOK file: %s\n",hbk_name_str.c_str());
     return "";
   }
-  hbk_name_str = "//LUN10";
+  hbk_name_str = "//LUN60";
   return hbk_name_str;
 }
 
@@ -337,8 +337,8 @@ std::string open_output_hbk(const char* name, const char* hbk_name){
 	 hbk_name_str.substr(hbk_name_str.length()-6) == ".hbook"))){
     hbk_name_str += ".hb";
   }
-  int lun = 10, ier=0, record_size=1024;
-  hropen_(lun,"LUN10",hbk_name_str.c_str(),"n",record_size,ier,5,hbk_name_str.length(),1);
+  int lun = 60, ier=0, record_size=1024;
+  hropen_(lun,"LUN60",hbk_name_str.c_str(),"n",record_size,ier,5,hbk_name_str.length(),1);
   if (ier)  {
     printf(" Error on hropen was %d\n", ier);
     return "";
@@ -347,7 +347,7 @@ std::string open_output_hbk(const char* name, const char* hbk_name){
     printf("Error cannot open the HBOOK file: %s\n",hbk_name_str.c_str());
     return "";
   }
-  hbk_name_str = "//LUN10";
+  hbk_name_str = "//LUN60";
   return hbk_name_str;
 }
 
@@ -424,11 +424,11 @@ void dir2hbk(TDirectory* root_dir, const char* hbk_name){
   std::string hbk_name_str = open_output_hbk(root_dir->GetName(),hbk_name);
   if(hbk_name_str==""){return;}
   int shm_flag = 0;
-  convert_dir_root2hbk(shm_flag,root_dir,"//PAWC","//LUN10");
+  convert_dir_root2hbk(shm_flag,root_dir,"//PAWC","//LUN60");
   /*int icycle = 0;
   hrout_(0,icycle,"T",1);*/
-  hrout_rec("//PAWC","//LUN10");
-  hrend_("LUN10",5);
+  hrout_rec("//PAWC","//LUN60");
+  hrend_("LUN60",5);
   return;
 }
 
@@ -482,7 +482,7 @@ void hbk2dir(const char *hbk_name, TDirectory* root_dir) {
   if(hbk_name_str==""){return;}
   if (root_dir == 0) {root_dir = gROOT;}
   convert_dir_hbk2root(hbk_name_str.c_str(), root_dir);
-  hrend_("LUN10",5);
+  hrend_("LUN60",5);
   return;
 }
 
@@ -492,7 +492,7 @@ void hbk2root(const char *hbk_name, const char *root_name) {
   TFile *f = open_output_root(hbk_name,root_name);
   if (f==0) {return;}
   convert_dir_hbk2root(hbk_name_str.c_str(), (TDirectory*)f);
-  hrend_("LUN10",5);
+  hrend_("LUN60",5);
   f->Write();
   f->Close();
   return;
@@ -506,7 +506,7 @@ void hbk2shm(const char* hbk_name, const char* shm_name){
   int shm_flag = 0;
   convert_dir_hbk2hbk(shm_flag,hbk_name_str.c_str(),"//PAWC","");
   hcdir_("//PAWC"," ",6,1);
-  hrend_("LUN10",5);
+  hrend_("LUN60",5);
   return;
 }
 
@@ -539,11 +539,11 @@ void root2hbk(const char *root_name, const char* hbk_name){
   std::string hbk_name_str = open_output_hbk(root_name,hbk_name);
   if(hbk_name_str==""){return;}
   int shm_flag = 0;
-  convert_dir_root2hbk(shm_flag,(TDirectory*)f,"//PAWC","//LUN10");
+  convert_dir_root2hbk(shm_flag,(TDirectory*)f,"//PAWC","//LUN60");
   /*int icycle = 0;
   hrout_(0,icycle,"T",1);*/
-  hrout_rec("//PAWC","//LUN10");
-  hrend_("LUN10",5);
+  hrout_rec("//PAWC","//LUN60");
+  hrend_("LUN60",5);
   f->Close();
   return;
 }
@@ -587,15 +587,15 @@ void shm2hbk(const char* shm_name, const char* hbk_name){
   std::string hbk_name_str = open_output_hbk(shm_name,hbk_name);
   if(hbk_name_str==""){return;}
   int shm_flag = 1;
-  hcdir_("//LUN10"," ",7,1);
+  hcdir_("//LUN60"," ",7,1);
   hcdir_("//PAWC"," ",6,1);
-  convert_dir_hbk2hbk(shm_flag,shm_name_str.c_str(),"//PAWC","//LUN10");
+  convert_dir_hbk2hbk(shm_flag,shm_name_str.c_str(),"//PAWC","//LUN60");
   hcdir_("//PAWC"," ",6,1);
-  hcdir_("//LUN10"," ",7,1);
+  hcdir_("//LUN60"," ",7,1);
   /*int icycle = 0;
   hrout_(0,icycle,"T",1);*/
-  hrout_rec("//PAWC","//LUN10");
-  hrend_("LUN10",5);
+  hrout_rec("//PAWC","//LUN60");
+  hrend_("LUN60",5);
   return;
 }
 
@@ -661,13 +661,13 @@ void shms2hbk(const char *shm_names, const char *hbk_name) {
     }
     std::string shm_name_str = open_input_shm(shm_name.c_str());
     if(shm_name_str==""){return;}
-    hcdir_("//LUN10"," ",7,1);
+    hcdir_("//LUN60"," ",7,1);
     hmdir_(shm_name.c_str(),"S",shm_name.length(),1);
     hcdir_("//PAWC"," ",6,1);
     hmdir_(shm_name.c_str(),"S",shm_name.length(),1);
     int shm_flag = 1;
     std::string new_paw_name_str = "//PAWC/" + shm_name;
-    std::string new_hbk_name_str = "//LUN10/" + shm_name;
+    std::string new_hbk_name_str = "//LUN60/" + shm_name;
     convert_dir_hbk2hbk(shm_flag,shm_name_str.c_str(),
 			new_paw_name_str.c_str(),new_hbk_name_str.c_str());
     hcdir_(shm_name_str.c_str()," ",shm_name_str.length(),1);
@@ -675,11 +675,11 @@ void shms2hbk(const char *shm_names, const char *hbk_name) {
     hcdir_(new_hbk_name_str.c_str()," ",new_hbk_name_str.length(),1);
   }
   hcdir_("//PAWC"," ",6,1);
-  hcdir_("//LUN10"," ",7,1);
+  hcdir_("//LUN60"," ",7,1);
   /*int icycle = 0;
   hrout_(0,icycle,"T",1);*/
-  hrout_rec("//PAWC","//LUN10");
-  hrend_("LUN10",5);
+  hrout_rec("//PAWC","//LUN60");
+  hrend_("LUN60",5);
   return;
 }
 
@@ -783,11 +783,11 @@ void srv2hbk(const char* srv_url, const char *hbk_name){
   if (hbk_name_str =="") {return;}
   TString fulldir = "";
   int shm_flag = 0;
-  convert_dir_srv2hbk(shm_flag, xml, child, 1, srv_url, fulldir, "//PAWC","//LUN10");
+  convert_dir_srv2hbk(shm_flag, xml, child, 1, srv_url, fulldir, "//PAWC","//LUN60");
   /*int icycle = 0;
   hrout_(0,icycle,"T",1);*/
-  hrout_rec("//PAWC","//LUN10");
-  hrend_("LUN10",5);
+  hrout_rec("//PAWC","//LUN60");
+  hrend_("LUN60",5);
   xml.FreeDoc(xmldoc);
   return;
 }
