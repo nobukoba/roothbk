@@ -3,13 +3,13 @@ CURRDIR = $(PWD)
 
 all:
 	$(MAKE) -C minipacklib
-	cp -f minipacklib/libminipacklib.so ../lib/
-	cp -f minipacklib/libminipacklib.a ../lib/
+	cp -af minipacklib/libminipacklib.so ../lib/
+	cp -af minipacklib/libminipacklib.a ../lib/
 	$(MAKE) -C roothbklib
-	cp -f roothbklib/libroothbklib.so ../lib/
-	cp -f roothbklib/libroothbklib.a ../lib/
+	cp -af roothbklib/libroothbklib.so ../lib/
+	cp -af roothbklib/libroothbklib.a ../lib/
 ifeq ($(ROOT_VER_GTEQ_6),1)
-	cp -f roothbklib/roothbklibDict_rdict.pcm ../lib/
+	cp -af roothbklib/roothbklibDict_rdict.pcm ../lib/
 endif
 	$(MAKE) -C exec
 clean:
