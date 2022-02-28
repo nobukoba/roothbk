@@ -9,8 +9,8 @@ $ make
 ```
 
 # How to use it
-## Executable
-The executable is made in roothbk/bin directory
+## Executables
+The executables are located in the roothbk/bin directory
 ```
 $ cd roothbk/bin
 $ ls
