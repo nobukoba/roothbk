@@ -44,7 +44,7 @@ $ ./lshm
 Name key        shmid      owner      perms      bytes      nattch     status
 ...
 ```
-### shm2root: Dump the contents of the shared memory in a root file
+### shm2root: Dump the contents of the shared memory in a ROOT file
 ```
 $ ./shm2root EXAM
 $ ls
@@ -55,6 +55,24 @@ or
 $ ./shm2root EXAM out.root
 $ ls
 ... out.root ...
+```
+### shms2root: Dump the contents of all the shared memories in a ROOT file
+```
+$ ./shms2root ""
+$ ls
+... shms.root ...
+```
+
+### hbk2root: convert a HBOOK file to a ROOT file
+This is the same command as h2root, but the error calculation is bug-fixed properly.
+```
+$ ./hbk2root test.hb test.root
+```
+
+### root2hbk: convert a ROOT file to a HBOOK file
+This is the same command as h2root, but the error calculation is bug-fixed properly.
+```
+$ ./hbk2root test.hb test.root
 ```
 
 # Troubleshooting
