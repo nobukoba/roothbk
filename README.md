@@ -1,6 +1,61 @@
 # roothbk
-Mini packlib spun off from the h2root.cxx source code in the CERN ROOT program
+Mini packlib spun off from the h2root.cxx source code in the CERN ROOT
 
+# How to compile
+```
+$ git clone https://github.com/nobukoba/roothbk
+$ cd roothbk/src
+$ make
+```
+
+# How to use it
+## Executable
+The executable is made in roothbk/bin directory
+```
+$ cd roothbk/bin
+$ ls
+dshm      hbk2srv   root2shm  shm2root     shms2hbk   srv2hbk
+hbk2root  lshm      root2srv  shm2srv      shms2root  srv2root
+hbk2shm   root2hbk  shm2hbk   shm_monitor  shms2srv   srv2shm
+```
+### lshm: list the shared memory with key names
+```
+$ ./lshm
+----------- Shared Memory Segments --------
+Name key        shmid      owner      perms      bytes      nattch     status
+     0x00000000 262144     okabem     600        1769472    2          dest
+     0x00000000 22544385   kobaryo    600        1769472    2          dest
+...
+STAK 0x4b415453 2654261    stakasi    666        4000000    0
+EXAM 0x4d415845 22544458   kobayash   666        128000000  1
+```
+### dshm: delete the shared memory by the key name
+```
+$ ./lshm
+----------- Shared Memory Segments --------
+Name key        shmid      owner      perms      bytes      nattch     status
+...
+EXAM 0x4d415845 22544458   kobayash   666        128000000  1
+
+$ ./dshm EXAM
+Executing the system command: ipcrm -M 0x4d415845
+$ ./lshm
+----------- Shared Memory Segments --------
+Name key        shmid      owner      perms      bytes      nattch     status
+...
+```
+### shm2root: Dump the contents of the shared memory in a root file
+```
+$ ./shm2root EXAM
+$ ls
+... EXAM.root ...
+```
+or
+```
+$ ./shm2root EXAM out.root
+$ ls
+... out.root ...
+```
 
 # Troubleshooting
 ### Another library including CERNlib is loaded
