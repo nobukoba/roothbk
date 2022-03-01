@@ -66,7 +66,11 @@ N.B. On saho-a/saho-b, all ports are closed. Therefore, the THTTPserver runing a
 - gcc, g++, and gfortran (around version 8)
 - ROOT version 5 or version 6
 
-N.B. This program does not require the CERN Program Library (CERNlib)! The source codes of CERNLib are included in this source codes. On macOS 12.2.1, somes commands does not work, but some commands work.
+N.B. This program does not require the CERN Program Library (CERNlib)! The source codes of CERNLib are included in this source codes. On macOS 12.2.1, somes commands does not work, but some commands work. On macOS 12.2.1, the size of the shared memory should be enlarged by the following command.
+```
+sudo sysctl -w kern.sysv.shmmax=12582912
+sudo sysctl -w kern.sysv.shmall=12582912
+```
 
 # How to compile it
 ```
