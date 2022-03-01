@@ -60,7 +60,7 @@ root_file_name:
     the name is created from the input file name. For example,
     if the input file name is filename.hb, the output is filename.root
 ```
-N.B. This command is the same as h2root command, but the error calculation is bug-fixed.
+N.B. This command is the same as the h2root command, but the error calculation is bug-fixed.
 
 ### hbk2shm: Write contensts of a HBOOK file into the shared memory
 ```
