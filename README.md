@@ -1,5 +1,5 @@
 # roothbk
-Utility to manipulate HBOOK and ROOT files.
+Utility to handle HBOOK and ROOT files.
 
 # Requirements
 - Linux (CentOS 8 etc.)
