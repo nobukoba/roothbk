@@ -85,6 +85,49 @@ root [3] .ls
  OBJ: TH2F	h4_test4	test4 : 0 at: 0x28db2c0
 root [4] h1_test1->Draw()
 ```
+### libminipacklib.so and libminipacklib.a
+libminipacklib.so and libminipacklib.a are the mini version of the packlib in CERNlib. Core subroutines of HBOOK are included in these libraries. For instance, the following subroutines are available.
+```
+hlimit
+hlimap
+hbook1
+hbook2
+hf1
+hf2
+hfill
+hidall
+hpak
+hpake
+hropen
+hrin
+hrend
+hrout
+hdelet
+hrdir
+hcdir
+hmdir
+etc...
+```
+So, if your program just uses the above subroutine, you can replace the original libpacklib.a with libminipacklib.a. For example in RCNP saho-a/saho-b, the Makefile can be changed as below.
+```
+CERNLIB = -L/usr/lib64/cernlib/2006/lib -Wl,-static -lpacklib -lkernlib -Wl,-dy
+-->
+CERNLIB = -L/<path to roothbk>/roothbk/lib -Wl,-static -lminipacklib -Wl,-dy
+```
+If you want to use the shared library libminipacklib.so, you can modifiy your Makefile as below.
+```
+CERNLIB = -L/<path to roothbk>/roothbk/lib -lminipacklib
+```
+Then, you can set LD_LIBRARY_PATH as below.
+```
+export LD_LIBRARY_PATH=/<path to roothbk>/roothbk/lib:$LD_LIBRARY_PATH
+```
+If you do not like to modify the LD_LIBRARY_PATH, you can add -rpath option in your Makefile.
+```
+CERNLIB = -L/usr/lib64/cernlib/2006/lib -Wl,-static -lpacklib -lkernlib -Wl,-dy
+-->
+CERNLIB = -L/<path to roothbk>/roothbk/lib -lminipacklib -Wl,--rpath=/<path to roothbk>/roothbk/lib
+```
 
 ## Executables
 The executables are located in the roothbk/bin directory
