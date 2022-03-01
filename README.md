@@ -83,7 +83,7 @@ $ cd roothbk/lib
 $ ls
 libminipacklib.a  libminipacklib.so  libroothbklib.a  libroothbklib.so  roothbklibDict_rdict.pcm
 ```
-### A library to handle HBOOK files in ROOT: libroothblib.so
+### A library to handle HBOOK files in ROOT's prompt: libroothblib.so
 libroothbklib.so is an usefull shared library to handle HBOOK files in prompt of ROOT's CINT. The following is how to load the library.
 ```
 $ root
