@@ -29,7 +29,7 @@ $ root
 ...
 root[0] gSystem->Load("<path to roothbk directory>/roothbk/lib/libroothbklib.so")
 ```
-The original CERNlib can not be loaded from ROOT, because CERNlib does not support the shared library format (.so). In order to create a shared library, I modified the hlimap.f, hshm.c, hbook.f files etc. After loading the libraray, you can use the following commands. The details are found in the section "Executables".
+After loading the libraray, you can use the following commands. The details are found in the section "Executables".
 - lshm(): List the shared memory with key names
 - dshm("shm_name_key"): Selete the shared memory by the key name
 - dir2hbk("hbk_file_name"): Save contesnts of the current ROOT's directory into a HBOOK file
@@ -86,7 +86,7 @@ root [3] .ls
 root [4] h1_test1->Draw()
 ```
 ### libminipacklib.so and libminipacklib.a
-libminipacklib.so and libminipacklib.a are the mini version of the packlib in CERNlib. Core subroutines of HBOOK are included in these libraries. For instance, the following subroutines are available.
+libminipacklib.so and libminipacklib.a are the mini version of the packlib in CERNlib. The original CERNlib can not be loaded from ROOT, because CERNlib does not support the shared library format (.so). In order to solve the problem, I modified the hlimap.f, hshm.c, hbook.f files etc. Then now you can creat the .so file including CERNlib subroutines. Core subroutines of HBOOK are included in libminipacklib.so and libminipacklib.a. For instance, the following subroutines are available.
 ```
 hlimit
 hlimap
