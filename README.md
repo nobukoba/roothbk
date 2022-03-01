@@ -52,7 +52,7 @@ root [4] h1_test1->Draw()
 ... Waiting accumulation of events ...
 root [5] shm2dir("TEST"); h1_test1->Draw()
 ... Waiting accumulation of events ...
-root [7] shm2dir("TEST"); h1_test1->Draw()
+root [6] shm2dir("TEST"); h1_test1->Draw()
 ```
 In addition, the histograms stored in the shared memory can be dumped by using an executable shm2root as below.
 ```
