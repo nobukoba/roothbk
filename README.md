@@ -380,26 +380,6 @@ shm_name:
 ```
 
 # Troubleshooting
-## Another library including CERNlib is loaded
-If another library including CERNlib (e.g., libAllGrutinizer.so) is loaded, you would see the follwoing message.
-```
-$ cd roothbk/lib/
-$ ls 
-libminipacklib.a  libminipacklib.so  libroothbklib.a  libroothbklib.so
-$ root
-...
-root [0] gSystem->Load("libroothbklib.so")
-(int)0
-root [1] shm2dir("EXAM")
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-LOCB/LOCF: address 0x7f1547a7f360 exceeds the 32 bit address space
-or is not in the data segments
-This may result in program crash or incorrect results
-Therefore we will stop here
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-```
-This is a typical error when you use the normal (or DESY 64 bit) CERNlib in the 64-bit Linux. This message is written in a source file: cernlib_2005/2005/src/packlib/kernlib/kerngen/ccgen/lp64gs/chkloc.c. This message, however, is never written in my library (roothbk/minipacklib). So if you see this error, another cernlib is loaded.
-
 ## Compilation with old ROOTs (ROOT v6.1? or smaller)
 You will see the following errors with old ROOTs.
 ```
@@ -423,3 +403,23 @@ This is because the TBufferJSON::FromJSON function is not implimented in old ROO
 # If ROOT does not have TBufferJSON::FromJSON class, please use the below CXXFLAG
 CXXFLAGS   = -g -I../../inc $(shell root-config --cflags) -fPIC -DNoFromJSON
 ```
+
+## Another library including CERNlib is loaded
+If another library including CERNlib (e.g., libAllGrutinizer.so) is loaded, you would see the follwoing message.
+```
+$ cd roothbk/lib/
+$ ls 
+libminipacklib.a  libminipacklib.so  libroothbklib.a  libroothbklib.so
+$ root
+...
+root [0] gSystem->Load("libroothbklib.so")
+(int)0
+root [1] shm2dir("EXAM")
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+LOCB/LOCF: address 0x7f1547a7f360 exceeds the 32 bit address space
+or is not in the data segments
+This may result in program crash or incorrect results
+Therefore we will stop here
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+```
+This is a typical error when you use the normal (or DESY 64 bit) CERNlib in the 64-bit Linux. This message is written in a source file: cernlib_2005/2005/src/packlib/kernlib/kerngen/ccgen/lp64gs/chkloc.c. This message, however, is never written in my library (roothbk/minipacklib). So if you see this error, another cernlib is loaded.
