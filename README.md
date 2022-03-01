@@ -49,6 +49,19 @@ $ ./lshm
 Name key        shmid      owner      perms      bytes      nattch     status
 ...
 ```
+### shm_monitor: Monitoring the contents of the shared memories on the THTTPserver
+```
+Usage:   shm_monitor port [shm_name_list]
+Example: shm_monitor 8080 TEST,FRED
+shm_name_list:
+    Should be separated by commas with no space.
+    If an empty string "" is given, all shared 
+    memories is read.
+port:
+    TCP port number of the THttpServer
+```
+N.B. This command is similar with the shms2srv command. The shms2srv command converts shared memories only once. On the other hand, the shm_monitor command constantly converts shared memories every 300 ms. After executing this command, access http://localhost:port with a web browser. You can see the histograms in the shared memory. This command is suitable to show online histograms. This command is terminated by ctrl-c.
+
 ### hbk2root: Convert a HBOOK file to a ROOT file
 ```
 Usage:   hbk2root hbk_file_name [root_file_name]
