@@ -417,7 +417,7 @@ make[1]: *** [Makefile:39: convertfunc.o] Error 1
 make[1]: Leaving directory '/home/kobayash/nobukoba/roothbk/src/roothbklib'
 make: *** [Makefile:8: all] Error 2
 ```
-This is because the TBufferJSON class is not implimented in old ROOTs. In order to solve the problem, CXXFLAG should be changed in src/roothbklib/Makefile as below.
+This is because the TBufferJSON::FromJSON function is not implimented in old ROOTs. In order to solve the problem, CXXFLAG should be changed in src/roothbklib/Makefile as below.
 ```
 #CXXFLAGS   = -g -I../../inc $(shell root-config --cflags) -fPIC
 # If ROOT does not have TBufferJSON::FromJSON class, please use the below CXXFLAG
