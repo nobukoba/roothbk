@@ -31,6 +31,11 @@ EXAM 0x4d415845 22544458   kobayash   666        128000000  1
 ```
 ### dshm: delete the shared memory by the key name
 ```
+Usage:   dshm shm_name1 [shm_name...]
+Example: dshm SHM1 SHM2
+```
+The following is the example.
+```
 $ ./lshm
 ----------- Shared Memory Segments --------
 Name key        shmid      owner      perms      bytes      nattch     status
@@ -52,36 +57,181 @@ hbk_file_name:
     Name of an input HBOOK file
 root_file_name:
     Name of an output ROOT file. If this value is not given,
-    The name is created from the input file name. For example,
+    the name is created from the input file name. For example,
     if the input file name is filename.hb, the output is filename.root
 ```
 
-### shm2root: Dump the contents of the shared memory in a ROOT file
-$ ./shm2root EXAM out.root
-$ ls
-... out.root ...
+### hbk2shm: Write contensts of a HBOOK file into the shared memory
 ```
-### shms2root: Dump the contents of all the shared memories in a ROOT file
-```
-$ ./shms2root ""
-$ ls
-... shms.root ...
+Usage:   hbk2shm hbk_file_name shm_name
+Example: hbk2shm input.hb TEST
+hbk_file_name:
+    Name of input HBOOK file.
+shm_name:
+    Name of output shared memory
 ```
 
-### hbk2root: convert a HBOOK file to a ROOT file
-This is the same command as h2root, but the error calculation is bug-fixed properly.
+### hbk2srv: Show contents of a HBOOK file on the THTTPserver
 ```
-$ ./hbk2root test.hb test.root
+Usage:   hbk2srv hbk_file_name [port]
+Example: hbk2srv input.hb 8080
+hbk_file_name:
+    Name of an input HBOOK file name.
+port:
+    TCP port number of the THTTPserver. Default: 8080.
+```
+After executing this command, access http://localhost:port with a web browser. You can see the histograms in the HBOOK file. This command is terminated by ctrl-c.
+
+### root2hbk: Convert a ROOT file to a HBOOK file
+```
+Usage:   root2hbk root_file_name hbk_file_name
+Example: root2hbk input.root output.hb
+root_file_name:
+    Name of an output ROOT file.
+hbk_file_name:
+    Name of an input HBOOK file.  If this value is not given,
+    the name is created from the input file name. For example,
+    if the input file name is filename.root, the output is filename.hb
 ```
 
-### root2hbk: convert a ROOT file to a HBOOK file
-This is the same command as h2root, but the error calculation is bug-fixed properly.
+### root2shm: Write contents of a ROOT file into the shared memory
 ```
-$ ./hbk2root test.hb test.root
+Usage:   root2shm root_file_name shm_name
+Example: root2shm input.root TEST
+root_file_name:
+    Name of input ROOT file.
+shm_name:
+    Name of the shared memory.
+```
+
+### root2srv: Show contents of a ROOT file on the THTTPserver
+```
+Usage:   root2srv root_file_name [port]
+Example: root2srv input.root 8080
+root_file_name:
+    Name of an input ROOT file name.
+port:
+    TCP port number of the THTTPserver. Default: 8080
+```
+After executing this command, access http://localhost:port with a web browser. You can see the histograms in the ROOT file. This command is terminated by ctrl-c.
+
+### shm2hbk: Dump histograms of a shared memory into a HBOOK file
+```
+Usage:   shm2hbk shm_name [hbk_file_name]
+Example: shm2hbk TEST out.hb
+shm_name:
+    Name of the shared memory
+hbk_file_name:
+    Name of an output HBOOK file. If this value is not given,
+    the name is created from the shm_name. For example, if the
+    shm_name is TEST, the output is TEST.hb
+```
+
+### shm2root: Dump histograms of a shared memory into a ROOT file
+```
+Usage:   shm2root shm_name [root_file_name]
+Example: shm2root TEST out.root
+shm_name:
+    Name of the shared memory
+root_file_name:
+    Name of an output ROOT file. If this value is not given,
+    the name is created from the shm_name. For example, if the
+    shm_name is TEST, the output is TEST.root
+```
+
+### shm2root: Dump histograms of a shared memory into a ROOT file
+```
+Usage:   shm2root shm_name [root_file_name]
+Example: shm2root TEST out.root
+shm_name:
+    Name of the shared memory
+root_file_name:
+    Name of an output ROOT file. If this value is not given,
+    the name is created from the shm_name. For example, if the
+    shm_name is TEST, the output is TEST.root
+```
+### shm2srv: Show histograms of a shared memory on THTTPserver
+```
+Usage:   shm2srv shm_name [port]
+Example: shm2srv TEST 8080
+shm_name:
+    Name of the shared memory
+port:
+    TCP port number of the THTTPserver
+```
+After executing this command, access http://localhost:port with a web browser. You can see the histograms in the ROOT file. This command is terminated by ctrl-c.
+
+### shm2hbk: Dump histograms of all the shared memories into a HBOOK file
+```
+Usage:   shms2hbk shm_name_list [hbk_file_name]
+Example: shms2hbk TEST,FRED out.hb
+shm_name_list:
+    List of names of shared memories. Should be separated by
+    commas with no space. If an empty string "" is given,
+    all shared memories is read.
+hbk_file_name:
+    Name of the output HBOOK file. Default value = shms.hb.
+```
+### shm2root: Dump histograms of all the shared memories into a ROOT file
+```
+Usage:   shms2root shm_name_list [root_file_name]
+Example: shms2root TEST,FRED out.root
+shm_name_list:
+    Should be separated by commas with no space.
+    If an empty string "" is given, all shared 
+    memories will be read.
+root_file_name:
+    Name of the output ROOT file. Default value = shms.root.
+```
+### shm2srv: Show histograms of all the shared memories on the THTTPserver
+```
+Usage:   shms2srv shm_name_list [port]
+Example: shms2srv TEST,FRED 8080
+shm_name_list:
+    Should be separated by commas with no space.
+    If an empty string "" is given, all shared 
+    memories will be read.
+port:
+    TCP port number of the THTTPserver. Default: 8080.
+```
+After executing this command, access http://localhost:port with a web browser. You can see the histograms in the shared memories. This command is terminated by ctrl-c.
+
+### srv2hbk: Download histograms on the THTTPserver into a HBOOK file
+```
+Usage:   srv2hbk srv_url [hbk_file_name]
+Example: srv2hbk "http://localhost:8080/" output.hb
+srv_url:
+    URL where running the THttpServer
+hbk_file_name:
+    Name of an output HBOOK file name.
+    Default value = http.hb
+```
+N.B.: This command is supported on newer version of ROOT, because this command uses TBufferJSON::FromJSON() function.
+
+### srv2hbk: Download histograms on the THTTPserver into a ROOT file
+```
+Usage:   srv2hbk srv_url [root_file_name]
+Example: srv2hbk "http://localhost:8080/" output.root
+srv_url:
+    URL where running the THttpServer
+root_file_name:
+    Name of an output ROOT file name.
+    Default value = thttpserver.root
+```
+
+### srv2shm: Convert histograms on the THTTPserver into a shared memory
+```
+Usage:   srv2shm srv_url [shm_name]
+Example: srv2shm "http://localhost:8080/" TEST
+srv_url:
+    URL where running the THttpServer
+shm_name:
+    Name of a shared memory.
+    Default value = HTTP
 ```
 
 # Troubleshooting
-### Another library including CERNlib is loaded
+## Another library including CERNlib is loaded
 If another library including CERNlib (e.g., libAllGrutinizer.so) is loaded, you would see the follwoing message.
 ```
 $ cd roothbk/lib/
@@ -101,7 +251,7 @@ Therefore we will stop here
 ```
 This is a typical error when you use the normal (or DESY 64 bit) CERNlib in the 64-bit Linux. This message is written in a source file: cernlib_2005/2005/src/packlib/kernlib/kerngen/ccgen/lp64gs/chkloc.c. This message, however, is never written in my library (roothbk/minipacklib). So if you see this error, another cernlib is loaded.
 
-### Compilation with old ROOTs (ROOT v6.1? or smaller)
+## Compilation with old ROOTs (ROOT v6.1? or smaller)
 You will see the following errors with old ROOTs.
 ```
 make[1]: Entering directory '/home/kobayash/nobukoba/roothbk/src/roothbklib'
