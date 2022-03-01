@@ -48,7 +48,7 @@ root [3] .ls
  OBJ: TH2F	h4_test4	test4 : 0 at: 0x28db2c0
 root [4] h1_test1->Draw()
 ```
-In addition, the histograms in the shared memory can be dumped by using an executable shm2root as below.
+In addition, the histograms stored in the shared memory can be dumped by using an executable shm2root as below.
 ```
 $ <path to roothbk directory>/roothbk/bin/shm2root TEST
 ```
