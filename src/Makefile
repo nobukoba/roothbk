@@ -16,7 +16,7 @@ clean:
 	$(MAKE) clean -C minipacklib
 	$(MAKE) clean -C roothbklib
 	$(MAKE) clean -C exec
-ifeq ($(ROOT_VER_GTEQ_6),1)
-	rm -f ../lib/libminipacklib.so ../lib/libminipacklib.a ../lib/libroothbklib.so ../lib/libroothbklib.a ../lib/roothbklibDict_rdict.pcm
-endif
 	rm -f ../lib/libminipacklib.so ../lib/libminipacklib.a ../lib/libroothbklib.so ../lib/libroothbklib.a
+ifeq ($(ROOT_VER_GTEQ_6),1)
+	rm -f ../lib/roothbklibDict_rdict.pcm
+endif
