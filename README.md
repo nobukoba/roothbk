@@ -82,19 +82,22 @@ After loading the libraray, you can use the following commands. The details are 
 - dir2root("root_file_name"): Save contesnts of the current ROOT's directory into a ROOT file
 - dir2shm("shm_name"): Save contents of the current ROOT's directory into a shared memory
 - dir2srv(port): Show the contents of the current ROOT's directory on the THTTPserver
+- hbk2dir("hbk_file_name"): Convert a HBOOK file to a current ROOT directory
 - hbk2root("hbk_file_name","root_file_name"): Convert a HBOOK file to a ROOT file
 - hbk2shm("hbk_file_name","shm_name"): Write contensts of a HBOOK file into the shared memory
 - hbk2srv("hbk_file_name",port): Show contents of a HBOOK file on the THTTPserver
+- root2dir("root_file_name"): Convert a ROOT file to a current ROOT directory
 - root2hbk("root_file_name","hbk_file_name"): Convert a ROOT file to a HBOOK file
 - root2shm("root_file_name","shm_name"): Write contents of a ROOT file into the shared memory
 - root2srv("root_file_name",port): Show contents of a ROOT file on the THTTPserver
+- shm2dir("shm_name"): Dump histograms of a shared memory into a current ROOT directory
 - shm2hbk("shm_name","hbk_file_name"): Dump histograms of a shared memory into a HBOOK file
 - shm2root("shm_name","root_file_name"): Dump histograms of a shared memory into a ROOT file
-- shm2root("shm_name","root_file_name"): Dump histograms of a shared memory into a ROOT file
 - shm2srv("shm_name",port): Show histograms of a shared memory on THTTPserver
-- shm2hbk("shm_name_list","hbk_file_name"): Dump histograms of all the shared memories into a HBOOK file
-- shm2root("shm_name_list","root_file_name"): Dump histograms of all the shared memories into a ROOT file
-- shm2srv("shm_name_list",port): Show histograms of all the shared memories on the THTTPserver
+- shms2dir("shm_name_list"): Dump histograms of all the shared memories into a cuurent ROOT directory
+- shms2hbk("shm_name_list","hbk_file_name"): Dump histograms of all the shared memories into a HBOOK file
+- shms2root("shm_name_list","root_file_name"): Dump histograms of all the shared memories into a ROOT file
+- shms2srv("shm_name_list",port): Show histograms of all the shared memories on the THTTPserver
 - srv2hbk("srv_url","hbk_file_name"): Download histograms on the THTTPserver into a HBOOK file
 - srv2hbk("srv_url","root_file_name"): Download histograms on the THTTPserver into a ROOT file
 - srv2shm("srv_url","shm_name"): Convert histograms on the THTTPserver into a shared memory
@@ -307,7 +310,7 @@ port:
 ```
 After executing this command, access http://localhost:port with a web browser. You can see the histograms in the ROOT file. This command is terminated by ctrl-c.
 
-### shm2hbk: Dump histograms of all the shared memories into a HBOOK file
+### shms2hbk: Dump histograms of all the shared memories into a HBOOK file
 ```
 Usage:   shms2hbk shm_name_list [hbk_file_name]
 Example: shms2hbk TEST,FRED out.hb
@@ -318,7 +321,7 @@ shm_name_list:
 hbk_file_name:
     Name of the output HBOOK file. Default value = shms.hb.
 ```
-### shm2root: Dump histograms of all the shared memories into a ROOT file
+### shms2root: Dump histograms of all the shared memories into a ROOT file
 ```
 Usage:   shms2root shm_name_list [root_file_name]
 Example: shms2root TEST,FRED out.root
@@ -329,7 +332,7 @@ shm_name_list:
 root_file_name:
     Name of the output ROOT file. Default value = shms.root.
 ```
-### shm2srv: Show histograms of all the shared memories on the THTTPserver
+### shms2srv: Show histograms of all the shared memories on the THTTPserver
 ```
 Usage:   shms2srv shm_name_list [port]
 Example: shms2srv TEST,FRED 8080
