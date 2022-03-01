@@ -85,8 +85,8 @@ root [3] .ls
  OBJ: TH2F	h4_test4	test4 : 0 at: 0x28db2c0
 root [4] h1_test1->Draw()
 ```
-### libminipacklib.so and libminipacklib.a
-libminipacklib.so and libminipacklib.a are the mini version of the packlib in CERNlib. The original CERNlib can not be loaded from ROOT, because CERNlib does not support the shared library format (.so). In order to solve the problem, I modified the hlimap.f, hshm.c, hbook.f files etc. Then now you can creat the .so file including CERNlib subroutines. Core subroutines of HBOOK are included in libminipacklib.so and libminipacklib.a. For instance, the following subroutines are available.
+### Mini verion of packlib: libminipacklib.so and libminipacklib.a
+libminipacklib.so and libminipacklib.a are the mini version of the HBOOK library packlib in CERNlib. The original CERNlib can not be loaded from ROOT, because CERNlib does not support the shared library format (.so). In order to solve the problem, I modified the hlimap.f, hshm.c, hbook.f files etc. Then now you can creat the .so file including CERNlib subroutines. Core subroutines of HBOOK are included in libminipacklib.so and libminipacklib.a. For instance, the following subroutines are available.
 ```
 hlimit
 hlimap
