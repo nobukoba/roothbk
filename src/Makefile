@@ -13,8 +13,10 @@ ifeq ($(ROOT_VER_GTEQ_6),1)
 endif
 	$(MAKE) -C exec
 clean:
-	cd $(CURRDIR)/minipacklib; $(MAKE) clean
-	cd $(CURRDIR)/roothbklib;  $(MAKE) clean
-	cd $(CURRDIR)/exec;        $(MAKE) clean
-	cd $(CURRDIR)/../lib;      rm *
-
+	$(MAKE) clean -C minipacklib
+	$(MAKE) clean -C roothbklib
+	$(MAKE) clean -C exec
+ifeq ($(ROOT_VER_GTEQ_6),1)
+	rm -f ../lib/libminipacklib.so ../lib/libminipacklib.a ../lib/libroothbklib.so ../lib/libroothbklib.a ../lib/roothbklibDict_rdict.pcm
+endif
+	rm -f ../lib/libminipacklib.so ../lib/libminipacklib.a ../lib/libroothbklib.so ../lib/libroothbklib.a
