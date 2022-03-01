@@ -118,7 +118,7 @@ If you want to use the shared library libminipacklib.so, you can modifiy your Ma
 ```
 CERNLIB = -L/<path to roothbk>/roothbk/lib -lminipacklib
 ```
-Then, you can set LD_LIBRARY_PATH as below.
+Then, you should set LD_LIBRARY_PATH as below.
 ```
 export LD_LIBRARY_PATH=/<path to roothbk>/roothbk/lib:$LD_LIBRARY_PATH
 ```
