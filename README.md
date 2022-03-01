@@ -16,6 +16,7 @@ $ make
 ```
 
 # Highlight of the program
+## Shared memory
 At RCNP experiments, online histograms are stored in the shared memory by using the analyser Tamii-ana. A conventional way to show the histograms is to use PAW as below.
 ```
 $ paw
@@ -59,6 +60,19 @@ In addition, the histograms stored in the shared memory can be dumped by using a
 $ <path to roothbk directory>/roothbk/bin/shm2root TEST
 ```
 Then TEST.root file including the contents of the shared memory TEST is created.
+
+## shm_monitor: Monitoring the contents of the shared memories on the THTTPserver
+Another usefull program is shm_monitor. This automatically converts histograms stored in the shared memory on the THTTPserver. The histograms can be looked at  http://localhost:port_number with a web browser. This command is suitable to show online histograms.
+```
+Usage:   shm_monitor port [shm_name_list]
+Example: shm_monitor 8080 TEST,FRED
+shm_name_list:
+    Should be separated by commas with no space.
+    If an empty string "" is given, all shared 
+    memories is read.
+port:
+    TCP port number of the THttpServer
+```
 
 # Functions
 ## Libraries
