@@ -27,6 +27,8 @@ PAW > hi/li
             3  test3   
             4  test4   
 PAW > hi/pl 1
+... Waiting accumulation of events ...
+PAW > hi/pl 1
 ```
 Similar things can be done in the ROOT by using the roothbk library.
 ```
@@ -47,6 +49,10 @@ root [3] .ls
  OBJ: TH1F	h3_test3	test3 : 0 at: 0x28da8e0
  OBJ: TH2F	h4_test4	test4 : 0 at: 0x28db2c0
 root [4] h1_test1->Draw()
+... Waiting accumulation of events ...
+root [5] shm2dir("TEST"); h1_test1->Draw()
+... Waiting accumulation of events ...
+root [7] shm2dir("TEST"); h1_test1->Draw()
 ```
 In addition, the histograms stored in the shared memory can be dumped by using an executable shm2root as below.
 ```
