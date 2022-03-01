@@ -124,8 +124,6 @@ export LD_LIBRARY_PATH=/<path to roothbk>/roothbk/lib:$LD_LIBRARY_PATH
 ```
 If you do not like to modify the LD_LIBRARY_PATH, you can add -rpath option in your Makefile.
 ```
-CERNLIB = -L/usr/lib64/cernlib/2006/lib -Wl,-static -lpacklib -lkernlib -Wl,-dy
--->
 CERNLIB = -L/<path to roothbk>/roothbk/lib -lminipacklib -Wl,--rpath=/<path to roothbk>/roothbk/lib
 ```
 
