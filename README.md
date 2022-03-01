@@ -53,7 +53,7 @@ The original CERNlib can not be loaded from ROOT, because CERNlib does not suppo
 - srv2hbk("srv_url","root_file_name"): Download histograms on the THTTPserver into a ROOT file
 - srv2shm("srv_url","shm_name"): Convert histograms on the THTTPserver into a shared memory
 ### Usefull commands: lshm(), shm2dir(), and shms2dir()
- lshm(), shm2dir(), and shms2dir() would be very useful. On the RCNP experiments, online histograms are stored in the shared memory by using the analyser Tamii-ana. A conventional way to show the histograms is to use PAW as below.
+ lshm(), shm2dir(), and shms2dir() would be very useful. At the RCNP experiments, online histograms are stored in the shared memory by using the analyser Tamii-ana. A conventional way to show the histograms is to use PAW as below.
 ```
 $ paw
 ...
