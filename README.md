@@ -47,7 +47,7 @@ $ <path to roothbk directory>/roothbk/bin/shm2root TEST
 ```
 Then TEST.root is created. The file includes the contents of the shared memory TEST.
 
-## Monitoring histograms stored at the shared memories on the THTTPserver: shm_monitor
+## Monitoring histograms stored at the shared memories via the THTTPserver: shm_monitor
 Another usefull program is shm_monitor. This automatically converts histograms stored in the shared memory on the THTTPserver. The histograms are seen at http://localhost:port_number with a web browser. This command is suitable to show online histograms. The following is the usage etc.
 ```
 Usage:   shm_monitor port [shm_name_list]
