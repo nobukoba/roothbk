@@ -73,7 +73,7 @@ shm_name_list:
 port:
     TCP port number of the THttpServer
 ```
-N.B. On saho-a/saho-b, all ports are closed. Therefore, the THTTPserver runing saho-a/saho-b are not accessible from outside of saho-a/saho-b.
+N.B. On saho-a/saho-b, all ports are closed. Therefore, the THTTPserver runing at saho-a/saho-b are not accessible from outside of saho-a/saho-b.
 
 # Functions
 ## Libraries
