@@ -45,6 +45,7 @@ Name key        shmid      owner      perms      bytes      nattch     status
 ...
 ```
 ### hbk2root: Convert a HBOOK file to a ROOT file
+```
 Usage:   hbk2root hbk_file_name [root_file_name]
 Example: hbk2root input.hb output.root
 hbk_file_name:
@@ -53,15 +54,9 @@ root_file_name:
     Name of an output ROOT file. If this value is not given,
     The name is created from the input file name. For example,
     if the input file name is filename.hb, the output is filename.root
+```
 
 ### shm2root: Dump the contents of the shared memory in a ROOT file
-```
-$ ./shm2root EXAM
-$ ls
-... EXAM.root ...
-```
-or
-```
 $ ./shm2root EXAM out.root
 $ ls
 ... out.root ...
