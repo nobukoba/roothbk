@@ -76,6 +76,7 @@ Name key        shmid      owner      perms      bytes      nattch     status
      0x00000000 262144     okabem     600        1769472    2          dest
 ...
 TEST 0x54534554 22544459   kobayash   666        128000000  1
+...
 root [2] shm2dir("TEST")
 root [3] .ls
  OBJ: TH1F	h1_test1	test1 : 0 at: 0x248c2e0
