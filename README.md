@@ -15,45 +15,8 @@ $ cd roothbk/src
 $ make
 ```
 
-# How to use it
-## Libraries
-The libraries are located in the roothbk/lib directory.
-```
-$ cd roothbk/lib
-$ ls
-libminipacklib.a  libminipacklib.so  libroothbklib.a  libroothbklib.so  roothbklibDict_rdict.pcm
-```
-The following is how to load the library.
-```
-$ root
-...
-root[0] gSystem->Load("<path to roothbk directory>/roothbk/lib/libroothbklib.so")
-```
-After loading the libraray, you can use the following commands. The details are found in the section "Executables".
-- lshm(): List the shared memory with key names
-- dshm("shm_name_key"): Selete the shared memory by the key name
-- dir2hbk("hbk_file_name"): Save contesnts of the current ROOT's directory into a HBOOK file
-- dir2root("root_file_name"): Save contesnts of the current ROOT's directory into a ROOT file
-- dir2shm("shm_name"): Save contents of the current ROOT's directory into a shared memory
-- dir2srv(port): Show the contents of the current ROOT's directory on the THTTPserver
-- hbk2root("hbk_file_name","root_file_name"): Convert a HBOOK file to a ROOT file
-- hbk2shm("hbk_file_name","shm_name"): Write contensts of a HBOOK file into the shared memory
-- hbk2srv("hbk_file_name",port): Show contents of a HBOOK file on the THTTPserver
-- root2hbk("root_file_name","hbk_file_name"): Convert a ROOT file to a HBOOK file
-- root2shm("root_file_name","shm_name"): Write contents of a ROOT file into the shared memory
-- root2srv("root_file_name",port): Show contents of a ROOT file on the THTTPserver
-- shm2hbk("shm_name","hbk_file_name"): Dump histograms of a shared memory into a HBOOK file
-- shm2root("shm_name","root_file_name"): Dump histograms of a shared memory into a ROOT file
-- shm2root("shm_name","root_file_name"): Dump histograms of a shared memory into a ROOT file
-- shm2srv("shm_name",port): Show histograms of a shared memory on THTTPserver
-- shm2hbk("shm_name_list","hbk_file_name"): Dump histograms of all the shared memories into a HBOOK file
-- shm2root("shm_name_list","root_file_name"): Dump histograms of all the shared memories into a ROOT file
-- shm2srv("shm_name_list",port): Show histograms of all the shared memories on the THTTPserver
-- srv2hbk("srv_url","hbk_file_name"): Download histograms on the THTTPserver into a HBOOK file
-- srv2hbk("srv_url","root_file_name"): Download histograms on the THTTPserver into a ROOT file
-- srv2shm("srv_url","shm_name"): Convert histograms on the THTTPserver into a shared memory
-### Usefull commands: lshm(), shm2dir(), and shms2dir()
- lshm(), shm2dir(), and shms2dir() would be very useful. At the RCNP experiments, online histograms are stored in the shared memory by using the analyser Tamii-ana. A conventional way to show the histograms is to use PAW as below.
+# Highlight of the program
+At RCNP experiments, online histograms are stored in the shared memory by using the analyser Tamii-ana. A conventional way to show the histograms is to use PAW as below.
 ```
 $ paw
 ...
@@ -85,6 +48,51 @@ root [3] .ls
  OBJ: TH2F	h4_test4	test4 : 0 at: 0x28db2c0
 root [4] h1_test1->Draw()
 ```
+In addition, the histograms in the shared memory can be dumped by using an executable shm2root as below.
+```
+$ <path to roothbk directory>/roothbk/bin/shm2root TEST
+```
+Then TEST.root file including the contents of the shared memory TEST is created.
+
+# Functions
+## Libraries
+The libraries are located in the roothbk/lib directory.
+```
+$ cd roothbk/lib
+$ ls
+libminipacklib.a  libminipacklib.so  libroothbklib.a  libroothbklib.so  roothbklibDict_rdict.pcm
+```
+### A library to handle HBOOK files in ROOT: libroothblib.so
+libroothbklib.so is an usefull shared library to handle HBOOK files in prompt of ROOT's CINT. The following is how to load the library.
+```
+$ root
+...
+root[0] gSystem->Load("<path to roothbk directory>/roothbk/lib/libroothbklib.so")
+```
+After loading the libraray, you can use the following commands. The details are found in the section "Executables".
+- lshm(): List the shared memory with key names
+- dshm("shm_name_key"): Selete the shared memory by the key name
+- dir2hbk("hbk_file_name"): Save contesnts of the current ROOT's directory into a HBOOK file
+- dir2root("root_file_name"): Save contesnts of the current ROOT's directory into a ROOT file
+- dir2shm("shm_name"): Save contents of the current ROOT's directory into a shared memory
+- dir2srv(port): Show the contents of the current ROOT's directory on the THTTPserver
+- hbk2root("hbk_file_name","root_file_name"): Convert a HBOOK file to a ROOT file
+- hbk2shm("hbk_file_name","shm_name"): Write contensts of a HBOOK file into the shared memory
+- hbk2srv("hbk_file_name",port): Show contents of a HBOOK file on the THTTPserver
+- root2hbk("root_file_name","hbk_file_name"): Convert a ROOT file to a HBOOK file
+- root2shm("root_file_name","shm_name"): Write contents of a ROOT file into the shared memory
+- root2srv("root_file_name",port): Show contents of a ROOT file on the THTTPserver
+- shm2hbk("shm_name","hbk_file_name"): Dump histograms of a shared memory into a HBOOK file
+- shm2root("shm_name","root_file_name"): Dump histograms of a shared memory into a ROOT file
+- shm2root("shm_name","root_file_name"): Dump histograms of a shared memory into a ROOT file
+- shm2srv("shm_name",port): Show histograms of a shared memory on THTTPserver
+- shm2hbk("shm_name_list","hbk_file_name"): Dump histograms of all the shared memories into a HBOOK file
+- shm2root("shm_name_list","root_file_name"): Dump histograms of all the shared memories into a ROOT file
+- shm2srv("shm_name_list",port): Show histograms of all the shared memories on the THTTPserver
+- srv2hbk("srv_url","hbk_file_name"): Download histograms on the THTTPserver into a HBOOK file
+- srv2hbk("srv_url","root_file_name"): Download histograms on the THTTPserver into a ROOT file
+- srv2shm("srv_url","shm_name"): Convert histograms on the THTTPserver into a shared memory
+
 ### Mini verion of packlib: libminipacklib.so and libminipacklib.a
 libminipacklib.so and libminipacklib.a are the mini version of the HBOOK library packlib in CERNlib. The original CERNlib can not be loaded from ROOT, because CERNlib does not support the shared library format (.so). In order to solve the problem, I modified the hlimap.f, hshm.c, hbook.f files etc. Then now you can creat the .so file including CERNlib subroutines. Core subroutines of HBOOK are included in libminipacklib.so and libminipacklib.a. For instance, the following subroutines are available.
 ```
