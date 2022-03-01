@@ -16,6 +16,75 @@ $ make
 ```
 
 # How to use it
+## Libraries
+The libraries are located in the roothbk/lib directory.
+```
+$ cd roothbk/lib
+$ ls
+libminipacklib.a  libminipacklib.so  libroothbklib.a  libroothbklib.so  roothbklibDict_rdict.pcm
+```
+The following is how to load the library.
+```
+$ root
+...
+root[0] gSystem->Load("<path to roothbk directory>/roothbk/lib/libroothbklib.so")
+```
+The original CERNlib can not be loaded from ROOT, because CERNlib does not support the shared library format (.so). In order to create a shared library, I modified the hlimap.f, hshm.c, hbook.f files etc. After loading the libraray, you can use the following commands. The details are found in the section "Executables".
+- lshm(): List the shared memory with key names
+- dshm("shm_name_key"): Selete the shared memory by the key name
+- dir2hbk("hbk_file_name"): Save contesnts of the current ROOT's directory into a HBOOK file
+- dir2root("root_file_name"): Save contesnts of the current ROOT's directory into a ROOT file
+- dir2shm("shm_name"): Save contents of the current ROOT's directory into a shared memory
+- dir2srv(port): Show the contents of the current ROOT's directory on the THTTPserver
+- hbk2root("hbk_file_name","root_file_name"): Convert a HBOOK file to a ROOT file
+- hbk2shm("hbk_file_name","shm_name"): Write contensts of a HBOOK file into the shared memory
+- hbk2srv("hbk_file_name",port): Show contents of a HBOOK file on the THTTPserver
+- root2hbk("root_file_name","hbk_file_name"): Convert a ROOT file to a HBOOK file
+- root2shm("root_file_name","shm_name"): Write contents of a ROOT file into the shared memory
+- root2srv("root_file_name",port): Show contents of a ROOT file on the THTTPserver
+- shm2hbk("shm_name","hbk_file_name"): Dump histograms of a shared memory into a HBOOK file
+- shm2root("shm_name","root_file_name"): Dump histograms of a shared memory into a ROOT file
+- shm2root("shm_name","root_file_name"): Dump histograms of a shared memory into a ROOT file
+- shm2srv("shm_name",port): Show histograms of a shared memory on THTTPserver
+- shm2hbk("shm_name_list","hbk_file_name"): Dump histograms of all the shared memories into a HBOOK file
+- shm2root("shm_name_list","root_file_name"): Dump histograms of all the shared memories into a ROOT file
+- shm2srv("shm_name_list",port): Show histograms of all the shared memories on the THTTPserver
+- srv2hbk("srv_url","hbk_file_name"): Download histograms on the THTTPserver into a HBOOK file
+- srv2hbk("srv_url","root_file_name"): Download histograms on the THTTPserver into a ROOT file
+- srv2shm("srv_url","shm_name"): Convert histograms on the THTTPserver into a shared memory
+### Usefull commands: lshm(), shm2dir(), and shms2dir()
+ lshm(), shm2dir(), and shms2dir() would be very useful. On the RCNP experiments, online histograms are stored in the shared memory by using the analyser Tamii-ana. A conventional way to show the histograms is to use PAW as below.
+```
+$ paw
+...
+PAW > glo TEST
+PAW > hi/li
+            1  test1   
+            2  test2   
+            3  test3   
+            4  test4   
+PAW > hi/pl 1
+```
+Similar things can be done in the ROOT by using the roothbk library.
+```
+$ root
+...
+root [0] gSystem->Load("<path to roothbk directory>/roothbk/lib/libroothbklib.so")
+root [1] lshm()
+----------- Shared Memory Segments --------
+Name key        shmid      owner      perms      bytes      nattch     status
+     0x00000000 262144     okabem     600        1769472    2          dest
+...
+TEST 0x54534554 22544459   kobayash   666        128000000  1
+root [2] shm2dir("TEST")
+root [3] .ls
+ OBJ: TH1F	h1_test1	test1 : 0 at: 0x248c2e0
+ OBJ: TH1F	h2_test2	test2 : 0 at: 0x248caf0
+ OBJ: TH1F	h3_test3	test3 : 0 at: 0x28da8e0
+ OBJ: TH2F	h4_test4	test4 : 0 at: 0x28db2c0
+root [4] h1_test1->Draw()
+```
+
 ## Executables
 The executables are located in the roothbk/bin directory
 ```
