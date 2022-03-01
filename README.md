@@ -116,7 +116,7 @@ After loading the libraray, you can use the following commands. The details are 
 - srv2hbk("srv_url","root_file_name"): Download histograms on the THTTPserver into a ROOT file
 - srv2shm("srv_url","shm_name"): Convert histograms on the THTTPserver into a shared memory
 
-### Mini verion of packlib: libminipacklib.so and libminipacklib.a
+### Mini version of packlib: libminipacklib.so and libminipacklib.a
 libminipacklib.so and libminipacklib.a are the mini version of the HBOOK library packlib in CERNlib. The original CERNlib can not be loaded from ROOT, because CERNlib does not support the shared library format (.so). In order to solve the problem, I modified the hlimap.f, hshm.c, hbook.f files etc. Then now you can creat the .so file including CERNlib subroutines. Core subroutines of HBOOK are included in libminipacklib.so and libminipacklib.a. For instance, the following subroutines are available.
 ```
 hlimit
