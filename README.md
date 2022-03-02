@@ -1,6 +1,25 @@
 # roothbk
 Utility to handle HBOOK and ROOT files. This program can handle only histograms and does not support either NTuple strusture or TTree structure.
 
+# Requirements
+- 64-bit Linux (CentOS 8 etc.)
+- gcc, g++, and gfortran (around version 7, 8)
+- ROOT version 5 or version 6
+
+N.B. This program does not require the CERN Program Library (CERNlib)! The source codes of CERNLib are included in this source codes. On macOS 12.2.1, somes commands does not work, but some commands work. On macOS 12.2.1, the size of the shared memory should be enlarged by the following command.
+```
+sudo sysctl -w kern.sysv.shmmax=12582912
+sudo sysctl -w kern.sysv.shmall=12582912
+```
+
+# How to compile it
+```
+$ git clone https://github.com/nobukoba/roothbk
+$ cd roothbk/src
+$ make
+```
+
+
 # Highlight of the program
 ## Online analysis
 At RCNP experiments, online histograms are stored in the shared memory by using the analyser Tamii-ana. A conventional way to show the histograms is to use PAW as below.
@@ -61,23 +80,6 @@ port:
 ```
 N.B. On saho-a/saho-b, all ports are closed. Therefore, the THTTPserver runing at saho-a/saho-b is not accessible from outside of saho-a/saho-b.
 
-# Requirements
-- 64-bit Linux (CentOS 8 etc.)
-- gcc, g++, and gfortran (around version 7, 8)
-- ROOT version 5 or version 6
-
-N.B. This program does not require the CERN Program Library (CERNlib)! The source codes of CERNLib are included in this source codes. On macOS 12.2.1, somes commands does not work, but some commands work. On macOS 12.2.1, the size of the shared memory should be enlarged by the following command.
-```
-sudo sysctl -w kern.sysv.shmmax=12582912
-sudo sysctl -w kern.sysv.shmall=12582912
-```
-
-# How to compile it
-```
-$ git clone https://github.com/nobukoba/roothbk
-$ cd roothbk/src
-$ make
-```
 
 # Functions
 ## Libraries
