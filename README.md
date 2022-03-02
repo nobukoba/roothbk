@@ -19,8 +19,7 @@ $ cd roothbk/src
 $ make
 ```
 
-
-# Highlight of the program
+# How to use it
 ## Online analysis
 At RCNP experiments, online histograms are stored in the shared memory by using the analyser Tamii-ana. A conventional way to show the histograms is to use PAW as below.
 ```
