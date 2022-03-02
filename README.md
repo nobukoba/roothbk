@@ -366,10 +366,10 @@ hbk_file_name:
 ```
 N.B.: This command is supported on newer version of ROOT, because this command uses TBufferJSON::FromJSON() function.
 
-### srv2hbk: Download histograms on the THTTPserver into a ROOT file
+### srv2root: Download histograms on the THTTPserver into a ROOT file
 ```
-Usage:   srv2hbk srv_url [root_file_name]
-Example: srv2hbk "http://localhost:8080/" output.root
+Usage:   srv2root srv_url [root_file_name]
+Example: srv2root "http://localhost:8080/" output.root
 srv_url:
     URL where running the THttpServer
 root_file_name:
