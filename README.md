@@ -308,17 +308,6 @@ root_file_name:
     shm_name is TEST, the output is TEST.root
 ```
 
-### shm2root: Dump histograms of a shared memory into a ROOT file
-```
-Usage:   shm2root shm_name [root_file_name]
-Example: shm2root TEST out.root
-shm_name:
-    Name of the shared memory
-root_file_name:
-    Name of an output ROOT file. If this value is not given,
-    the name is created from the shm_name. For example, if the
-    shm_name is TEST, the output is TEST.root
-```
 ### shm2srv: Show histograms of a shared memory on THTTPserver
 ```
 Usage:   shm2srv shm_name [port]
