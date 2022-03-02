@@ -1,5 +1,5 @@
 # roothbk
-Utilit to handle HBOOK and ROOT files. This program can handle only histograms and does not support either NTuple strusture or TTree structure.
+Utilities to handle HBOOK and ROOT files. This program can handle only histograms and does not support either NTuple strusture or TTree structure.
 
 # Requirements
 - 64-bit Linux (CentOS 8 etc.)
