@@ -97,7 +97,7 @@ root[0] gSystem->Load("<path to roothbk directory>/roothbk/lib/libroothbklib.so"
 ```
 After loading the libraray, you can use the following commands. The details are found in the section "Executables".
 - lshm(): List the shared memory with key names
-- dshm("shm_name_key"): Selete the shared memory by the key name
+- dshm("shm_name_key"): Delete the shared memory by the key name
 - dir2hbk("hbk_file_name"): Save contesnts of the current ROOT's directory into a HBOOK file
 - dir2root("root_file_name"): Save contesnts of the current ROOT's directory into a ROOT file
 - dir2shm("shm_name"): Save contents of the current ROOT's directory into a shared memory
@@ -173,7 +173,7 @@ dshm      hbk2srv   root2shm  shm2root     shms2hbk   srv2hbk
 hbk2root  lshm      root2srv  shm2srv      shms2root  srv2root
 hbk2shm   root2hbk  shm2hbk   shm_monitor  shms2srv   srv2shm
 ```
-### lshm: list the shared memory with key names
+### lshm: List the shared memory with key names
 ```
 $ ./lshm
 ----------- Shared Memory Segments --------
@@ -184,7 +184,7 @@ Name key        shmid      owner      perms      bytes      nattch     status
 STAK 0x4b415453 2654261    stakasi    666        4000000    0
 EXAM 0x4d415845 22544458   kobayash   666        128000000  1
 ```
-### dshm: delete the shared memory by the key name
+### dshm: Delete the shared memory by the key name
 ```
 Usage:   dshm shm_name1 [shm_name...]
 Example: dshm SHM1 SHM2
