@@ -1,3 +1,20 @@
+/*
+  Note by Nobu Kobayashi on Mar. 6, 2022.
+  Timing of calling the subroutine hlimit and hlimap is
+  important.
+  
+  hlimit_(PAWC_SIZE)           : Creating PAWC on the normal memory
+  hlimap_(0, SHM_NAME)         : Attach the contents of shared memory
+                                 on normal memory PAWC
+  hlimap_(PAWC_SIZE, SHM_NAME) : Creating PAWC on the shared memory
+  
+  After calling hlimap_(PAWC_SIZE, SHM_NAME), hlimit_(PAWC_SIZE) should
+  be called. For example, hlimap_(PAWC_SIZE, SHM_NAME) is called in ***2shm
+  function, and then hlimit_(PAWC_SIZE) should be called in
+  shm2*** fucntion. On the other hand, only hlimap_(PAWC_SIZE, SHM_NAME)
+  should be called in hbk2shm because of conflict between PAWCs in normal
+  and shared memories. In shm2hbk, only hlimit_(PAWC_SIZE) is called.
+*/
 #include <iostream>
 #include <string>
 #include <sstream>
