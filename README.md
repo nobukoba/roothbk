@@ -8,8 +8,8 @@ Utilities to handle HBOOK and ROOT files. This program can handle only histogram
 
 N.B. This program does not require the CERN Program Library (CERNlib)! The source codes of CERNLib are included in this source codes. On macOS 12.2.1, somes commands does not work, but some commands work. On macOS 12.2.1, the size of the shared memory should be enlarged by the following command.
 ```
-sudo sysctl -w kern.sysv.shmmax=12582912
-sudo sysctl -w kern.sysv.shmall=12582912
+sudo sysctl -w kern.sysv.shmmax=2147483647
+sudo sysctl -w kern.sysv.shmall=4294967296
 ```
 
 # How to compile it
@@ -18,6 +18,13 @@ $ git clone https://github.com/nobukoba/roothbk
 $ cd roothbk/src
 $ make
 ```
+
+If you use ROOT v5 or older ROOT v6, you should modify src/roothbklib/Makefile to add -DNoFramJSON option in CXXFLAGS as below.
+
+```
+CXXFLAGS   = -g -I../../inc $(shell root-config --cflags) -fPIC -DNoFromJSON
+```
+
 
 # How to use it
 ## Online analysis
