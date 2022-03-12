@@ -5,10 +5,10 @@ CXXFLAGS  = -g -I../../inc $(shell root-config --cflags) -fPIC
 LFLAGS    = 
 ifeq ($(OS_TYPE),Darwin)
 # macOS 12.2
-LIBS       = $(shell root-config --glibs) -lXMLIO -lRHTTP -L /usr/local/lib/gcc/11/ -lgfortran ../../lib/libminipacklib.a ../../lib/libroothbklib.a
+LIBS       =  ../../lib/libroothbklib.a ../../lib/libminipacklib.a $(shell root-config --glibs) -lXMLIO -lRHTTP -L /usr/local/lib/gcc/11/ -lgfortran
 else
 # Linux
-LIBS       = $(shell root-config --glibs) -lXMLIO -lRHTTP -lgfortran ../../lib/libminipacklib.a ../../lib/libroothbklib.a
+LIBS       =  ../../lib/libroothbklib.a ../../lib/libminipacklib.a $(shell root-config --glibs) -lXMLIO -lRHTTP -lgfortran
 endif
 
 TARGETS   = ../../bin/shms2hbk ../../bin/shms2root ../../bin/shms2srv ../../bin/shm2hbk ../../bin/shm2root ../../bin/shm2srv ../../bin/hbk2shm ../../bin/hbk2root ../../bin/hbk2srv ../../bin/root2shm ../../bin/root2hbk ../../bin/root2srv ../../bin/srv2shm ../../bin/srv2hbk ../../bin/srv2root ../../bin/lshm ../../bin/dshm ../../bin/shm_monitor
