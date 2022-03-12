@@ -76,7 +76,18 @@ void dshm(const char* shm_name){
 void lshm(){
   FILE* pipe = popen("ipcs -m", "r");
   char buffer[256];
-  int nline = -1;
+  int macos_flag = 0;
+  if (fgets(buffer, 256, pipe) != NULL) {
+    std::string buffer_str = buffer;
+    if (buffer_str.substr(0,3) == "IPC") {
+      macos_flag = 1;
+    }
+    std::cout << buffer_str;
+  }else{
+    std::cout << "No output: ipcs -m" << std::endl;
+    return;
+  }
+  int nline = 0;
   while (fgets(buffer, 256, pipe) != NULL) {
     nline++;
     std::string buffer_str = buffer;
@@ -89,18 +100,30 @@ void lshm(){
     while (buffer_str.back() == ' '){
       buffer_str.pop_back();
     }
-    if (nline == 0) {
-      std::cout << buffer_str << std::endl;
-      continue;
-    }else if(nline == 1) {
-      std::cout << "-----" << buffer_str << std::endl;
-      continue;
-    }else if(nline == 2) {
-      std::cout << "Name " << buffer_str << std::endl;
-      continue;
+    if (macos_flag == 1){
+      if(nline == 1) {
+	std::cout << "NAME " << buffer_str << std::endl;
+	continue;
+      }
+      if(nline == 2) {
+	std::cout << buffer_str << std::endl;
+	continue;
+      }
+    }else{
+      if(nline == 1) {
+	std::cout << "-----" << buffer_str << std::endl;
+	continue;
+      }else if(nline == 2) {
+	std::cout << "Name " << buffer_str << std::endl;
+	continue;
+      }
     }
     std::stringstream ss;
-    ss << std::hex << buffer_str.substr(0,10);
+    if (macos_flag == 1){
+      ss << std::hex << buffer_str.substr(9,10);
+    }else{
+      ss << std::hex << buffer_str.substr(0,10);
+    }
     unsigned int str_int = 0;
     ss >> str_int;
     std::string out_str = "";
@@ -145,7 +168,14 @@ std::string get_shm_names_str(const char *shm_names){
   if (shm_names_str.length() == 0) {
     FILE* pipe = popen("ipcs -m", "r");
     char buffer[256];
-    int nline = -1;
+    int macos_flag = 0;
+    if (fgets(buffer, 256, pipe) != NULL) {
+      std::string buffer_str = buffer;
+      if (buffer_str.substr(0,3) == "IPC") {
+	macos_flag = 1;
+      }
+    }
+    int nline = 0;
     while (fgets(buffer, 256, pipe) != NULL) {
       nline++;
       if (nline <= 2) {
@@ -153,7 +183,13 @@ std::string get_shm_names_str(const char *shm_names){
       }
       std::stringstream ss(buffer);
       std::string buffer_str;
-      ss >> buffer_str;
+      if (macos_flag == 1){
+	ss >> buffer_str;
+	ss >> buffer_str;
+	ss >> buffer_str;
+      }else{
+	ss >> buffer_str;
+      }
       std::stringstream ss2;
       ss2 << std::hex << buffer_str;
       unsigned int str_int = 0;
