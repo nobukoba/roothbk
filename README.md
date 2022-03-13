@@ -12,7 +12,7 @@ sudo sysctl -w kern.sysv.shmmax=2147483647
 sudo sysctl -w kern.sysv.shmall=4294967296
 ```
 
-N.B. If you use ROOT v6.20.08 or older ROOT, you can not use functions srv2shm(), srv2hbk, srv2root, srv2dir etc. That's because the function TBufferJSON::FromJSON does not work in older ROOTs.
+N.B. If you use ROOT v6.20.08 or older ROOT, you can not use functions srv2shm(), srv2hbk(), srv2root(), and srv2dir() etc. That's because the function TBufferJSON::FromJSON does not work in older ROOTs.
 
 # How to compile it
 ```
