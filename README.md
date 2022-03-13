@@ -2,15 +2,17 @@
 Utilities to handle HBOOK and ROOT files. This program can handle only histograms and does not support either NTuple strusture or TTree structure.
 
 # Requirements
-- 64-bit Linux (CentOS 8 etc.)
+- 64-bit Linux (CentOS 8 etc.) or Intel Mac (macOS 12.2.1 etc.)
 - gcc, g++, and gfortran (around version 7, 8)
-- ROOT version 5 or version 6
+- ROOT version 5.34/38 or version 6
 
-N.B. This program does not require the CERN Program Library (CERNlib)! The source codes of CERNLib are included in this source codes. On macOS 12.2.1, somes commands does not work, but some commands work. On macOS 12.2.1, the size of the shared memory should be enlarged by the following command.
+N.B. This program does not require the CERN Program Library (CERNlib)! The source codes of CERNLib are included in this source codes. On macOS 12.2.1, the size of the shared memory should be enlarged by the following command.
 ```
 sudo sysctl -w kern.sysv.shmmax=2147483647
 sudo sysctl -w kern.sysv.shmall=4294967296
 ```
+
+N.B. If you use ROOT v6.20.08 or older ROOT, you can not use functions srv2shm(), srv2hbk, srv2root, srv2dir etc. That's because the function TBufferJSON::FromJSON does not work in older ROOTs.
 
 # How to compile it
 ```
@@ -18,13 +20,6 @@ $ git clone https://github.com/nobukoba/roothbk
 $ cd roothbk/src
 $ make
 ```
-
-If you use ROOT v5 or older ROOT v6, you should modify src/roothbklib/Makefile to add -DNoFramJSON option in CXXFLAGS as below.
-
-```
-CXXFLAGS   = -g -I../../inc $(shell root-config --cflags) -fPIC -DNoFromJSON
-```
-
 
 # How to use it
 ## Online analysis
