@@ -1,11 +1,11 @@
 ROOT_VER_GTEQ_6_00 = $(shell expr `root-config --version|cut -f1 -d/` \>= 6.00)
-ROOT_VER_GTEQ_6_14 = $(shell expr `root-config --version|cut -f1 -d/` \>= 6.14)
+ROOT_VER_GTEQ_6_22 = $(shell expr `root-config --version|cut -f1 -d/` \>= 6.22)
 OS_TYPE            = $(shell uname -s)
 
 TARGETS    = libroothbklib.a libroothbklib.so
 CXX        = g++
 AR         = ar r
-ifeq ($(ROOT_VER_GTEQ_6_14),1)
+ifeq ($(ROOT_VER_GTEQ_6_22),1)
 CXXFLAGS   = -g -I../../inc $(shell root-config --cflags) -fPIC
 else
 CXXFLAGS   = -g -I../../inc $(shell root-config --cflags) -fPIC -DNoFromJSON
