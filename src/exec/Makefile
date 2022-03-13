@@ -46,9 +46,9 @@ all:	$(TARGETS)
 ../../bin/srv2root:  srv2root.o
 	$(CXX) $(LFLAGS) -o $@ $^ $(LIBS)
 ../../bin/lshm:      lshm.o
-	$(CXX) -o $@ $^ $(LIBS) $(LFLAGS)
+	$(CXX) $(LFLAGS) -o $@ $^ $(LIBS)
 ../../bin/dshm:      dshm.o
-	$(CXX) -o $@ $^ $(LIBS) $(LFLAGS) 
+	$(CXX) $(LFLAGS) -o $@ $^ $(LIBS)
 ../../bin/shm_monitor: shm_monitor.o
 	$(CXX) $(LFLAGS) -o $@ $^ $(LIBS)
 
