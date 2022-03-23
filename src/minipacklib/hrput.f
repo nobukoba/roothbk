@@ -46,7 +46,9 @@
          CALL HROPEN(88,'HRPUT',CHFILE,CHOPT1,1024,ISTAT)
          IF(ISTAT.NE.0)GO TO 99
          CALL HROUT(ID,ICYCLE,CHOPT2)
-         CALL HRENDC('HRPUT')
+* Nobu modified 2022.03.23
+*     CALL HRENDC('HRPUT')
+         CALL HREND('HRPUT')
          CLOSE(88)
          CALL RZCDIR(CHSAVE(1:LSAVE),' ')
       ELSE
