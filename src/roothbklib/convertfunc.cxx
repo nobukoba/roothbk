@@ -1171,7 +1171,7 @@ void convert_dir_srv2hbk(int shm_flag, TXMLEngine &xml, XMLNodePointer_t node,
       TObject *obj = 0;
 #if defined(NoFromJSON)
       std::cout << "No TBufferJSON::FromJSON" << std::endl;
-      std::cout << "Use new ROOT version 6" << std::endl;
+      std::cout << "Use ROOT version 6.22.00 or higher" << std::endl;
 #else
       TBufferJSON::FromJSON(obj, result);
 #endif
@@ -1185,13 +1185,15 @@ void convert_dir_srv2hbk(int shm_flag, TXMLEngine &xml, XMLNodePointer_t node,
 	     attr_kind.EqualTo("ROOT.TMemFile")||
 	     attr_kind.EqualTo("ROOT.TFile")||
 	     attr_kind.BeginsWith("ROOT.TDirectory")){
+      
+      TString fulldir_next = fulldir;
       if(open_itself_flag == 0){
-	fulldir += attr_name + "/";
+	fulldir_next = fulldir + attr_name + "/";
       }
       if (attr_kind.EqualTo("ROOT.Session")||
 	  (attr_name.EqualTo("Files")&&attr_kind.EqualTo(""))) {
         convert_dir_srv2hbk(shm_flag, xml, cur_node, level + 1,
-			    baseurl, fulldir, pawdir_in, lundir_in);
+			    baseurl, fulldir_next, pawdir_in, lundir_in);
       }else{
 	std::string objname = attr_name.Data();
 	objname = objname.substr(0,16);
@@ -1220,7 +1222,7 @@ void convert_dir_srv2hbk(int shm_flag, TXMLEngine &xml, XMLNodePointer_t node,
 	std::string new_pawdir = pawdir + "/" + objname;
 	std::string new_lundir = lundir + "/" + objname;
         convert_dir_srv2hbk(shm_flag, xml, cur_node, level + 1,
-			    baseurl, fulldir,
+			    baseurl, fulldir_next,
 			    new_pawdir.c_str(), new_lundir.c_str());
 	hcdir_(pawdir.c_str()," ",pawdir.length(),1);
 	if (shm_flag == 0) {
@@ -1255,6 +1257,7 @@ void convert_dir_srv2root(TXMLEngine &xml, XMLNodePointer_t node, Int_t level,
     TString attr_name = xml.GetAttr(cur_node,"_name");
     TString attr_typename = xml.GetAttr(cur_node,"_typename");
     TDirectory* newdir = 0;
+    std::cout << "attr_kind: " << attr_kind << std::endl;
     if(attr_typename.Length()>1){
     }else if (attr_kind.BeginsWith("ROOT.TH")) {
       TString cmd = "";
@@ -1271,7 +1274,7 @@ void convert_dir_srv2root(TXMLEngine &xml, XMLNodePointer_t node, Int_t level,
       TObject *obj = 0;
 #if defined(NoFromJSON)
       std::cout << "No TBufferJSON::FromJSON" << std::endl;
-      std::cout << "Use new ROOT version 6" << std::endl;
+      std::cout << "Use ROOT version 6.22/00 or higher" << std::endl;
 #else
       TBufferJSON::FromJSON(obj, result);
 #endif
@@ -1301,10 +1304,11 @@ void convert_dir_srv2root(TXMLEngine &xml, XMLNodePointer_t node, Int_t level,
 	  newdir = new TDirectoryFile(attr_name.Data(),attr_name.Data(),"",curdir);
 	}
       }
+      TString fulldir_next = fulldir;
       if(open_itself_flag == 0){
-	fulldir += attr_name + "/";
+	fulldir_next = fulldir + attr_name + "/";
       }
-      convert_dir_srv2root(xml, cur_node, level + 1, baseurl, fulldir, newdir);
+      convert_dir_srv2root(xml, cur_node, level + 1, baseurl, fulldir_next, newdir);
     }
     if(open_itself_flag == 1){
       cur_node = 0;
