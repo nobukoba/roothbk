@@ -18,7 +18,8 @@ C-    giving the same sequence as the IBM and VAX version
       EQUIVALENCE (AMAN,MANT)
       SAVE  MCGN
       DATA  MCGN  /12345/
-      DATA MASK1  /x'0C000000'/, MASK2/x'33000000'/
+c      DATA MASK1  /x'0C000000'/, MASK2/x'33000000'/
+      DATA MASK1  /Z'0C000000'/, MASK2/Z'33000000'/
 
       MCGN = MCGN * 69069
       MANT = ishft (MCGN,-8)
