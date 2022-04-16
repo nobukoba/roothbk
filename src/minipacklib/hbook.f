@@ -574,6 +574,9 @@
 #include "hbook/hcbits.inc"
 #include "hbook/hcntpar.inc"
       CHARACTER*(*) CHTITL
+* Nobu added CHTITLT on 2022.04.16
+* for macOS 12.2.1 clang & gfortran
+      CHARACTER*(80) CHTITLT
       NARG=10
       NCX=0
       IF(NARG.GT.5)NCY=0
@@ -613,11 +616,21 @@
       IF(NARG.LT.9)GO TO 99
       NWT=NWTIT
       IF(NWT.EQ.0)GO TO 99
-      NCH=LEN(CHTITL)
+* Nobu added on 2022.04.16
+      CHTITLT=CHTITL(1:LENOCC(CHTITL))
+* Nobu modified on 2022.04.16
+*     NCH=LEN(CHTITL)
+      NCH=LEN(CHTITLT)
       NWCH=MIN(NCH,4*NWT)
-      IF(NCH.GT.0)CHTITL=' '
-      CALL UHTOC(IQ(IWT),4,CHTITL,NWCH)
-  99  RETURN
+* Nobu modified on 2022.04.16
+*      IF(NCH.GT.0)CHTITL=' '
+      IF(NCH.GT.0)CHTITLT=' '
+* Nobu modified on 2022.04.16
+*      CALL UHTOC(IQ(IWT),4,CHTITL,NWCH)
+      CALL UHTOC(IQ(IWT),4,CHTITLT,NWCH)
+* Nobu added on 2022.04.16
+      CHTITL(1:NWCH)=CHTITLT
+ 99   RETURN
       END
 
 *-------------------------------------------------------------------------------
