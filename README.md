@@ -391,7 +391,7 @@ shm_name:
 ```
 
 # Troubleshooting
-## Compilation with old ROOTs (ROOT v6.1? or smaller)
+## Compilation with old ROOTs (ROOT v6.12 or smaller)
 You will see the following errors with old ROOTs.
 ```
 make[1]: Entering directory '/home/kobayash/nobukoba/roothbk/src/roothbklib'
@@ -434,3 +434,40 @@ Therefore we will stop here
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ```
 This is a typical error when you use the normal (or DESY 64 bit) CERNlib in the 64-bit Linux. This message is written in a source file: cernlib_2005/2005/src/packlib/kernlib/kerngen/ccgen/lp64gs/chkloc.c. This message, however, is never written in my library (roothbk/minipacklib). So if you see this error, another cernlib is loaded.
+
+## Shared memory is not enough
+On macOS 12.2.1 (or Linux OS), if the size of the shared memory is small like as below,
+```
+$ sysctl -a | grep shm
+kern.sysv.shmall: 1024
+kern.sysv.shmmax: 4194304
+kern.sysv.shmmin: 1
+kern.sysv.shmmni: 32
+kern.sysv.shmseg: 8
+machdep.pmap.hashmax: 14
+security.mac.posixshm_enforce: 1
+security.mac.sysvshm_enforce: 1
+```
+the following error would appear for ???2shm commands.
+```
+$ ./root2shm  dir2root.root 
+shmget: Invalid argument
+ GLOBAL MEMORY ERROR =          -22
+ Unknown histogramHPAK             1
+ Unknown histogramHPAKE            1
+ Unknown histogramHNOENT_PUT           1
+ Unknown histogramHPAK             2
+ Unknown histogramHPAKE            2
+ Unknown histogramHNOENT_PUT           2
+ Unknown histogramHPAK             3
+ Unknown histogramHPAKE            3
+ Unknown histogramHNOENT_PUT           3
+ Unknown histogramHPAK             4
+ Unknown histogramHPAKE            4
+ Unknown histogramHNOENT_PUT           4
+```
+Then, enlarge the size of the shared memory like the following.
+```
+sudo sysctl -w kern.sysv.shmmax=2147483647
+sudo sysctl -w kern.sysv.shmall=4294967296
+```
