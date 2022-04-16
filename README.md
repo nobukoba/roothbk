@@ -435,7 +435,7 @@ Therefore we will stop here
 ```
 This is a typical error when you use the normal (or DESY 64 bit) CERNlib in the 64-bit Linux. This message is written in a source file: cernlib_2005/2005/src/packlib/kernlib/kerngen/ccgen/lp64gs/chkloc.c. This message, however, is never written in my library (roothbk/minipacklib). So if you see this error, another cernlib is loaded.
 
-## Shared memory is not enough
+## Size of the shared memory is not enough
 On macOS 12.2.1 (or Linux OS), if the size of the shared memory is small like as below,
 ```
 $ sysctl -a | grep shm
