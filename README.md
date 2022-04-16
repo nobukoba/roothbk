@@ -484,7 +484,17 @@ Call of subroutine from C has some trouble. If the subroutine has an argument of
  Cannot open fileHROPEN           0
  Error on hropen was 1
 ```
-This is because an argument CHOPTT does not pass to the HROPEN subroutine properly. Therefore, the following line was added in HROPEN.
+This is because an argument CHOPTT does not pass to the HROPEN subroutine properly.
+```
+in roothbk/src/roothbklib/convert.cxx
+  hropen_(lun,"LUN60",hbk_name_str.c_str(),"n",record_size,ier,5,hbk_name_str.length(),1);
+  ^ ^ ^
+  | | |
+  v v v
+in roothbk/src/minipacklib/hbook.f
+      SUBROUTINE HROPEN(LUN,CHDIR,CFNAME,CHOPTT,LRECL,ISTAT)
+```
+Therefore, the following line was added in HROPEN.
 ```
       CHOPT=CHOPTT(1:LENOCC(CHOPTT)) 
 ```
