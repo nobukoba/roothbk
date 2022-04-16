@@ -167,7 +167,15 @@
       COMMON/QUEST/IQUEST(100)
       CHARACTER*(*) CFNAME,CHDIR,CHOPTT
       CHARACTER*8 CHOPT
+*     Nobu added macOS 12.2.1 on 2022.04.16
+*     gcc -v --> Apple clang version 13.1.6 (clang-1316.0.21.2.3)
+*     gfortran -v --> gcc version 11.2.0 (Homebrew GCC 11.2.0_3)
+*     for the error: RZMAKE. LRECP input value less than 50
+      CHARACTER*16 CHDIRT
       CHOPT=CHOPTT
+*     Nobu added for macOS 12.2.1 2022.04.16
+      CHOPT=CHOPTT(1:LENOCC(CHOPTT))
+      CHDIRT=CHDIR(1:LENOCC(CHDIR))
       CALL CLTOU(CHOPT)
       DO 10 I=1,NCHTOP
          IF(CFNAME.EQ.HFNAME(I))THEN
@@ -180,7 +188,9 @@
          IC = MIN(LENOCC(CHOPT)+1,8)
          CHOPT(IC:IC) = 'C'
       ENDIF
-      CALL RZOPEN(LUN,CHDIR,CFNAME,CHOPT,LRECL,ISTAT)
+*     Nobu modified 2022.04.16
+*      CALL RZOPEN(LUN,CHDIR,CFNAME,CHOPT,LRECL,ISTAT)
+      CALL RZOPEN(LUN,CHDIRT,CFNAME,CHOPT,LRECL,ISTAT)
   90  IF(ISTAT.NE.0)THEN
          print*, 'Cannot open file','HROPEN',0
          GO TO 99
@@ -192,11 +202,15 @@
       LRE=IQUEST(10)
       IQUEST(10)=IQ10
       IQUEST(99)=LRE
-      CALL HRFILE(LUN,CHDIR,CHOPT)
+*     Nobu modified 2022.04.16
+*      CALL HRFILE(LUN,CHDIR,CHOPT)
+      CALL HRFILE(LUN,CHDIRT,CHOPT)
       IF(IQUEST(1).NE.0)THEN
          ISTAT=IQUEST(1)
 *         print*,'>>>>>> CALL RZEND(CHDIR)'
-         CALL RZEND(CHDIR)
+*     Nobu modified 2022.04.16
+*         CALL RZEND(CHDIR)
+         CALL RZEND(CHDIRT)
          CLOSE(LUN)
          GO TO 90
       ENDIF
