@@ -8,8 +8,8 @@ Utilities to handle HBOOK and ROOT files. This program can handle only histogram
 
 N.B. This program does not require the CERN Program Library (CERNlib)! The source codes of CERNLib are included in this source codes. On macOS 12.2.1, the size of the shared memory should be enlarged by the following command.
 ```
-sudo sysctl -w kern.sysv.shmmax=2147483647
-sudo sysctl -w kern.sysv.shmall=4294967296
+sudo sysctl -w kern.sysv.shmall=2147483647
+sudo sysctl -w kern.sysv.shmmax=4294967296
 ```
 
 N.B. If you use ROOT v6.20.08 or older ROOT, you can not use functions srv2shm(), srv2hbk(), srv2root(), and srv2dir() etc. That's because the function TBufferJSON::FromJSON does not work in older ROOTs.
@@ -468,6 +468,6 @@ shmget: Invalid argument
 ```
 Then, enlarge the size of the shared memory like the following.
 ```
-sudo sysctl -w kern.sysv.shmmax=2147483647
-sudo sysctl -w kern.sysv.shmall=4294967296
+sudo sysctl -w kern.sysv.shmall=2147483647
+sudo sysctl -w kern.sysv.shmmax=4294967296
 ```
