@@ -501,3 +501,14 @@ $ ./shm2hbk TEST
  Cannot open fileHROPEN           0
  Error on hropen was 2
 ```
+In addition, HGIVE was also modified to add CHTITLT.
+```
+      CHARACTER*(80) CHTITLT
+      ...
+      CHTITLT=CHTITL(1:LENOCC(CHTITL))
+      NCH=LEN(CHTITLT)
+      NWCH=MIN(NCH,4*NWT)
+      IF(NCH.GT.0)CHTITLT=' '
+      CALL UHTOC(IQ(IWT),4,CHTITLT,NWCH)
+      CHTITL(1:NWCH)=CHTITLT
+```
