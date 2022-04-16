@@ -471,3 +471,33 @@ Then, enlarge the size of the shared memory like the following.
 sudo sysctl -w kern.sysv.shmall=2147483647
 sudo sysctl -w kern.sysv.shmmax=4294967296
 ```
+# History of changes
+## Errors on macOS 12.2.1
+The compilers used are the following.
+```
+gcc -v: Apple clang version 13.1.6 (clang-1316.0.21.2.3)
+gfortran -v: gcc version 11.2.0 (Homebrew GCC 11.2.0_3) 
+```
+Call of subroutine from C has some trouble. If the subroutine has an argument of charactors, the length of the charactor is not properly treated. For example, the shm2hbk command shows the following error.
+```
+ RZMAKE. LRECP input value less than 50
+ Cannot open fileHROPEN           0
+ Error on hropen was 1
+```
+This is because an argument CHOPTT does not pass to the HROPEN subroutine properly. Therefore, the following line was added in HROPEN.
+```
+      CHOPT=CHOPTT(1:LENOCC(CHOPTT)) 
+```
+Similary, also the following line was added in HROPEN.
+```
+      CHARACTER*16 CHDIRT
+      ...
+      CHDIRT=CHDIR(1:LENOCC(CHDIR))    
+```
+Then, CHDIR was replaced with CHDIRT in HROPEN. Otherwise, you would see the following error.
+```
+$ ./shm2hbk TEST
+ RZCDIR. Unknown directory //LUN60x Error o
+ Cannot open fileHROPEN           0
+ Error on hropen was 2
+```
