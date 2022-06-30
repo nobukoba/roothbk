@@ -26,11 +26,11 @@ static int    shm_pawc;
 static void  *paddr = 0; /* 0 was added nobu */
 static long   len;
  
-
-/* Nobu added 2021.10.11 --> */
-static void  *paddr_cre = 0;
+/* Nobu added 2021.10.11
+   Nobu hfreem_cre_ -->  hfreem_map_ 2022.06.30 --> */
+static void  *paddr_map = 0;
 int hfreem_(long *);
-int hfreem_cre_(long *);
+int hfreem_map_(long *);
 /* <-- */
 
  
@@ -56,9 +56,9 @@ int hcreatei_(key_t *mkey, int *size, long *comaddr)
    len = *size * 8;
 #endif
 
-   /* Nobu added 2021.10.11 --> */
-   if (paddr_cre){
-     hfreem_cre_(0);
+   /* Nobu added 2021.10.11, modified 2022.06.30  --> */
+   if (paddr){
+     hfreem_(0);
    }
    /* <-- */
 
@@ -74,14 +74,12 @@ int hcreatei_(key_t *mkey, int *size, long *comaddr)
     * starting at req_addr
     */
     req_addr = (void*)(*comaddr);
-    /*if ((paddr = shmat(shm_pawc, req_addr, SHM_RND)) == (void *)-1) { */
-    if ((paddr_cre = shmat(shm_pawc, req_addr, SHM_RND)) == (void *)-1) {
+    if ((paddr = shmat(shm_pawc, req_addr, SHM_RND)) == (void *)-1) {
       perror("shmat");
       istat = -errno;
    } else {
       istat    = 0;
-      /* inter    = (unsigned long) paddr; */
-      inter    = (unsigned long) paddr_cre;
+      inter    = (unsigned long) paddr;
 #if !defined(DOUBLE_PRECISION)
       *comaddr = (long) (inter >> 2);
 #else
@@ -112,9 +110,9 @@ int hmapi_(key_t *mkey, long *comaddr)
    void            *req_addr;
    struct shmid_ds  shm_stat;
 
-   /* Nobu added 2021.10.11 --> */
-   if (paddr){
-     hfreem_(0);
+   /* Nobu added 2021.10.11, modified 2022.06.30 --> */
+   if (paddr_map){
+     hfreem_map_(0);
    }
    /* <-- */
    /*
@@ -198,16 +196,16 @@ int hfreem_(long *comaddr)
 }
 
 /* Nobu added 2021.10.11 --> */
-int hfreem_cre_(long *comaddr)
+int hfreem_map_(long *comaddr)
 {
    int istat;
    /* unmaps segment from address space */
-   if ((istat = shmdt(paddr_cre)) == -1) {
+   if ((istat = shmdt(paddr_map)) == -1) {
       perror("shmdt");
       istat = -errno;
       return(istat);
    }
-   paddr_cre = 0;
+   paddr_map = 0;
    return(istat);
 }
 /* <-- */
