@@ -199,17 +199,28 @@ std::string get_shm_names_str(const char *shm_names){
       if ((str_int&0x0000ff00)>0) {out_str += (char)((str_int&0x0000ff00)>>8);}
       if ((str_int&0x00ff0000)>0) {out_str += (char)((str_int&0x00ff0000)>>16);}
       if ((str_int&0xff000000)>0) {out_str += (char)((str_int&0xff000000)>>24);}
-      if (out_str.length()){
-	ss >> buffer_str;
-	ss >> buffer_str;
-	for (int i = 0; i < out_str.length(); i++) {
-	  if((int)(out_str[i]) >= 0x61 &&
-	     (int)(out_str[i]) <= 0x7a){
-	    out_str[i] = (char)((int)out_str[i] - 0x20);
-	  }
-	}
-	shm_names_str += out_str + "," + buffer_str + " ";
+      if (out_str.length() == 0){
+	continue;
       }
+      ss >> buffer_str;
+      ss >> buffer_str;
+      int valid_name_flag = 1;
+      for (int i = 0; i < out_str.length(); i++) {
+	if((int)(out_str[i]) < 0x20 ||
+	   (int)(out_str[i]) > 0x7e){
+	  valid_name_flag = 0; 
+	}
+      }
+      if (valid_name_flag == 0) {
+	continue;
+      }
+      for (int i = 0; i < out_str.length(); i++) {
+	if((int)(out_str[i]) >= 0x61 &&
+	   (int)(out_str[i]) <= 0x7a){
+	  out_str[i] = (char)((int)out_str[i] - 0x20);
+	}
+      }
+      shm_names_str += out_str + "," + buffer_str + " ";
     }
     pclose(pipe);
   }
@@ -287,6 +298,15 @@ std::string open_input_shm(const char* shm_name){
   shm_name_str = shm_name_str.substr(0,4);
   if (((int)shm_name_str.find(",")) > -1) {
     shm_name_str = shm_name_str.substr(0,shm_name_str.find(","));
+  }
+  if (shm_name_str.length()==0){
+    return "";
+  }
+  for (int i = 0; i < shm_name_str.length(); i++) {
+    if((int)(shm_name_str[i]) < 0x20 ||
+	      (int)(shm_name_str[i]) > 0x7e){
+      return "";
+    }
   }
   for (int i = 0; i < shm_name_str.length(); i++) {
     if((int)(shm_name_str[i]) >= 0x61 &&
