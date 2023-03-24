@@ -41,6 +41,16 @@
 *
       JCDIR = JR1
       NDIR=0
+
+*     Nobu added 2023.03.24 -->
+      ILAST=IPAWD(NW)
+      IF(ILAST.LE.KOF)THEN
+*         write(*,*) 'Check point 1: ILAST.LE.KOF in hcopyu.f'
+*         write(*,*) 'Check point 1: ILAST, KOF', ILAST, KOF
+         GO TO 99
+      ENDIF
+*     --> Nobu added
+      
       LF=IPAWD(JCDIR-1)
       IF(LF.NE.0)THEN
    60    IF(NDIR.GE.MAXDIR)GO TO 99

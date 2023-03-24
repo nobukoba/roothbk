@@ -68,5 +68,5 @@ void  convert_dir_srv2hbk(int, TXMLEngine &, XMLNodePointer_t,
                           Int_t, TString, TString,
 			  const char *, const char *);
 void  convert_histo_root2hbk(TH1*, int&);
-void  convert_histo_hbk2root(int, int, TDirectory*);
+int   convert_histo_hbk2root(int, int, TDirectory*);
 #endif

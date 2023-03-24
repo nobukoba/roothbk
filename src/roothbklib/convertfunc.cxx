@@ -464,17 +464,34 @@ THttpServer* open_output_srv(int port) {
   }
   saved_port = port;
   if (serv == 0) {
+    std::cout << "Check if the port: " << port << " can be bound or not." << std::endl;
     TServerSocket *ssocket = new TServerSocket(port);
     if(!ssocket->IsValid()){
       std::cout << "TServerSocket::GetErrorCode(): " << ssocket->GetErrorCode() << std::endl;
       std::cout << "Probably port: " << port << " is already in use." << std::endl;
-      std::cout << "Exit."<< std::endl;
+      std::cout << "Use a different port or wait a moment until the port becomes available." << std::endl;
       delete ssocket;
       return 0;
-    }else{
-      std::cout << "The port is free." << std::endl;
-      delete ssocket;
     }
+    std::cout << "The port: " << port << " can be bound." << std::endl;
+    /*
+    std::cout << "Check if the port: " << port << " is open or not on the firewall of " << gSystem->HostName() <<"."<< std::endl;
+    TSocket *sock = new TSocket(gSystem->HostName(), port);
+    if(!sock->IsValid()){
+      std::cout << "Probably port: " << port << " is closed by the firewall." << std::endl;
+      std::cout << "Please use a different port." << std::endl;
+      std::cout << "On aino-1/aino-2, port 5901 -- 5999 are open." << std::endl;
+      std::cout << "On saho-a/saho-b, port 5901 -- 5999 are open." << std::endl;
+      std::cout << "The open port information can be investigated by the linux command: nmap" << std::endl;
+      delete sock;
+      delete ssocket;
+      return 0;
+    }
+    std::cout << "The port: " << port << " is open on the firewall." << std::endl;
+    delete sock;
+    */
+    delete ssocket;
+    
     TString thttpserver_str = Form("http:%d?top=pid%d_at_%s", port, gSystem->GetPid(), gSystem->HostName());
     serv = new THttpServer(thttpserver_str.Data());
   }
@@ -1112,13 +1129,21 @@ void convert_dir_hbk2root(const char *cur_dir, TDirectory* output_dir) {
       continue;
     }
     if (hcbits_[0]) {
-      convert_histo_hbk2root(id, 1, output_dir);
-      hdelet_(id);
+      if (convert_histo_hbk2root(id, 1, output_dir)){
+	/* std::cout << "Error in convert_histo_hbk2root(id, 1, output_dir)" << std::endl; */
+	break;
+      }else{
+	hdelet_(id);
+      }
       continue;
     }
     if (hcbits_[1] || hcbits_[2]) {
-      convert_histo_hbk2root(id, 2, output_dir);
-      hdelet_(id);
+      if(convert_histo_hbk2root(id, 2, output_dir)){
+	/* std::cout << "Error in convert_histo_hbk2root(id, 2, output_dir)" << std::endl; */
+	break;
+      }else{
+	hdelet_(id);
+      }
     }
   }
   /* converting subdirectories of this directory */
@@ -1468,16 +1493,27 @@ void convert_histo_root2hbk(TH1* h, int& id) {
   return;
 }
 
-void convert_histo_hbk2root(int id, int kind, TDirectory* cur_dir) {
+int convert_histo_hbk2root(int id, int kind, TDirectory* cur_dir) {
   char idname[128];
   if (id > 0) snprintf(idname,128,"h%d",id);
   else        snprintf(idname,128,"h_%d",-id);
   int nentries;
   hnoent_(id,nentries);
+  if (quest_[0] != 0) {
+     std::cout << "quest_[0] != 0 after hnoent subroutine..." << std::endl;
+     std::cout << "This may happen during booking of the hbooks. Skip the conversion." << std::endl;
+    return 1;
+  }
   char chtitl[128];
   int ncx,ncy,nwt,idb;
   float xmin,xmax,ymin,ymax;
   hgive_(id,chtitl,ncx,xmin,xmax,ncy,ymin,ymax,nwt,idb,80);
+  int lcid  = hcbook_[10];
+  if (lcid <= 0) {
+    std::cout << "lcid <= 0 after hgive subroutine..." << std::endl;
+    return 1;
+  }
+
   chtitl[4*nwt] = 0;
   std::string chtitl_str = chtitl;
   while (chtitl_str.back() == ' '){
@@ -1529,7 +1565,7 @@ void convert_histo_hbk2root(int id, int kind, TDirectory* cur_dir) {
   if(cur_kind != kind){
     new_flag = 1;
   }
-  int lcid  = hcbook_[10];
+  /* int lcid  = hcbook_[10]; */
   if(kind == 1){
     if(h){
       if(ncx != h->GetXaxis()->GetNbins()){
@@ -1648,4 +1684,5 @@ void convert_histo_hbk2root(int id, int kind, TDirectory* cur_dir) {
   h->GetXaxis()->SetTitle(xtitle.c_str());
   h->GetYaxis()->SetTitle(ytitle.c_str());
   h->SetEntries(nentries);
+  return 0;
 }
