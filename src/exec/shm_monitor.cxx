@@ -25,9 +25,6 @@ int main (int argc, char **argv) {
     std::cout << "The port number is not valid." << std::endl;
     return 0;
   }
-  std::cout << "Now you can have access to http://" << gSystem->HostName() << ":"
-	    << port << "/" << std::endl;
-  std::cout << "Type ctrl-c to stop the program." << std::endl;
   while (1) {
     if(argc == 2){
       shms2srv("",port);
