@@ -39,7 +39,8 @@
 #include "minicfortran.h"
 #include "convertfunc.h"
 
-int hbk_id_title_flag = 2;
+int hbk_id_title_flag = 1;
+int hbk_title_convert_flag = 1;
 int shms2srv_sync_flag = 1;
 
 void hbk_id_title(int flag){
@@ -1523,6 +1524,7 @@ int convert_histo_hbk2root(int id, int kind, TDirectory* cur_dir) {
   while (chtitl_str.back() == ' '){
     chtitl_str.pop_back();
   }
+  /* std::cout << "chtitl: " << chtitl <<  std::endl; */
   std::string xtitle = "";
   std::string ytitle = "";
   int dlmpos = chtitl_str.find(";");
@@ -1537,19 +1539,25 @@ int convert_histo_hbk2root(int id, int kind, TDirectory* cur_dir) {
   }
   /*std::string idname_title = Form("%s_%s",idname,chtitl_str.c_str());*/
   std::string idname_title = idname;
-  if(hbk_id_title_flag > 0){
+  if(hbk_id_title_flag == 1){ /* Histogram title: "h1_BLK" */
+    std::string chtitl_first = chtitl_str;
+    int spcpos = chtitl_first.find(" ");
+    chtitl_first = chtitl_first.substr(0,spcpos);
+    idname_title += "_" + chtitl_first;
+  }
+  if(hbk_id_title_flag == 2){ /* Histogram title: "h1_BLK        Block Number" */
     idname_title += "_" + chtitl_str;
-    if (hbk_id_title_flag == 2){
-      std::stringstream ss("/ , . { } ( ) [ ] ? % # ! & ' - = ~ ^ |");
-      std::string tmp_str = "";
-      while (ss >> tmp_str){
-	while (((int)idname_title.find(tmp_str.c_str())) > -1) {
-	  idname_title[idname_title.find(tmp_str.c_str())] = '_';
-	}
+  }
+  if (hbk_title_convert_flag == 1){ /* Histogram title: "h1_BLK________Block_Number" */
+    std::stringstream ss("/ , . { } ( ) [ ] ? % # ! & ' - = ~ ^ |");
+    std::string tmp_str = "";
+    while (ss >> tmp_str){
+      while (((int)idname_title.find(tmp_str.c_str())) > -1) {
+	idname_title[idname_title.find(tmp_str.c_str())] = '_';
       }
-      while (((int)idname_title.find(" ")) > -1) {
-	idname_title[idname_title.find(" ")] = '_';
-      }
+    }
+    while (((int)idname_title.find(" ")) > -1) {
+      idname_title[idname_title.find(" ")] = '_';
     }
   }
   TH1* h = (TH1*)cur_dir->TDirectory::FindObject(idname_title.c_str());
